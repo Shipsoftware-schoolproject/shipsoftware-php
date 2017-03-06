@@ -18,12 +18,29 @@ function display_error($message, $error_code = 500)
 }
 
 try {
-	//$conn = mysqli_connect("mysql.cc.puv.fi", $tunnarit[0], $tunnarit[1], $tunnarit[0] . "_Kurssi");
 	$conn = new PDO("mysql:host=mysql.cc.puv.fi;dbname=" . $tunnarit[0] . "_Shipsoftware", $tunnarit[0], $tunnarit[1]);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $conn->exec('SET NAMES utf8');
 } catch (PDOException $e) {
 	display_error("Tietokanta yhteyden muodostaminen epäonnistui");
+}
+
+// Hae laivat
+if ($_GET['haeLaivat']) {
+	$query = $conn->prepare('SELECT * FROM Ships');
+	$query->execute();
+
+	$laivat = array();
+	$i = 0;
+
+	while ($row = $query->fetch()) {
+		$laivat[$i]['ShipID'] = $row['ShipID'];
+		$laivat[$i]['ShipName'] = $row['ShipName'];
+		$i++;
+	}
+
+	echo json_encode($laivat);
+	die();
 }
 
 ?>
