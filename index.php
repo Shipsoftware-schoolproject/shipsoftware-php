@@ -12,7 +12,6 @@
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
         <link href="./css/custom.css" rel="stylesheet">
         <script src="./js/compass.js"></script>
-		<script src="./js/custom.js"></script>
     </head>
     <body>
 		<nav class="navbar navbar-default navbar-static-top">
@@ -42,11 +41,6 @@
 								<!-- TODO: Search button -->
 								<input class="laivatSearchBox" type="textbox" placeholder="Hae laiva"></input>
 									<select class="laivatListBox" size="8" name="laivat">
-										<option>Titanic</option>
-										<option>USS Manhattan</option>
-										<option>HMN Afrika's starliner</option>
-										<option>USS Enterprise</option>
-										<option>Navetta</option>
 									</select>
 								</div>
 							</div>
@@ -318,6 +312,7 @@
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+        <script src="./js/custom.js"></script>
         <script type="text/javascript">
             // Init kompassi
             $(document).ready(function() {
@@ -330,6 +325,8 @@
                     draw($('#laivanTarkkaSuunta').text());
                 }
             })
+
+            haeLaivat();
         </script>
     </body>
 </html>
