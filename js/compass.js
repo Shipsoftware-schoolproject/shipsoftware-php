@@ -12,7 +12,7 @@ function draw(degrees) {
 
 		// Load the compass image
 		img = new Image();
-		img.src = './img/kompassi.jpg';
+		img.src = './img/compass.svg';
 		//img.onload = draw;
 	} else {
 		alert("Canvas not supported!");

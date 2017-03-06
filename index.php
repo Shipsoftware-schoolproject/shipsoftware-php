@@ -89,7 +89,7 @@
 										<table class=table>
 											<thead>
 												<tr>
-													<th>ID</th>
+													<th>Sotu</th>
 													<th>Etunimi</th>
 													<th>Sukunimi</th>
 													<th>Tehtävä</th>
@@ -153,43 +153,36 @@
 										<h3 class="panel-title">Henkilötiedot</h3>
 									</div>
 									<div class="panel-body">
-										<div class="col-lg-2">
-										</div>
-										<div class="col-lg-2">
-											<table border="5">
-
+											<table border="5" style="width: 100%">
 												<tr>
-													<th><h4>Kuva</h4></th>
-													<th>Nimi</th>
-													<th>Sotu</th>
-													<th>Kotiosoite</th>
+													<td rowspan="2"><img src="http://vignette3.wikia.nocookie.net/pirates/images/f/f0/OSTJackSmileCropped.jpg/revision/latest/scale-to-width-down/300?cb=20121116204603" width="120"></img></td>
+													<td colspan="2"><b>Nimi:</b> Jack Sparrow</td>
+													<th >Kotiosoite</th>
 												</tr>
 												<tr>
-													<td><img src="http://vignette3.wikia.nocookie.net/pirates/images/f/f0/OSTJackSmileCropped.jpg/revision/latest/scale-to-width-down/300?cb=20121116204603" width="120"></img></td>
-													<td>Jack Sparrow</td>
-													<td>000000001</td>
+													<td colspan="2"><b>Sotu:</b>00000001 </td>
 													<td>
-														<table>
+														<table border="3" style="width: 100%">
 															<tr>
-																<th>Postiosoite</th>
-																<th>Kaupunki</th>
-																<th>Postinumero</th>
+																<th>Postiosoite:</th>
+																<td>Kapteeninkatu 1</td>
 															</tr>
 															<tr>
-																<td>Kapteeninkatu 1</td>
+																<th>Kaupunki:</th>								
 																<td>Barmuda</td>
+															</tr>
+															<tr>
+																<th>Postinumero:</th>
 																<td>65600</td>
 															</tr>
 														</table>
 													</td>
 												</tr>
-												
-
+												<tr>
+													<td colspan="2"><b>Titteli:</b>  Kapteeni</td>
+													<td colspan="2"><b>Puhelin Numero:</b> 040715517</td>
+												</tr>		
 											</table>
-										</div>
-										<div class="col-lg-10">
-											
-										</div>
 									</div>
 								</div>
 							</div>
@@ -245,7 +238,7 @@
 										</div>
 										<div class="row">
 											<div class="col-md-8">Tarkka suunta:</div>
-											<div id="laivanTarkkaSuunta" class="col-md-4 text-right">180</div>
+											<div id="laivanTarkkaSuunta" class="col-md-4 text-right">270</div>
 										</div>
 									</div>
 								</div>
