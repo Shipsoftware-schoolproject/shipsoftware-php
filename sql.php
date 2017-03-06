@@ -3,7 +3,7 @@
 $tunnarit = array();
 
 # Tiedostoon ekalle riville SQL käyttäjänimi ja toiselle riville salasana
-$fd = fopen("../../mysql_tunnarit.txt", "r");
+$fd = fopen("../../mysql_tunnarit.tx", "r");
 if ($fd) {
 	$i = 0;
 	while (($line = fgets($fd)) !== false) {
@@ -11,15 +11,15 @@ if ($fd) {
 		$i++;
 	}
 } else {
-	echo "";
+	echo "MySQL tunnuksien lataaminen ei onnistunut.";
+	http_response_code(500);
+	die();
 }
-echo "username: \"$tunnarit[0]\"";
 
-$conn = mysqli_connect("mysql.cc.puv.fi", $tunnarit[0], $tunnarit[1], "e1501153_Kurssi");
+$conn = mysqli_connect("mysql.cc.puv.fi", $tunnarit[0], $tunnarit[1], $tunnarit[0] . "_Kurssi");
 
 if (!$conn ) {
     echo "Connection could not be established.<br />";
-} else {
-	echo "Success<br />";
 }
+
 ?>
