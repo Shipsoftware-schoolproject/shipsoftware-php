@@ -9,48 +9,39 @@ $(window).resize(function() {
     colWidth = $bodyCells.map(function() {
         return $(this).width();
     }).get();
-    
+
     // Set the width of thead columns
     $table.find('thead tr').children().each(function(i, v) {
         $(v).width(colWidth[i]);
-    });    
+    });
 }).resize(); // Trigger resize handler
 
-function phpKutsu(kutsu)
+function phpKutsu(kutsu, callback)
 {
-    var status;
-    var data
-
-    var request = $.ajax({
-                        async: false,
-                        type: 'GET',
-                        url: "sql.php?" + kutsu,
-                    });
-
-    request.done(function(response) {
-        //alert("status: " + 200 + " data: " + response);
-        status = 200;
-        data = response;
-    })
-
-    request.fail(function(data) {
-        status = data.status;
-        this.data = data.response;
-    });
-
-    return { 'status': status, 'data': data };
+    var request = new XMLHttpRequest();
+    request.onreadystatechange = function() {
+        if (request.readyState == 4) {
+            callback({ status: request.status, data: request.responseText });
+        }
+    };
+    request.open('GET', 'sql.php?' + kutsu);
+    request.send();
 }
 
-function haeLaivat()
+function haeLaivat(data = null)
 {
-    var laivat = phpKutsu('haeLaivat=true');
+    if (data === null) {
+        phpKutsu('haeLaivat=true', haeLaivat);
+        return;
+    }
 
-    if (laivat['status'] != 200) {
-        alert('Laivojen hakeminen ei onnistunut.');
+    if (data['status'] != 200) {
+        alert(data);
     } else {
-        laivat.data = JSON.parse(laivat.data);
-        for (var key in laivat.data) {
-            $(".laivatListBox").append("<option id=\"" + laivat.data[key]['ShipID'] + "\">" + laivat.data[key]['ShipName'] + "</option>");
+        var laivat = JSON.parse(data.data);
+
+        for (var i in laivat) {
+            $(".laivatListBox").append("<option id=\"" + laivat[i]['ShipID'] + "\">" + laivat[i]['ShipName'] + "</option>");
         }
     }
 }
