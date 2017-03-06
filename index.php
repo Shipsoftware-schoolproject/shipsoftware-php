@@ -160,7 +160,38 @@
 									</div>
 									<div class="panel-body">
 										<div class="col-lg-2">
-											<img width="120" src="http://2.bp.blogspot.com/_Qe1wgxDiEdU/TFO4R6Fl2tI/AAAAAAAABUk/XyVZ4v6Q1qE/s1600/215896_f520.jpg"></img>
+										</div>
+										<div class="col-lg-2">
+											<table border="5">
+
+												<tr>
+													<th><h4>Kuva</h4></th>
+													<th>Nimi</th>
+													<th>Sotu</th>
+													<th>Kotiosoite</th>
+												</tr>
+												<tr>
+													<td><img src="http://vignette3.wikia.nocookie.net/pirates/images/f/f0/OSTJackSmileCropped.jpg/revision/latest/scale-to-width-down/300?cb=20121116204603" width="120"></img></td>
+													<td>Jack Sparrow</td>
+													<td>000000001</td>
+													<td>
+														<table>
+															<tr>
+																<th>Postiosoite</th>
+																<th>Kaupunki</th>
+																<th>Postinumero</th>
+															</tr>
+															<tr>
+																<td>Kapteeninkatu 1</td>
+																<td>Barmuda</td>
+																<td>65600</td>
+															</tr>
+														</table>
+													</td>
+												</tr>
+												
+
+											</table>
 										</div>
 										<div class="col-lg-10">
 											
