@@ -77,7 +77,7 @@ function haeRahti(data = null)
     $('#rahtitiedot').empty();
 
     if (data['status'] != 200) {
-        alert(data.data);
+        $('#rahtitiedot').append('<tr><td scope=row colspan=3>' + data.data + '</td></tr>');
     } else {
         var rahti = JSON.parse(data.data);
 

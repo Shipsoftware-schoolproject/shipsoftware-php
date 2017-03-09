@@ -60,15 +60,15 @@ if (isset($_GET['haeRahti'])) {
 		return_error("Pätemätön parametri!", 400);
 	} else {
 		$query = $conn->prepare('SELECT Cargo.CargoID, ContainerBarCode, CargoType, OverallWeight FROM Cargo
-								 INNER JOIN CargoContainer 
-								 ON Cargo.CargoID = CargoContainer.CargoID 
+								 INNER JOIN CargoContainer
+								 ON Cargo.CargoID = CargoContainer.CargoID
 								 WHERE ShipID = :ShipID');
 		$query->bindParam(':ShipID', $_GET['haeRahti'], PDO::PARAM_INT);
-		//try {
+		try {
 			$query->execute();
-		//} catch (PDOException $e) {
-		//	return_error("Virhe SQL -kyselyssä");
-		//}
+		} catch (PDOException $e) {
+			return_error("Virhe SQL -kyselyssä");
+		}
 
 		$rahti = array();
 		$i = 0;
@@ -78,6 +78,10 @@ if (isset($_GET['haeRahti'])) {
 			$rahti[$i]['Content'] = $row['CargoType'];
 			$rahti[$i]['OverallWeight'] = $row['OverallWeight'];
 			$i++;
+		}
+
+		if ($i == 0) {
+			return_error('Laivalla ei ole rahtia', 206);
 		}
 
 		return_success($rahti);
