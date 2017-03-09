@@ -32,6 +32,16 @@ function phpKutsu(kutsu, callback)
     request.send();
 }
 
+// Päivitä tab:n sisältö kun listalaatikon valinta muuttuu
+$('#laivatListBox').change(function() {
+    var currentTab = $('.nav-pills li.active').find('a').attr('href');
+
+    // TODO: lisää puuttuvat funktiot
+    if (currentTab == '#rahti') {
+        haeRahti();
+    }
+});
+
 function haeLaivat(data = null)
 {
     if (data === null) {
