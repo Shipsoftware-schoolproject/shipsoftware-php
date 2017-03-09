@@ -11,8 +11,8 @@ body {
     margin-top: 0px;
 }
 
-.laivatSearchBox,
-.laivatListBox {
+#laivatSearchBox,
+#laivatListBox {
 	width: 100%;
 }
 

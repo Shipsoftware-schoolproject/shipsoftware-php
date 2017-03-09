@@ -39,8 +39,8 @@
 								</div>
 								<div class="panel-body">
 								<!-- TODO: Search button -->
-								<input class="laivatSearchBox" type="textbox" placeholder="Hae laiva"></input>
-									<select class="laivatListBox" size="8" name="laivat">
+								<input id="laivatSearchBox" type="textbox" placeholder="Hae laiva"></input>
+									<select id="laivatListBox" size="8" name="laivat">
 									</select>
 								</div>
 							</div>
@@ -258,7 +258,7 @@
 							</div>
 						</div>
 						<!-- Rahti -välilehti -->
-						<div class="tab-pane" id="rahti">
+						<div class="tab-pane">
 							<div class="col-lg-12">
 								<!-- Minimap -laatikko -->
 								<div id="minimap" class="panel panel-default">
@@ -273,19 +273,7 @@
 													<th>Sisältö</th>
 												</tr>
 											</thead>
-											<tbody>
-												<tr>
-													<th scope=row>106141410123456786</th>
-													<td>Tietokoneen komponentteja</td>
-												</tr>
-												<tr>
-													<th scope=row>9347001000013</th>
-													<td>Eletroniikkaa</td>
-												</tr>
-												<tr>
-													<th scope=row>927710174</th>
-													<td>Electrolux:n jääkaappeja</td>
-												</tr>
+											<tbody id="rahti">
 											</tbody>
 										</table>
 									</div>
