@@ -77,7 +77,7 @@ function haeRahti(data = null)
 }
 
 $('[data-toggle="tab"]').click(function(event) {
-    var currentTab = '#' + $('.nav-pills .active').text().toLowerCase();
+    var currentTab = $('.nav-pills li.active').find('a').attr('href');
     var targetTab = $(event.target).attr('href')
 
     if (currentTab == targetTab) {
