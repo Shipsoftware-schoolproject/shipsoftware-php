@@ -64,10 +64,7 @@ function haeRahti(data = null)
         return true;
     }
 
-    var rahtiTiedot = $('#rahtitiedot');
-    while (rahtiTiedot.firstChild) {
-        rahtiTiedot.removeChild(rahtiTiedot.firstChild);
-    }
+    $('#rahtitiedot').empty();
 
     if (data['status'] != 200) {
         alert(data.data);
@@ -75,7 +72,7 @@ function haeRahti(data = null)
         var rahti = JSON.parse(data.data);
 
         for (var i in rahti) {
-            rahtiTiedot.append('<tr><th scope=row>' + rahti[i]['ContainerBarCode'] + '</th><td>' + rahti[i]['Content'] + '</td></tr>');
+            $('#rahtitiedot').append('<tr><th scope=row>' + rahti[i]['ContainerBarCode'] + '</th><td>' + rahti[i]['Content'] + '</td></tr>');
         }
     }
 
