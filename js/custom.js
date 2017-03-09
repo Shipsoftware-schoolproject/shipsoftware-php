@@ -55,14 +55,13 @@ function haeRahti(data = null)
     if (data === null) {
         var listBox = document.getElementById('laivatListBox');
         if (!listBox.options[listBox.selectedIndex]) {
-            alert('Valitse ensin laiva.');
-            return; //e.preventDefault();
+            return false;
         } else {
             var id = listBox.options[listBox.selectedIndex].value;
         }
-        
+
         phpKutsu('haeRahti=' + id, haeRahti);
-        return;
+        return true;
     }
 
     if (data['status'] != 200) {
@@ -77,10 +76,22 @@ function haeRahti(data = null)
 
 }
 
-// $('[data-toggle="tab"]').click(function(event) {
-//     if ($(event.target).attr('href') == '#rahti') {
-//         haeRahti();
-//     } else {
-//         alert('Tabiä "' + $(event.target).attr('href') + '" ei ole implementoitu');
-//     }
-// });
+$('[data-toggle="tab"]').click(function(event) {
+    var currentTab = '#' + $('.nav-pills .active').text().toLowerCase();
+    var targetTab = $(event.target).attr('href')
+
+    if (currentTab == targetTab) {
+        event.preventDefault();
+        return false;
+    }
+
+    if (targetTab == '#rahti') {
+        if (!haeRahti()) {
+            alert('Valitse ensin laiva.');
+            event.preventDefault();
+            return false;
+        }
+    } else {
+        alert('Tabiä "' + $(event.target).attr('href') + '" ei ole implementoitu');
+    }
+});

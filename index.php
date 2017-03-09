@@ -57,7 +57,7 @@
 										<li class="active"><a href="#kartta" role="tab" data-toggle="tab">Kartta</a></li>
 										<li><a href="#miehistö" role="tab" data-toggle="tab">Miehistö</a></li>
 										<li><a href="#laivantiedot" role="tab" data-toggle="tab">Laivan tiedot</a></li>
-										<li><a href="#rahti" role="tab" data-toggle="tab" onclick="haeRahti()">Rahti</a></li>
+										<li><a href="#rahti" role="tab" data-toggle="tab">Rahti</a></li>
 									</ul>
 								</div>
 							</div>
@@ -168,7 +168,7 @@
 																<td>Kapteeninkatu 1</td>
 															</tr>
 															<tr>
-																<th>Kaupunki:</th>								
+																<th>Kaupunki:</th>
 																<td>Barmuda</td>
 															</tr>
 															<tr>
@@ -181,7 +181,7 @@
 												<tr>
 													<td colspan="2"><b>Titteli:</b>  Kapteeni</td>
 													<td colspan="2"><b>Puhelin Numero:</b> 040715517</td>
-												</tr>		
+												</tr>
 											</table>
 									</div>
 								</div>
