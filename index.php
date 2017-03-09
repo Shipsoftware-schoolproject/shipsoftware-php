@@ -57,7 +57,7 @@
 										<li class="active"><a href="#kartta" role="tab" data-toggle="tab">Kartta</a></li>
 										<li><a href="#miehistö" role="tab" data-toggle="tab">Miehistö</a></li>
 										<li><a href="#laivantiedot" role="tab" data-toggle="tab">Laivan tiedot</a></li>
-										<li><a href="#rahti" role="tab" data-toggle="tab">Rahti</a></li>
+										<li><a href="#rahti" role="tab" data-toggle="tab" onclick="haeRahti()">Rahti</a></li>
 									</ul>
 								</div>
 							</div>
@@ -258,7 +258,7 @@
 							</div>
 						</div>
 						<!-- Rahti -välilehti -->
-						<div class="tab-pane">
+						<div class="tab-pane" id="rahti">
 							<div class="col-lg-12">
 								<!-- Minimap -laatikko -->
 								<div id="minimap" class="panel panel-default">
@@ -273,7 +273,7 @@
 													<th>Sisältö</th>
 												</tr>
 											</thead>
-											<tbody id="rahti">
+											<tbody id="rahtitiedot">
 											</tbody>
 										</table>
 									</div>

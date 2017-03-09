@@ -56,7 +56,7 @@ function haeRahti(data = null)
         var listBox = document.getElementById('laivatListBox');
         if (!listBox.options[listBox.selectedIndex]) {
             alert('Valitse ensin laiva.');
-            //return; //e.preventDefault();
+            return; //e.preventDefault();
         } else {
             var id = listBox.options[listBox.selectedIndex].value;
         }
@@ -71,16 +71,16 @@ function haeRahti(data = null)
         var rahti = JSON.parse(data.data);
 
         for (var i in rahti) {
-            $("#rahti").append('<tr><th scope=row>' + rahti[i]['ContainerBarCode'] + '</th><td>' + rahti[i]['Content'] + '</td></tr>');
+            $("#rahtitiedot").append('<tr><th scope=row>' + rahti[i]['ContainerBarCode'] + '</th><td>' + rahti[i]['Content'] + '</td></tr>');
         }
     }
 
 }
 
-$('[data-toggle="tab"]').click(function(event) {
-    if ($(event.target).attr('href') == '#rahti') {
-        haeRahti();
-    } else {
-        alert('Tabiä "' + $(event.target).attr('href') + '" ei ole implementoitu');
-    }
-});
+// $('[data-toggle="tab"]').click(function(event) {
+//     if ($(event.target).attr('href') == '#rahti') {
+//         haeRahti();
+//     } else {
+//         alert('Tabiä "' + $(event.target).attr('href') + '" ei ole implementoitu');
+//     }
+// });
