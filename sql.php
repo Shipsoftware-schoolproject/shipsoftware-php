@@ -7,11 +7,11 @@ error_reporting(E_ALL);
 # Tiedostoon ekalle riville SQL käyttäjänimi ja toiselle riville salasana
 $tunnarit = file("../../mysql_tunnarit.txt", FILE_IGNORE_NEW_LINES);
 if ($tunnarit === false) {
-	display_error("MySQL tunnuksien lataaminen ei onnistunut.");
+	return_error("MySQL tunnuksien lataaminen ei onnistunut.");
 }
 
 if (count($tunnarit) != 2) {
-	display_error("MySQL tiedoston sisältö ei ole validi");
+	return_error("MySQL tiedoston sisältö ei ole validi");
 }
 
 // Käytä kun tarvitsee palauttaa virhe
