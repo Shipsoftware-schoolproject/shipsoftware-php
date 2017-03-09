@@ -50,12 +50,13 @@ function haeLaivat(data = null)
     }
 
     if (data['status'] != 200) {
-        alert(data.data);
+        $('#laivatListBox').attr('disabled', true);
+        $('#laivatListBox').append('<option>' + data.data + '</option>');
     } else {
         var laivat = JSON.parse(data.data);
 
         for (var i in laivat) {
-            $("#laivatListBox").append("<option value=\"" + laivat[i]['ShipID'] + "\">" + laivat[i]['ShipName'] + "</option>");
+            $("#laivatListBox").append('<option value="' + laivat[i]['ShipID'] + '">' + laivat[i]['ShipName'] + '</option>');
         }
     }
 }

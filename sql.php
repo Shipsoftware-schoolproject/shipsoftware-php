@@ -5,13 +5,13 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 # Tiedostoon ekalle riville SQL käyttäjänimi ja toiselle riville salasana
-$tunnarit = file("../../mysql_tunnarit.txt", FILE_IGNORE_NEW_LINES);
+$tunnarit = file('../../mysql_tunnarit.txt', FILE_IGNORE_NEW_LINES);
 if ($tunnarit === false) {
-	return_error("MySQL tunnuksien lataaminen ei onnistunut.");
+	return_error('MySQL tunnuksien lataaminen ei onnistunut.');
 }
 
 if (count($tunnarit) != 2) {
-	return_error("MySQL tiedoston sisältö ei ole validi");
+	return_error('MySQL tiedoston sisältö ei ole validi');
 }
 
 // Käytä kun tarvitsee palauttaa virhe
@@ -30,17 +30,21 @@ function return_success($message)
 }
 
 try {
-	$conn = new PDO("mysql:host=mysql.cc.puv.fi;dbname=" . $tunnarit[0] . "_Shipsoftware", $tunnarit[0], $tunnarit[1]);
+	$conn = new PDO('mysql:host=mysql.cc.puv.fi;dbname=' . $tunnarit[0] . '_Shipsoftware', $tunnarit[0], $tunnarit[1]);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $conn->exec('SET NAMES utf8');
 } catch (PDOException $e) {
-	return_error("Tietokanta yhteyden muodostaminen epäonnistui");
+	return_error('Tietokanta yhteyden muodostaminen epäonnistui');
 }
 
 // Hae laivat
 if (isset($_GET['haeLaivat'])) {
 	$query = $conn->prepare('SELECT ShipID, ShipName FROM Ships');
-	$query->execute();
+	try {
+		$query->execute();
+	} catch (PDOException $e) {
+		return_error('Virhe SQL -kyselyssä');
+	}
 
 	$laivat = array();
 	$i = 0;
@@ -51,13 +55,17 @@ if (isset($_GET['haeLaivat'])) {
 		$i++;
 	}
 
+	if ($i == 0) {
+		return_error('Laivoja ei löytynyt', 206);
+	}
+
 	return_success($laivat);
 }
 
 // Hae rahti
 if (isset($_GET['haeRahti'])) {
 	if (!is_numeric($_GET['haeRahti']) || $_GET['haeRahti'] < 0) {
-		return_error("Pätemätön parametri!", 400);
+		return_error('Pätemätön parametri!', 400);
 	} else {
 		$query = $conn->prepare('SELECT Cargo.CargoID, ContainerBarCode, CargoType, OverallWeight FROM Cargo
 								 INNER JOIN CargoContainer
@@ -67,7 +75,7 @@ if (isset($_GET['haeRahti'])) {
 		try {
 			$query->execute();
 		} catch (PDOException $e) {
-			return_error("Virhe SQL -kyselyssä");
+			return_error('Virhe SQL -kyselyssä');
 		}
 
 		$rahti = array();
@@ -88,6 +96,6 @@ if (isset($_GET['haeRahti'])) {
 	}
 }
 
-return_error("Tuntematon pyyntö", 400);
+return_error('Tuntematon pyyntö', 400);
 
 ?>
