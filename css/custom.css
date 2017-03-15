@@ -16,6 +16,14 @@ body {
 	width: 100%;
 }
 
+#map {
+    /*
+    dynaaminen korkeus
+    height: 65vh;
+    */
+    min-height: 454px;
+}
+
 .miehistoTable {
 	overflow: auto;
 	height: 300px;

@@ -74,7 +74,7 @@
 									<div class="panel-heading">
 										<h3 class="panel-title">Kartta</h3>
 									</div>
-									<div class="panel-body"><img src="http://opinnot.internetix.fi/fi/muikku2materiaalit/peruskoulu/ge/ge3/1_suomen_karttakuva/01/fi_embedded/yleiskartta.jpg" width="555" height="555"></img></div>
+									<div class="panel-body" id="map"></div>
 								</div>
 							</div>
 						</div>
@@ -246,7 +246,27 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
         <script src="./js/custom.js"></script>
-        <script type="text/javascript">
+		<script>
+			var map;
+
+			function initMap() {
+				map = new google.maps.Map(document.getElementById('map'), {
+					center: { lat: 63.1022601, lng: 21.5809185 },
+					zoom: 8,
+					streetViewControl: false,
+				});
+			}
+
+			function addMarker(sijainti, otsikko) {
+				marker = new google.maps.Marker({
+					position: sijainti,
+					map: map,
+					title: otsikko
+				});
+			}
+		</script>
+		<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAK8bzrVV9-fH72e3jyXSSjsWkW5bpduok&callback=initMap"></script>
+		<script type="text/javascript">
             // Init kompassi
             $(document).ready(function() {
                 draw(0);

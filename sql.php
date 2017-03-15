@@ -39,7 +39,7 @@ try {
 
 // Hae laivat
 if (isset($_GET['haeLaivat'])) {
-	$query = $conn->prepare('SELECT ShipID, ShipName FROM Ships');
+	$query = $conn->prepare('SELECT Ships.ShipID, ShipName, North, East, MAX(LogID) FROM Ships LEFT JOIN GPS ON Ships.ShipID = GPS.ShipID GROUP BY ShipID');
 	try {
 		$query->execute();
 	} catch (PDOException $e) {
@@ -52,6 +52,8 @@ if (isset($_GET['haeLaivat'])) {
 	while ($row = $query->fetch()) {
 		$laivat[$i]['ShipID'] = $row['ShipID'];
 		$laivat[$i]['ShipName'] = $row['ShipName'];
+		$laivat[$i]['North'] = $row['North'];
+		$laivat[$i]['East'] = $row['East'];
 		$i++;
 	}
 
