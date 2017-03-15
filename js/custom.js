@@ -57,7 +57,9 @@ function haeLaivat(data = null)
 
         for (var i in laivat) {
             $("#laivatListBox").append('<option value="' + laivat[i]['ShipID'] + '">' + laivat[i]['ShipName'] + '</option>');
-            addMarker(new google.maps.LatLng(laivat[i]['North'], laivat[i]['East']), laivat[i]['ShipName']);
+            if (laivat[i]['North'] != null) {
+                addMarker(new google.maps.LatLng(laivat[i]['North'], laivat[i]['East']), laivat[i]['ShipName']);
+            }
         }
     }
 }
