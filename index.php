@@ -93,7 +93,7 @@
 													<th>Etunimi</th>
 													<th>Sukunimi</th>
 													<th>Tehtävä</th>
-											s	</tr>
+											</tr>
 											</thead>
 											<tbody id="miehistoTaulu">
 											</tbody>
