@@ -40,6 +40,9 @@ $('#laivatListBox').change(function() {
     if (currentTab == '#rahti') {
         haeRahti();
     }
+    else if (currentTab == '#miehistö'){
+        haeMiehisto();
+    }
 });
 
 function haeLaivat(data = null)
@@ -114,6 +117,23 @@ function haeMiehisto(data=null)
         }
         for (var i in miehisto) { // onclick lisää värejä, mousehover jne.
             $('#miehistoTaulu').append('<tr onclick="valitseHenkilo('+ miehisto[i]['SocialID'] +')"><th scope=row>' + miehisto[i]['SocialID'] + '</th><td>' + miehisto[i]['FirstName'] + '</td><td>' + miehisto[i]['LastName'] + '</td><td>' + miehisto[i]['Title'] + '</td></tr>');
+            }
+}
+function valitseHenkilo(SocialID)
+{
+    phpKutsu('haeHenkilo=' + SocialID, paivitaHenkilo);
+}
+function paivitaHenkilo(data)
+{
+     if (data['status'] != 200) {
+        $('#miehistoTaulu').append('<tr><td scope=row colspan=4>' + data.data + '</td></tr>');
+        }
+        else{
+        var henkilo = JSON.parse(data.data);
+        }
+        for (var i in henkilo) { // onclick lisää värejä, mousehover jne.
+            $('#miehistoTaulu').append('<tr onclick="alert("'+ henkilo[i]['SocialID'] +'")"><tr><td rowspan="2"><img src="'+henkilo[i]['Picture']+ 'width="120"></img></td><td colspan="2"><b>Nimi:</b>'+henkilo[i]['FirstName']+" "+henkilo[i]['LastName']+'</td><th >Kotiosoite</th></tr><tr><td colspan="2"><b>Sotu:</b>'+henkilo[i]['SocialID']+' </td><td><table border="3" style="width: 100%" ><tr><th>Postiosoite:</th><td>'+henkilo[i]['MailingAddress']+'</td></tr><tr><th>Kaupunki:</th><td>'+henkilo[i]['City']+'</td></tr><tr><th>Postinumero:</th><td>'+henkilo[i]['ZipCode']+'</td></tr>/table></td></tr><tr><td colspan="2"><b>Titteli:</b>  '+henkilo[i]['Title']+'</td><td colspan="2"><b>Puhelin Numero:</b> '+henkilo[i]['Phone']+'</td></tr>');
+            //$('#miehistoTaulu').append('<tr onclick="valitseHenkilo("'+ henkilo[i]['SocialID'] +'")"><tr><td rowspan="2"><img src="'+henkilo[i]['Picture']+ 'width="120"></img></td><td colspan="2"><b>Nimi:</b>'+henkilo[i]['FirstName']+" "+henkilo[i]['LastName']+'</td><th >Kotiosoite</th></tr><tr><td colspan="2"><b>Sotu:</b>'+henkilo[i]['SocialID']+' </td><td><table border="3" style="width: 100%" ><tr><th>Postiosoite:</th><td>'+henkilo[i]['MailingAddress']+'</td></tr><tr><th>Kaupunki:</th><td>'+henkilo[i]['City']+'</td></tr><tr><th>Postinumero:</th><td>'+henkilo[i]['ZipCode']+'</td></tr>/table></td></tr><tr><td colspan="2"><b>Titteli:</b>  '+henkilo[i]['Title']+'</td><td colspan="2"><b>Puhelin Numero:</b> '+henkilo[i]['Phone']+'</td></tr>');
             }
 }
 

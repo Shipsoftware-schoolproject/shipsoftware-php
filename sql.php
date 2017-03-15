@@ -98,7 +98,6 @@ if (isset($_GET['haeRahti'])) {
 	}
 }
 // Hae Miehistö
-// Hae rahti
 if (isset($_GET['haeMiehisto'])) {
 	if (!is_numeric($_GET['haeMiehisto']) || $_GET['haeMiehisto'] < 0) {
 		return_error('Pätemätön parametri!', 400);
@@ -125,6 +124,39 @@ if (isset($_GET['haeMiehisto'])) {
 			return_error('Laivalla ei ole miehistöä!',206);
 		}
 		return_success($miehisto);
+		}
+}
+//haeHenkilo
+ if (isset($_GET['haeHenkilo'])) {
+	if (!is_numeric($_GET['haeHenkilo']) || $_GET['haeHenkilo'] < 0) {
+		return_error('Pätemätön parametri!', 400);
+	}else {
+		$query = $conn->prepare('SELECT * 
+								FROM Persons Where SocialID = :SocialID');
+			$query->bindParam(':ShipID', $_GET['haeHenkilo'], PDO::PARAM_INT);
+		try {
+			$query->execute();
+		} catch (PDOException $e) {
+			return_error('Virhe SQL -kyselyssä');
+		}
+		$henkilo = array();
+		$i = 0;
+
+		while ($row = $query->fetch()) {
+			$henkilo[$i]['SocialID'] = $row['SocialID'];
+			$henkilo[$i]['FirstName'] = $row['FirstName'];
+			$henkilo[$i]['LastName'] = $row['LastName'];
+			$henkilo[$i]['Phone']	= $row['Phone'];
+			$henkilo[$i]['ZipCode']	= $row['ZipCode'];
+			$henkilo[$i]['City']	= $row['City'];
+			$henkilo[$i]['MailingAddress']	= $row['MailingAddress'];
+			$henkilo[$i]['Picture']	= $row['Picture'];
+			$i++;
+		}
+		if ($i == 0){
+			return_error('Laivalla ei ole miehistöä!',206);
+		}
+		return_success($henkilo);
 		}
 }
 return_error('Tuntematon pyyntö', 400);
