@@ -93,57 +93,9 @@
 													<th>Etunimi</th>
 													<th>Sukunimi</th>
 													<th>Tehtävä</th>
-												</tr>
+											s	</tr>
 											</thead>
-											<tbody>
-												<tr>
-													<th scope=row>4341</th>
-													<td>Mark</td>
-													<td>Otto</td>
-													<td>Mosa</td>
-												</tr>
-												<tr>
-													<th scope=row>23</th>
-													<td>Jacob</td>
-													<td>Thornton</td>
-													<td>Kapteeni</td>
-												</tr>
-												<tr>
-													<th scope=row>786</th>
-													<td>Larry</td>
-													<td>the Bird</td>
-													<td>Perämies</td>
-												</tr>
-												<tr>
-													<th scope=row>786</th>
-													<td>Larry</td>
-													<td>the Bird</td>
-													<td>Perämies</td>
-												</tr>
-												<tr>
-													<th scope=row>786</th>
-													<td>Larry</td>
-													<td>the Bird</td>
-													<td>Perämies</td>
-												</tr>
-												<tr>
-													<th scope=row>786</th>
-													<td>Larry</td>
-													<td>the Bird</td>
-													<td>Perämies</td>
-												</tr>
-												<tr>
-													<th scope=row>786</th>
-													<td>Larry</td>
-													<td>the Bird</td>
-													<td>Perämies</td>
-												</tr>
-												<tr>
-													<th scope=row>786</th>
-													<td>Larry</td>
-													<td>the Bird</td>
-													<td>Perämies</td>
-												</tr>
+											<tbody id="miehistoTaulu">
 											</tbody>
 										</table>
 									</div>
@@ -162,7 +114,7 @@
 												<tr>
 													<td colspan="2"><b>Sotu:</b>00000001 </td>
 													<td>
-														<table border="3" style="width: 100%">
+														<table border="3" style="width: 100%" id="Henkilotiedot">
 															<tr>
 																<th>Postiosoite:</th>
 																<td>Kapteeninkatu 1</td>

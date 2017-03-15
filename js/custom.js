@@ -88,6 +88,31 @@ function haeRahti(data = null)
     }
 
 }
+function haeMiehisto(data=null)
+{
+   if (data === null) {
+        var listBox = document.getElementById('laivatListBox');
+        if (!listBox.options[listBox.selectedIndex]) {
+            return false;
+        } else {
+            var id = listBox.options[listBox.selectedIndex].value;
+        }
+
+        phpKutsu('haeMiehisto=' + id, haeMiehisto);
+        return true;
+    }
+    $('#miehistoTaulu').empty();
+
+    if (data['status'] != 200) {
+        $('#miehistoTaulu').append('<tr><td scope=row colspan=4>' + data.data + '</td></tr>');
+        }
+        else{
+        var miehisto = JSON.parse(data.data);
+        }
+        for (var i in miehisto) { // onclick lisää värejä, mousehover jne.
+            $('#miehistoTaulu').append('<tr onclick="valitseHenkilo('+ miehisto[i]['SocialID'] +')"><th scope=row>' + miehisto[i]['SocialID'] + '</th><td>' + miehisto[i]['FirstName'] + '</td><td>' + miehisto[i]['LastName'] + '</td><td>' + miehisto[i]['Title'] + '</td></tr>');
+            }
+}
 
 $('[data-toggle="tab"]').click(function(event) {
     var currentTab = $('.nav-pills li.active').find('a').attr('href');
@@ -104,7 +129,15 @@ $('[data-toggle="tab"]').click(function(event) {
             event.preventDefault();
             return false;
         }
-    } else {
+    } 
+    else if(targetTab == '#miehistö'){
+        if(!haeMiehisto()){
+            alert('Valitse ensin laiva.')
+            event.preventDefault();
+            return false;
+        }
+    } 
+    else {
         alert('Tabiä "' + $(event.target).attr('href') + '" ei ole implementoitu');
     }
 });

@@ -95,7 +95,35 @@ if (isset($_GET['haeRahti'])) {
 		return_success($rahti);
 	}
 }
+// Hae Miehistö
+// Hae rahti
+if (isset($_GET['haeMiehisto'])) {
+	if (!is_numeric($_GET['haeMiehisto']) || $_GET['haeMiehisto'] < 0) {
+		return_error('Pätemätön parametri!', 400);
+	}else {
+		$query = $conn->prepare('SELECT FirstName, LastName, SocialID, Title 
+								FROM Persons Where ShipID = :ShipID');
+			$query->bindParam(':ShipID', $_GET['haeMiehisto'], PDO::PARAM_INT);
+		try {
+			$query->execute();
+		} catch (PDOException $e) {
+			return_error('Virhe SQL -kyselyssä');
+		}
+		$miehisto = array();
+		$i = 0;
 
+		while ($row = $query->fetch()) {
+			$miehisto[$i]['SocialID'] = $row['SocialID'];
+			$miehisto[$i]['FirstName'] = $row['FirstName'];
+			$miehisto[$i]['LastName'] = $row['LastName'];
+			$miehisto[$i]['Title']	= $row['Title'];
+			$i++;
+		}
+		if ($i == 0){
+			return_error('Laivalla ei ole miehistöä!',206);
+		}
+		return_success($miehisto);
+		}
+}
 return_error('Tuntematon pyyntö', 400);
-
 ?>
