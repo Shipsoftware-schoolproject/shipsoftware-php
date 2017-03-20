@@ -248,6 +248,7 @@
         <script src="./js/custom.js"></script>
 		<script>
 			var map;
+			var markers = new Array();
 
 			function initMap() {
 				map = new google.maps.Map(document.getElementById('map'), {
@@ -257,11 +258,16 @@
 				});
 			}
 
-			function addMarker(sijainti, otsikko) {
-				marker = new google.maps.Marker({
+			function addMarker(ShipID, sijainti, otsikko, infoIkkuna) {
+				var marker = new google.maps.Marker({
 					position: sijainti,
 					map: map,
 					title: otsikko
+				});
+				markers.push({ ShipID: ShipID, Marker: marker, InfoIkkuna: infoIkkuna });
+
+				google.maps.event.addListener(marker, 'click', function() {
+					infoIkkuna.open(map, marker);
 				});
 			}
 		</script>

@@ -32,6 +32,24 @@ function phpKutsu(kutsu, callback)
     request.send();
 }
 
+// Keskitä kartta laivan Markkeriin kun laiva valitaan listalaatikosta
+function keskitaKartta(ShipID)
+{
+    var sijainti = null;
+
+    for (i in markers) {
+        if (markers[i]['ShipID'] == ShipID) {
+            sijainti = markers[i]['Marker'].getPosition();
+            google.maps.event.trigger(markers[i]['Marker'], 'click');
+            break;
+        }
+    }
+
+    if (sijainti !== null) {
+        map.setCenter(sijainti);
+    }
+}
+
 // Päivitä tab:n sisältö kun listalaatikon valinta muuttuu
 $('#laivatListBox').change(function() {
     var currentTab = $('.nav-pills li.active').find('a').attr('href');
@@ -39,6 +57,13 @@ $('#laivatListBox').change(function() {
     // TODO: lisää puuttuvat funktiot
     if (currentTab == '#rahti') {
         haeRahti();
+    } else if (currentTab == '#kartta') {
+        var listBox = document.getElementById('laivatListBox');
+        if (!listBox.options[listBox.selectedIndex]) {
+            return false;
+        } else {
+            keskitaKartta(listBox.options[listBox.selectedIndex].value);
+        }
     }
     else if (currentTab == '#miehistö'){
         haeMiehisto();
@@ -61,9 +86,14 @@ function haeLaivat(data = null)
         for (var i in laivat) {
             $("#laivatListBox").append('<option value="' + laivat[i]['ShipID'] + '">' + laivat[i]['ShipName'] + '</option>');
             if (laivat[i]['North'] != null) {
-                addMarker(new google.maps.LatLng(laivat[i]['North'], laivat[i]['East']), laivat[i]['ShipName']);
+                sijainti = new google.maps.LatLng(laivat[i]['North'], laivat[i]['East']);
+                infoIkkuna = new google.maps.InfoWindow({ content: laivat[i]['ShipName'] + '<br>N: ' + laivat[i]['North'] + '<br>E: ' + laivat[i]['East'] });
+                addMarker(laivat[i]['ShipID'], sijainti, laivat[i]['ShipName'], infoIkkuna);
             }
         }
+
+        // Valitse listalaatikon eka itemi
+        $('#laivatListBox').val($('#laivatListBox option:first').val());
     }
 }
 
@@ -146,7 +176,12 @@ $('[data-toggle="tab"]').click(function(event) {
         return false;
     }
 
-    if (targetTab == '#rahti') {
+    if (targetTab == '#kartta') {
+        var listBox = document.getElementById('laivatListBox');
+        if (listBox.options[listBox.selectedIndex]) {
+            keskitaKartta(listBox.options[listBox.selectedIndex].value);
+        }
+    } else if (targetTab == '#rahti') {
         if (!haeRahti()) {
             alert('Valitse ensin laiva.');
             event.preventDefault();
@@ -159,7 +194,7 @@ $('[data-toggle="tab"]').click(function(event) {
             event.preventDefault();
             return false;
         }
-    } 
+    }
     else {
         alert('Tabiä "' + $(event.target).attr('href') + '" ei ole implementoitu');
     }
