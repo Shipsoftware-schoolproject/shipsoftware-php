@@ -106,34 +106,6 @@
 									</div>
 									<div class="panel-body">
 											<table id="Henkilotiedot" border="5" style="width: 100%">
-												<tr>
-													<td rowspan="2"><img src="http://vignette3.wikia.nocookie.net/pirates/images/f/f0/OSTJackSmileCropped.jpg/revision/latest/scale-to-width-down/300?cb=20121116204603" width="120"></img></td>
-													<td colspan="2"><b>Nimi:</b> Jack Sparrow</td>
-													<th >Kotiosoite</th>
-												</tr>
-												<tr>
-													<td colspan="2"><b>Sotu:</b>00000001 </td>
-													<td>
-														<table border="3" style="width: 100%" >
-															<tr>
-																<th>Postiosoite:</th>
-																<td>Kapteeninkatu 1</td>
-															</tr>
-															<tr>
-																<th>Kaupunki:</th>
-																<td>Barmuda</td>
-															</tr>
-															<tr>
-																<th>Postinumero:</th>
-																<td>65600</td>
-															</tr>
-														</table>
-													</td>
-												</tr>
-												<tr>
-													<td colspan="2"><b>Titteli:</b>  Kapteeni</td>
-													<td colspan="2"><b>Puhelin Numero:</b> 040715517</td>
-												</tr>
 											</table>
 									</div>
 								</div>

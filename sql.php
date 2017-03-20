@@ -128,12 +128,11 @@ if (isset($_GET['haeMiehisto'])) {
 }
 //haeHenkilo
  if (isset($_GET['haeHenkilo'])) {
-	if (!is_numeric($_GET['haeHenkilo']) || $_GET['haeHenkilo'] < 0) {
+	if (strlen($_GET['haeHenkilo']) <=9  || strlen($_GET['haeHenkilo']) > 10) {
 		return_error('Pätemätön parametri!', 400);
 	}else {
-		$query = $conn->prepare('SELECT * 
-								FROM Persons Where SocialID = :SocialID');
-			$query->bindParam(':ShipID', $_GET['haeHenkilo'], PDO::PARAM_INT);
+		$query = $conn->prepare('SELECT * FROM Persons Where SocialID = :SocialID');
+			$query->bindParam(':SocialID', $_GET['haeHenkilo'], PDO::PARAM_STR);
 		try {
 			$query->execute();
 		} catch (PDOException $e) {
@@ -146,6 +145,7 @@ if (isset($_GET['haeMiehisto'])) {
 			$henkilo[$i]['SocialID'] = $row['SocialID'];
 			$henkilo[$i]['FirstName'] = $row['FirstName'];
 			$henkilo[$i]['LastName'] = $row['LastName'];
+			$henkilo[$i]['Title']	= $row['Title'];
 			$henkilo[$i]['Phone']	= $row['Phone'];
 			$henkilo[$i]['ZipCode']	= $row['ZipCode'];
 			$henkilo[$i]['City']	= $row['City'];
