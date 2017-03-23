@@ -64,9 +64,10 @@ $('#laivatListBox').change(function() {
         } else {
             keskitaKartta(listBox.options[listBox.selectedIndex].value);
         }
-    }
-    else if (currentTab == '#miehistö'){
+    } else if (currentTab == '#miehistö') {
         haeMiehisto();
+    } else if (currentTab == '#laivantiedot') {
+        haeLaivanTiedot();
     }
 });
 
@@ -124,6 +125,30 @@ function haeRahti(data = null)
     }
 
 }
+
+function haeLaivanTiedot(data = null)
+{
+    if (data === null) {
+        var listBox = document.getElementById('laivatListBox');
+        if (!listBox.options[listBox.selectedIndex]) {
+            return false;
+        } else {
+            var id = listBox.options[listBox.selectedIndex].value;
+        }
+
+        phpKutsu('haeLaivanTiedot=' + id, haeLaivanTiedot);
+        return true;
+    }
+
+    if (data['status'] != 200) {
+        alert(data.data);
+    } else {
+        var tiedot = JSON.parse(data.data);
+
+        $('#laivaPituus').text(tiedot[0]['ShipLength']);
+    }
+}
+
 function haeMiehisto(data=null)
 {
    if (data === null) {
@@ -195,15 +220,19 @@ $('[data-toggle="tab"]').click(function(event) {
             event.preventDefault();
             return false;
         }
-    } 
-    else if(targetTab == '#miehistö'){
-        if(!haeMiehisto()){
+    } else if (targetTab == '#miehistö'){
+        if (!haeMiehisto()){
             alert('Valitse ensin laiva.')
             event.preventDefault();
             return false;
         }
-    }
-    else {
+    } else if (targetTab == '#laivantiedot') {
+        if (!haeLaivanTiedot()) {
+            alert('Valitse ensin laiva.');
+            event.preventDefault();
+            return false;
+        }
+    } else {
         alert('Tabiä "' + $(event.target).attr('href') + '" ei ole implementoitu');
     }
 });
