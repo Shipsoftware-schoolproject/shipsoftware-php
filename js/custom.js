@@ -144,8 +144,25 @@ function haeLaivanTiedot(data = null)
         alert(data.data);
     } else {
         var tiedot = JSON.parse(data.data);
+        if(tiedot['StartingPort'] == null || tiedot['EndingPort'] == null ){
+            $('#laivaReitti').text("Laivan reitti ei ole tiedossa.")
+        }
+        else{
+            $('#laivaReitti').text(tiedot['StartingPort'] +" - " + tiedot['EndingPort']);
+        }
+        $('#laivaNimi').text(tiedot['ShipName']);
+        $('#laivaMMSI').text(tiedot['MMSI']);
+        $('#laivaTyyppi').text(tiedot['Name']);
+        $('#laivaKuollutPaino').text(tiedot['ShipDeadWeight']+ " t");
+        $('#laivaPituus').text(tiedot['ShipLength'] + " m");
+        $('#laivaLeveys').text(tiedot['ShipWidth'] + " m");
+        $('#laivaPaino').text(tiedot['ShipGrossTonnage'] + " t");
+        $('#laivaNorth').text(tiedot['North']);
+        $('#laivaEast').text(tiedot['East']);
+        $('#laivanTarkkaSuunta').text(tiedot['Course']);
+        
+        draw(tiedot['Course']);
 
-        $('#laivaPituus').text(tiedot[0]['ShipLength']);
     }
 }
 

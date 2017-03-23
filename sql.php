@@ -131,13 +131,20 @@ if (isset($_GET['haeLaivanTiedot'])) {
 	if (!is_numeric($_GET['haeLaivanTiedot']) || $_GET['haeLaivanTiedot'] < 0) {
 		return_error('Pätemätön parametri!', 400);
 	} else {
-		$query = $conn->prepare('SELECT Ships.ShipID,ShipName,Name,ShipLength,ShipWidth,ShipDraft,ShipDeadWeight,ShipGrossTonnage,MMSI,Course,IsSailing,ShipSpeed,North,East,MAX(LogID) 
-			FROM Ships 
-			INNER JOIN GPS 
-			ON Ships.ShipID = GPS.ShipID
-			INNER JOIN ShipTypes
-			ON Ships.ShipTypeID = ShipTypes.ShipTypeID
-			WHERE Ships.ShipID = :ShipID ');
+		$query = $conn->prepare('SELECT(SELECT Name 
+										from ShipPorts 
+										inner join ShipRoutes on ShipPortID = StartingPortID 
+										inner join Ships on Ships.ShipRoutesID = ShipRoutes.ShipRoutesID 
+										Where ShipID=:ShipID ) as StartingPort,
+										 (SELECT Name from ShipPorts 
+										 inner join ShipRoutes on ShipPortID = EndingPortID 
+										 inner join Ships on Ships.ShipRoutesID = ShipRoutes.ShipRoutesID 
+										 Where ShipID=:ShipID ) as EndingPort,
+										 Ships.ShipID,ShipName,Name,ShipLength,ShipWidth,ShipDraft,ShipDeadWeight,ShipGrossTonnage,MMSI,Course,IsSailing,ShipSpeed,North,East,MAX(LogID) 
+										 FROM Ships 
+										 INNER JOIN GPS ON Ships.ShipID = GPS.ShipID
+										 INNER JOIN ShipTypes ON Ships.ShipTypeID = ShipTypes.ShipTypeID
+										 WHERE Ships.ShipID = :ShipID ');
 		$query->bindParam(':ShipID', $_GET['haeLaivanTiedot'], PDO::PARAM_INT);
 		try {
 			$query->execute();
@@ -150,6 +157,8 @@ if (isset($_GET['haeLaivanTiedot'])) {
 		$row = $query->fetch();
 
 		$laivanTiedot['ShipName'] = $row['ShipName'];
+		$laivanTiedot['StartingPort'] = $row['StartingPort'];
+		$laivanTiedot['EndingPort'] = $row['EndingPort'];
 		$laivanTiedot['Name'] = $row['Name'];
 		$laivanTiedot['ShipLength'] = $row['ShipLength'];
 		$laivanTiedot['ShipWidth'] = $row['ShipWidth'];
@@ -180,11 +189,11 @@ if (isset($_GET['haeRahti'])) {
 								 ON Cargo.CargoID = CargoContainer.CargoID
 								 WHERE ShipID = :ShipID');
 		$query->bindParam(':ShipID', $_GET['haeRahti'], PDO::PARAM_INT);
-		try {
-			$query->execute();
-		} catch (PDOException $e) {
-			return_error('Virhe SQL -kyselyssä');
-		}
+			try {
+				$query->execute();
+			} catch (PDOException $e) {
+				return_error('Virhe SQL -kyselyssä');
+			}
 
 		$rahti = array();
 		$i = 0;

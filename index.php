@@ -113,7 +113,8 @@
 						</div>
 						<!-- Laivan tiedot -välilehti -->
 						<div class="tab-pane" id="laivantiedot">
-							<div class="col-lg-4">
+							<!-- Yleistiedot,Sijainti,Suunta -->
+							<div class="col-lg-5">
 								<!-- Yleistiedot -laatikko -->
 								<div class="panel panel-default">
 									<div class="panel-heading">
@@ -121,16 +122,32 @@
 									</div>
 									<div class="panel-body">
 										<div class="row">
-											<div class="col-md-8">Pituus:</div>
-											<div id="laivaPituus" class="col-md-4 text-right">10 m</div>
+											<div class="col-md-6">Laivan nimi:</div>
+											<div id="laivaNimi" class="col-md-6 text-right"></div>
+										</div>
+										<div class="row">
+											<div class="col-md-6">Laivan Tyyppi:</div>
+											<div id="laivaTyyppi" class="col-md-6 text-right"></div>
+										</div>
+										<div class="row">
+											<div class="col-md-6">MMSI:</div>
+											<div id="laivaMMSI" class="col-md-6 text-right"></div>
+										</div>
+										<div class="row">
+											<div class="col-md-6">Pituus:</div>
+											<div id="laivaPituus" class="col-md-6 text-right"></div>
 										</div>
 										<div class="row">
 											<div class="col-md-8">Leveys:</div>
-											<div id="laivaLeveys" class="col-md-4 text-right">3 m</div>
+											<div id="laivaLeveys" class="col-md-4 text-right"></div>
 										</div>
 										<div class="row">
 											<div class="col-md-8">Paino:</div>
-											<div id="laivaPaino" class="col-md-4 text-right">1 T</div>
+											<div id="laivaPaino" class="col-md-4 text-right"></div>
+										</div>
+										<div class="row">
+											<div class="col-md-8">Kuollut Paino:</div>
+											<div id="laivaKuollutPaino" class="col-md-4 text-right"></div>
 										</div>
 									</div>
 								</div>
@@ -141,12 +158,16 @@
 									</div>
 									<div class="panel-body">
 										<div class="row">
+											<div class="col-md-2">Reitti:</div>
+											<div id="laivaReitti" class="col-md-10 text-right"></div>
+										</div>
+										<div class="row">
 											<div class="col-md-6">Nort:</div>
-											<div id="laivaNorth" class="col-md-6 text-right">63.088206</div>
+											<div id="laivaNorth" class="col-md-6 text-right"></div>
 										</div>
 										<div class="row">
 											<div class="col-md-6">East:</div>
-											<div id="laivaEast" class="col-md-6 text-right">21.545583</div>
+											<div id="laivaEast" class="col-md-6 text-right"></div>
 										</div>
 									</div>
 								</div>
@@ -162,7 +183,7 @@
 										</div>
 										<div class="row">
 											<div class="col-md-8">Tarkka suunta:</div>
-											<div id="laivanTarkkaSuunta" class="col-md-4 text-right">270</div>
+											<div id="laivanTarkkaSuunta" class="col-md-4 text-right"></div>
 										</div>
 									</div>
 								</div>
@@ -248,13 +269,6 @@
             // Init kompassi
             $(document).ready(function() {
                 draw(0);
-            })
-
-            // Nappaa suunta "laivanTarkkaSuunta" div:n tekstistä
-            $(document).on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
-                if($('.nav-stacked .active > a').attr('href') == "#laivantiedot") {
-                    draw($('#laivanTarkkaSuunta').text());
-                }
             })
 
             haeLaivat();
