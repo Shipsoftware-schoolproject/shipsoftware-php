@@ -64,39 +64,6 @@ if (isset($_GET['haeLaivat'])) {
 	return_success($laivat);
 }
 
-// Hae rahti
-if (isset($_GET['haeRahti'])) {
-	if (!is_numeric($_GET['haeRahti']) || $_GET['haeRahti'] < 0) {
-		return_error('Pätemätön parametri!', 400);
-	} else {
-		$query = $conn->prepare('SELECT Cargo.CargoID, ContainerBarCode, CargoType, OverallWeight FROM Cargo
-								 INNER JOIN CargoContainer
-								 ON Cargo.CargoID = CargoContainer.CargoID
-								 WHERE ShipID = :ShipID');
-		$query->bindParam(':ShipID', $_GET['haeRahti'], PDO::PARAM_INT);
-		try {
-			$query->execute();
-		} catch (PDOException $e) {
-			return_error('Virhe SQL -kyselyssä');
-		}
-
-		$rahti = array();
-		$i = 0;
-
-		while ($row = $query->fetch()) {
-			$rahti[$i]['ContainerBarCode'] = $row['ContainerBarCode'];
-			$rahti[$i]['Content'] = $row['CargoType'];
-			$rahti[$i]['OverallWeight'] = $row['OverallWeight'];
-			$i++;
-		}
-
-		if ($i == 0) {
-			return_error('Laivalla ei ole rahtia', 206);
-		}
-
-		return_success($rahti);
-	}
-}
 // Hae Miehistö
 if (isset($_GET['haeMiehisto'])) {
 	if (!is_numeric($_GET['haeMiehisto']) || $_GET['haeMiehisto'] < 0) {
@@ -159,5 +126,85 @@ if (isset($_GET['haeMiehisto'])) {
 		return_success($henkilo);
 		}
 }
+// Laivan Tiedot
+if (isset($_GET['haeLaivanTiedot'])) {
+	if (!is_numeric($_GET['haeLaivanTiedot']) || $_GET['haeLaivanTiedot'] < 0) {
+		return_error('Pätemätön parametri!', 400);
+	} else {
+		$query = $conn->prepare('SELECT Ships.ShipID,ShipName,Name,ShipLength,ShipWidth,ShipDraft,ShipDeadWeight,ShipGrossTonnage,MMSI,Course,IsSailing,ShipSpeed,North,East,MAX(LogID) 
+			FROM Ships 
+			INNER JOIN GPS 
+			ON Ships.ShipID = GPS.ShipID
+			INNER JOIN ShipTypes
+			ON Ships.ShipTypeID = ShipTypes.ShipTypeID
+			WHERE Ships.ShipID = :ShipID ');
+		$query->bindParam(':ShipID', $_GET['haeLaivanTiedot'], PDO::PARAM_INT);
+		try {
+			$query->execute();
+		} catch (PDOException $e) {
+			return_error('Virhe SQL -kyselyssä');
+		}
+
+		$laivanTiedot = array();
+		$i = 0;
+
+		while ($row = $query->fetch()) {
+			$laivanTiedot[$i]['ShipName'] = $row['ShipName'];
+			$laivanTiedot[$i]['Name'] = $row['Name'];
+			$laivanTiedot[$i]['ShipLength'] = $row['ShipLength'];
+			$laivanTiedot[$i]['ShipWidth'] = $row['ShipWidth'];
+			$laivanTiedot[$i]['ShipDraft'] = $row['ShipDraft'];
+			$laivanTiedot[$i]['ShipDeadWeight'] = $row['ShipDeadWeight'];
+			$laivanTiedot[$i]['ShipGrossTonnage'] = $row['ShipGrossTonnage'];
+			$laivanTiedot[$i]['MMSI'] = $row['MMSI'];
+			$laivanTiedot[$i]['Course'] = $row['Course'];
+			$laivanTiedot[$i]['IsSailing'] = $row['IsSailing'];
+			$laivanTiedot[$i]['ShipSpeed'] = $row['ShipSpeed'];
+			$laivanTiedot[$i]['North'] = $row['North'];
+			$laivanTiedot[$i]['East'] = $row['East'];
+			$i++;
+		}
+
+		if ($i == 0) {
+			return_error('Laivalla ei ole tietoja', 206);
+		}
+
+		return_success($laivanTiedot);
+	}
+}
+// Hae rahti
+if (isset($_GET['haeRahti'])) {
+	if (!is_numeric($_GET['haeRahti']) || $_GET['haeRahti'] < 0) {
+		return_error('Pätemätön parametri!', 400);
+	} else {
+		$query = $conn->prepare('SELECT Cargo.CargoID, ContainerBarCode, CargoType, OverallWeight FROM Cargo
+								 INNER JOIN CargoContainer
+								 ON Cargo.CargoID = CargoContainer.CargoID
+								 WHERE ShipID = :ShipID');
+		$query->bindParam(':ShipID', $_GET['haeRahti'], PDO::PARAM_INT);
+		try {
+			$query->execute();
+		} catch (PDOException $e) {
+			return_error('Virhe SQL -kyselyssä');
+		}
+
+		$rahti = array();
+		$i = 0;
+
+		while ($row = $query->fetch()) {
+			$rahti[$i]['ContainerBarCode'] = $row['ContainerBarCode'];
+			$rahti[$i]['Content'] = $row['CargoType'];
+			$rahti[$i]['OverallWeight'] = $row['OverallWeight'];
+			$i++;
+		}
+
+		if ($i == 0) {
+			return_error('Laivalla ei ole rahtia', 206);
+		}
+
+		return_success($rahti);
+	}
+}
+
 return_error('Tuntematon pyyntö', 400);
 ?>

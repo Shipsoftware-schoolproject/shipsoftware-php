@@ -145,8 +145,8 @@
 											<div id="laivaNorth" class="col-md-6 text-right">63.088206</div>
 										</div>
 										<div class="row">
-											<div class="col-md-6">West:</div>
-											<div id="laivaWest" class="col-md-6 text-right">21.545583</div>
+											<div class="col-md-6">East:</div>
+											<div id="laivaEast" class="col-md-6 text-right">21.545583</div>
 										</div>
 									</div>
 								</div>
