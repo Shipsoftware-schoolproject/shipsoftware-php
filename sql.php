@@ -146,26 +146,24 @@ if (isset($_GET['haeLaivanTiedot'])) {
 		}
 
 		$laivanTiedot = array();
-		$i = 0;
 
-		while ($row = $query->fetch()) {
-			$laivanTiedot[$i]['ShipName'] = $row['ShipName'];
-			$laivanTiedot[$i]['Name'] = $row['Name'];
-			$laivanTiedot[$i]['ShipLength'] = $row['ShipLength'];
-			$laivanTiedot[$i]['ShipWidth'] = $row['ShipWidth'];
-			$laivanTiedot[$i]['ShipDraft'] = $row['ShipDraft'];
-			$laivanTiedot[$i]['ShipDeadWeight'] = $row['ShipDeadWeight'];
-			$laivanTiedot[$i]['ShipGrossTonnage'] = $row['ShipGrossTonnage'];
-			$laivanTiedot[$i]['MMSI'] = $row['MMSI'];
-			$laivanTiedot[$i]['Course'] = $row['Course'];
-			$laivanTiedot[$i]['IsSailing'] = $row['IsSailing'];
-			$laivanTiedot[$i]['ShipSpeed'] = $row['ShipSpeed'];
-			$laivanTiedot[$i]['North'] = $row['North'];
-			$laivanTiedot[$i]['East'] = $row['East'];
-			$i++;
-		}
+		$row = $query->fetch();
 
-		if ($i == 0) {
+		$laivanTiedot['ShipName'] = $row['ShipName'];
+		$laivanTiedot['Name'] = $row['Name'];
+		$laivanTiedot['ShipLength'] = $row['ShipLength'];
+		$laivanTiedot['ShipWidth'] = $row['ShipWidth'];
+		$laivanTiedot['ShipDraft'] = $row['ShipDraft'];
+		$laivanTiedot['ShipDeadWeight'] = $row['ShipDeadWeight'];
+		$laivanTiedot['ShipGrossTonnage'] = $row['ShipGrossTonnage'];
+		$laivanTiedot['MMSI'] = $row['MMSI'];
+		$laivanTiedot['Course'] = $row['Course'];
+		$laivanTiedot['IsSailing'] = $row['IsSailing'];
+		$laivanTiedot['ShipSpeed'] = $row['ShipSpeed'];
+		$laivanTiedot['North'] = $row['North'];
+		$laivanTiedot['East'] = $row['East'];
+
+		if (!count($laivanTiedot)) {
 			return_error('Laivalla ei ole tietoja', 206);
 		}
 
