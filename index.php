@@ -221,6 +221,7 @@
 										<table class=table>
 											<thead>
 												<tr>
+													<td></td>
 													<th>Barcode</th>
 													<th>Sisältö</th>
 												</tr>

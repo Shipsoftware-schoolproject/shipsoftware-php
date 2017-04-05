@@ -115,12 +115,12 @@ function haeRahti(data = null)
     $('#rahtitiedot').empty();
 
     if (data['status'] != 200) {
-        $('#rahtitiedot').append('<tr><td scope=row colspan=3>' + data.data + '</td></tr>');
+        $('#rahtitiedot').append('<tr><td scope=row colspan=4>' + data.data + '</td></tr>');
     } else {
         var rahti = JSON.parse(data.data);
 
         for (var i in rahti) {
-            $('#rahtitiedot').append('<tr><th scope=row>' + rahti[i]['ContainerBarCode'] + '</th><td>' + rahti[i]['Content'] + '</td></tr>');
+            $('#rahtitiedot').append('<tr><td> <input type="checkbox" name="' + rahti[i]['ContainerBarCode'] + '" value=""></td><th scope=row>' + rahti[i]['ContainerBarCode'] + '</th><td>' + rahti[i]['Content'] + '</td></tr>');
         }
     }
 
@@ -188,7 +188,7 @@ function haeMiehisto(data=null)
         var miehisto = JSON.parse(data.data);
         }
         for (var i in miehisto) { // onclick lisää värejä, mousehover jne.
-            $('#miehistoTaulu').append('<tr onclick="valitseHenkilo(this)"><td> <input type="checkbox" name="henkiloCheckbox" value=""></td><br><th scope=row>' + miehisto[i]['SocialID'] + '</th><td>' + miehisto[i]['FirstName'] + '</td><td>' + miehisto[i]['LastName'] + '</td><td>' + miehisto[i]['Title'] + '</td></tr>');
+            $('#miehistoTaulu').append('<tr onclick="valitseHenkilo(this)"><td> <input type="checkbox" name="' + miehisto[i][SocialID] + '" value=""></td><br><th scope=row>' + miehisto[i]['SocialID'] + '</th><td>' + miehisto[i]['FirstName'] + '</td><td>' + miehisto[i]['LastName'] + '</td><td>' + miehisto[i]['Title'] + '</td></tr>');
             }
 }
 
