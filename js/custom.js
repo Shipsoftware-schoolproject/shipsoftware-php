@@ -188,7 +188,7 @@ function haeMiehisto(data=null)
         var miehisto = JSON.parse(data.data);
         }
         for (var i in miehisto) { // onclick lisää värejä, mousehover jne.
-            $('#miehistoTaulu').append('<tr onclick="valitseHenkilo(this)"><td> <input type="checkbox" name="' + miehisto[i][SocialID] + '" value=""></td><br><th scope=row>' + miehisto[i]['SocialID'] + '</th><td>' + miehisto[i]['FirstName'] + '</td><td>' + miehisto[i]['LastName'] + '</td><td>' + miehisto[i]['Title'] + '</td></tr>');
+            $('#miehistoTaulu').append('<tr onclick="valitseHenkilo(this)"><td> <input type="checkbox" name="' + miehisto[i]["SocialID"] + '" value=""></td><br><th scope=row>' + miehisto[i]['SocialID'] + '</th><td>' + miehisto[i]['FirstName'] + '</td><td>' + miehisto[i]['LastName'] + '</td><td>' + miehisto[i]['Title'] + '</td></tr>');
             }
 }
 
