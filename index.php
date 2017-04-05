@@ -108,7 +108,13 @@
 											<table id="Henkilotiedot" border="5" style="width: 100%">
 											</table>
 									</div>
+									
 								</div>
+									<div>
+											<button type="button" class="btn btn-success" id="lisaaHenkilo">Lisää henkilö</button>
+											<button type="button" class="btn btn-warning" id="muokkaaHenkilo">Muokkaa henkilöä</button>
+											<button type="button" class="btn btn-danger" id="poistaHenkilo">Poista henkilö</button>
+									</div>
 							</div>
 						</div>
 						<!-- Laivan tiedot -välilehti -->
@@ -223,6 +229,11 @@
 										</table>
 									</div>
 								</div>
+									<div>
+											<button type="button" class="btn btn-success" id="lisaaRahti">Lisää rahti</button>
+											<button type="button" class="btn btn-warning" id="muokkaaRahti">Muokkaa rahtia</button>
+											<button type="button" class="btn btn-danger" id="poistaRahti">Poista rahti</button>
+									</div>
 							</div>
 						</div>
 					</div>
