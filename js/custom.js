@@ -182,13 +182,13 @@ function haeMiehisto(data=null)
     $('#miehistoTaulu').empty();
 
     if (data['status'] != 200) {
-        $('#miehistoTaulu').append('<tr><td scope=row colspan=4>' + data.data + '</td></tr>');
+        $('#miehistoTaulu').append('<tr><td scope=row colspan=5>' + data.data + '</td></tr>');
         }
         else{
         var miehisto = JSON.parse(data.data);
         }
         for (var i in miehisto) { // onclick lisää värejä, mousehover jne.
-            $('#miehistoTaulu').append('<tr onclick="valitseHenkilo(this)"><th scope=row>' + miehisto[i]['SocialID'] + '</th><td>' + miehisto[i]['FirstName'] + '</td><td>' + miehisto[i]['LastName'] + '</td><td>' + miehisto[i]['Title'] + '</td></tr>');
+            $('#miehistoTaulu').append('<tr onclick="valitseHenkilo(this)"><td> <input type="checkbox" name="henkiloCheckbox" value=""></td><br><th scope=row>' + miehisto[i]['SocialID'] + '</th><td>' + miehisto[i]['FirstName'] + '</td><td>' + miehisto[i]['LastName'] + '</td><td>' + miehisto[i]['Title'] + '</td></tr>');
             }
 }
 

@@ -39,7 +39,7 @@ try {
 
 // Hae laivat
 if (isset($_GET['haeLaivat'])) {
-	$query = $conn->prepare('SELECT Ships.ShipID, ShipName, North, East, MAX(LogID) FROM Ships LEFT JOIN GPS ON Ships.ShipID = GPS.ShipID GROUP BY ShipID');
+	$query = $conn->prepare('SELECT Ships.ShipID, ShipName, North, East FROM Ships LEFT JOIN GPS ON Ships.ShipID = GPS.ShipID where LogID in (select max(LogID)from GPS group by shipID)');
 	try {
 		$query->execute();
 	} catch (PDOException $e) {

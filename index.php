@@ -89,6 +89,7 @@
 										<table class=table>
 											<thead>
 												<tr>
+													<td></td>
 													<th>Sotu</th>
 													<th>Etunimi</th>
 													<th>Sukunimi</th>
