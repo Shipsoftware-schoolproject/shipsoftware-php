@@ -199,6 +199,10 @@ function valitseHenkilo(elementti)
     phpKutsu('haeHenkilo=' + $(elementti).find('th:first').html(), paivitaHenkilo);
 }
 
+function lisaaHenkilo() {
+            
+    }
+
 function paivitaHenkilo(data)
 {
     $('#Henkilotiedot').empty();

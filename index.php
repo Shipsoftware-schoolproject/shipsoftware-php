@@ -111,11 +111,43 @@
 									</div>
 									
 								</div>
-									<div>
-											<button type="button" class="btn btn-success" id="lisaaHenkilo">Lisää henkilö</button>
-											<button type="button" class="btn btn-warning" id="muokkaaHenkilo">Muokkaa henkilöä</button>
-											<button type="button" class="btn btn-danger" id="poistaHenkilo">Poista henkilö</button>
+								<div>
+									<!-- lisää henkilö modal -->
+									<button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal" id="lisaaHenkilo">Lisää henkilö</button>
+									<!-- Modal -->
+									<div id="myModal" class="modal fade" role="dialog">
+									  <div class="modal-dialog">
+
+											    <!-- Modal content-->
+											<div class="modal-dialog modal-lg">
+											    <div class="modal-content">
+											      <div class="modal-header">
+											        <button type="button" class="close" data-dismiss="modal">&times;</button>
+											        <h4 class="modal-title">Modal Header</h4>
+											      </div>
+											      <div class="modal-body">
+											        <p>Some text in the modal.</p>
+											        <form>
+												      	<div class="form-group row">
+														  <label for="example-text-input" class="col-2 col-form-label">Text</label>
+														  <div class="col-3">
+														    <input class="form-control" type="text" value="Artisanal kale" id="example-text-input">
+														  </div>
+														</div>
+													</form>
+											      </div>
+											      <div class="modal-footer">
+											        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+											      </div>
+											    </div>
+
+											</div>
+										</div>
 									</div>
+
+									<button type="button" class="btn btn-warning" id="muokkaaHenkilo">Muokkaa henkilöä</button>
+									<button type="button" class="btn btn-danger" id="poistaHenkilo">Poista henkilö</button>
+								</div>
 							</div>
 						</div>
 						<!-- Laivan tiedot -välilehti -->
