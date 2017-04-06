@@ -131,20 +131,7 @@ if (isset($_GET['haeLaivanTiedot'])) {
 	if (!is_numeric($_GET['haeLaivanTiedot']) || $_GET['haeLaivanTiedot'] < 0) {
 		return_error('Pätemätön parametri!', 400);
 	} else {
-		$query = $conn->prepare('SELECT(SELECT Name 
-										from ShipPorts 
-										inner join ShipRoutes on ShipPortID = StartingPortID 
-										inner join Ships on Ships.ShipRoutesID = ShipRoutes.ShipRoutesID 
-										Where ShipID=:ShipID ) as StartingPort,
-										 (SELECT Name from ShipPorts 
-										 inner join ShipRoutes on ShipPortID = EndingPortID 
-										 inner join Ships on Ships.ShipRoutesID = ShipRoutes.ShipRoutesID 
-										 Where ShipID=:ShipID ) as EndingPort,
-										 Ships.ShipID,ShipName,Name,ShipLength,ShipWidth,ShipDraft,ShipDeadWeight,ShipGrossTonnage,MMSI,Course,IsSailing,ShipSpeed,North,East,MAX(LogID) 
-										 FROM Ships 
-										 INNER JOIN GPS ON Ships.ShipID = GPS.ShipID
-										 INNER JOIN ShipTypes ON Ships.ShipTypeID = ShipTypes.ShipTypeID
-										 WHERE Ships.ShipID = :ShipID ');
+		$query = $conn->prepare('SELECT(SELECT Name from ShipPorts inner join ShipRoutes on ShipPortID = StartingPortID inner join Ships on Ships.ShipRoutesID = ShipRoutes.ShipRoutesID Where ShipID=:ShipID ) as StartingPort, (SELECT Name from ShipPorts inner join ShipRoutes on ShipPortID = EndingPortID inner join Ships on Ships.ShipRoutesID = ShipRoutes.ShipRoutesID Where ShipID=:ShipID ) as EndingPort, Ships.ShipID,ShipName,Name,ShipLength,ShipWidth,ShipDraft,ShipDeadWeight,ShipGrossTonnage,MMSI,Course,IsSailing,ShipSpeed,North,East,MAX(LogID) FROM Ships INNER JOIN GPS ON Ships.ShipID = GPS.ShipID INNER JOIN ShipTypes ON Ships.ShipTypeID = ShipTypes.ShipTypeID WHERE Ships.ShipID = :ShipID and LogID in (select max(LogID)from GPS group by shipID)');
 		$query->bindParam(':ShipID', $_GET['haeLaivanTiedot'], PDO::PARAM_INT);
 		try {
 			$query->execute();
