@@ -121,24 +121,55 @@
 											    <!-- Modal content-->
 											<div class="modal-dialog modal-lg">
 											    <div class="modal-content">
-											      <div class="modal-header">
-											        <button type="button" class="close" data-dismiss="modal">&times;</button>
-											        <h4 class="modal-title">Modal Header</h4>
-											      </div>
-											      <div class="modal-body">
-											        <p>Some text in the modal.</p>
-											        <form>
-												      	<div class="form-group row">
-														  <label for="example-text-input" class="col-2 col-form-label">Text</label>
-														  <div class="col-3">
-														    <input class="form-control" type="text" value="Artisanal kale" id="example-text-input">
+											    	<div class="modal-header bg-success text-white">
+												        <button type="button" class="close" data-dismiss="modal">&times;</button>
+												        <h4 class="modal-title">Lisää Henkilö</h4>
+											    	</div>
+											    	<div class="modal-body">
+											    		<h4>Nimi Ja Sotu.</h4>
+											    		<form>
+												        <div class="form-inline">
+														  <label for="inlineFormInput">Sotu:</label>
+														  <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInput" placeholder="010293-123A">
+														  <label for="inlineFormInputGroup">Etunimi:</label>
+														  <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+														    <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Erkki">
+														  </div>
+														  <label for="inlineFormInputGroup">Sukunimi</label>
+														  <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+														    <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Esimerkki">
 														  </div>
 														</div>
-													</form>
-											      </div>
-											      <div class="modal-footer">
-											        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-											      </div>
+														<h4>Postitiedot.</h4>
+														<div class="form-inline">
+														  <label for="inlineFormInput">Postiosoite:</label>
+														  <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInput" placeholder="Esimerkkikatu 25-27 A13">
+														  <label for="inlineFormInputGroup">Postinumero:</label>
+														  <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+														    <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="65100">
+														  </div>
+														  <label for="inlineFormInputGroup">Paikkakunta:</label>
+														  <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+														    <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Vaasa">
+														  </div>
+														</div>
+														<h4>Muut Tiedot.</h4>
+														<div class="form-inline">
+														  <label for="inlineFormInput">Puhelin:</label>
+														  <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="inlineFormInput" placeholder="Esimerkkikatu 25-27 A13">
+														  <label for="inlineFormInputGroup">Kuva:</label>
+														  <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+														    <input type="file" name="myimage">
+														  </div>
+														</div>
+														 <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
+														
+												     	</div>
+												     	<div class="modal-footer">
+													     	<button type="submit" class="btn btn-success">Lisää henkilö</button>
+													        <button type="button" class="btn btn-default" data-dismiss="modal">Peruuta</button>
+													    </div>
+												      	</form>
 											    </div>
 
 											</div>
