@@ -120,63 +120,84 @@
 											<!-- Modal content-->
 											<div class="modal-dialog modal-lg">
 											    <div class="modal-content">
-											    	<div class="modal-header bg-success text-white">
-												        <button type="button" class="close" data-dismiss="modal">&times;</button>
-												        <h4 class="modal-title">Lisää Henkilö</h4>
-											    	</div>
-											    	<div class="modal-body">
-											    		<h4>Nimi Ja Sotu.</h4>
-											    		<form>
-												        <div class="form-inline">
-														  <label for="lblSotu">Sotu:</label>
-														  <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="txtSotu" placeholder="010293-123A">
-														  <label for="lblEtuniumi">Etunimi:</label>
-														  <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-														    <input type="text" class="form-control" id="txtEtunimi" placeholder="Erkki">
-														  </div>
-														  <label for="lblSukunimi">Sukunimi</label>
-														  <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-														    <input type="text" class="form-control" id="txtSukunimi" placeholder="Esimerkki">
-														  </div>
+													<div class="modal-header bg-success text-white">
+														<button type="button" class="close" data-dismiss="modal">&times;</button>
+														<h4 class="modal-title">Lisää Henkilö</h4>
+													</div>
+													<form action="sql.php?lisaaHenkilo=1" onsubmit="return validoiFormi()" method="POST">
+														<div class="modal-body">
+															<fieldset>
+																<legend>Nimi ja sotu</legend>
+																<div class="row">
+																	<div class="col-sm-4">
+																		<div class="form-group" id="divSotu">
+																			<label for="lblSotu">Sotu:</label>
+																			<input type="text" class="form-control" id="txtSotu" placeholder="010293-123A">
+																		</div>
+																	</div>
+																	<div class="col-sm-4">
+																		<div class="form-group" id="divEtunimi">
+																			<label for="lblEtuniumi">Etunimi:</label>
+																			<input type="text" class="form-control" id="txtEtunimi" placeholder="Erkki">
+																		</div>
+																	</div>
+																	<div class="col-sm-4">
+																		<div class="form-group" id="divSukunimi">
+																			<label for="lblSukunimi">Sukunimi</label>
+																			<input type="text" class="form-control" id="txtSukunimi" placeholder="Esimerkki">
+																		</div>
+																	</div>
+																</div>
+																<legend>Postitiedot</legend>
+																<div class="row">
+																	<div class="col-sm-4">
+																		<div class="form-group" id="divPostiosoite">
+																			<label for="lblPostiosoite">Postiosoite:</label>
+																			<input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="txtPostiosoite" placeholder="Esimerkkikatu 25-27 A13">
+																		</div>
+																	</div>
+																	<div class="col-sm-4">
+																		<div class="form-group" id="divPostinumero">
+																			<label for="lblPostinumero">Postinumero:</label>
+																			<input type="text" class="form-control" id="txtPostinumero" placeholder="65100">
+																		</div>
+																	</div>
+																	<div class="col-sm-4">
+																		<div class="form-group" id="divPaikkakunta">
+																			<label for="lblPaikkakunta">Paikkakunta:</label>
+																			<input type="text" class="form-control" id="txtPaikkakunta" placeholder="Vaasa">
+																		</div>
+																	</div>
+																</div>
+																<legend>Muut Tiedot.</legend>
+																<div class="row">
+																	<div class="col-sm-4">
+																		<div class="form-group" id="divPuhelin">
+																			<label for="lblPuheilin">Puhelin:</label>
+																			<input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="txtPuhelin" placeholder="0401234567">
+																		</div>
+																	</div>
+																	<div class="col-sm-4">
+																		<div class="form-group" id="divKuva">
+																			<label for="lblKuva">Kuva:</label>
+																			<input type="file" id="imgKuva" name="myimage">
+																		</div>
+																	</div>
+																</div>
+															</fieldset>
 														</div>
-														<h4>Postitiedot.</h4>
-														<div class="form-inline">
-														  <label for="lblPostiosoite">Postiosoite:</label>
-														  <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="txtPostiosoite" placeholder="Esimerkkikatu 25-27 A13">
-														  <label for="lblPostinumero">Postinumero:</label>
-														  <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-														    <input type="text" class="form-control" id="txtPostinumero" placeholder="65100">
-														  </div>
-														  <label for="lblPaikkakunta">Paikkakunta:</label>
-														  <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-														    <input type="text" class="form-control" id="txtPaikkakunta" placeholder="Vaasa">
-														  </div>
+														<div class="modal-footer">
+															<button type="submit" id="btnSubmithekilö" class="btn btn-success">Lisää henkilö</button>
+															<button type="button" id="btnPeruutahenkilö" class="btn btn-default" data-dismiss="modal">Peruuta</button>
 														</div>
-														<h4>Muut Tiedot.</h4>
-														<div class="form-inline">
-														  <label for="lblPuheilin">Puhelin:</label>
-														  <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="txtPuhelin" placeholder="0401234567">
-														  <label for="lblKuva">Kuva:</label>
-														  <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-														    <input type="file" id="imgKuva" name="myimage">
-														  </div>
-														</div>
-														 <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
-														
-												     	</div>
-												     	<div class="modal-footer">
-													     	<button type="submit" id="btnSubmithekilö" class="btn btn-success">Lisää henkilö</button>
-													        <button type="button" id="btnPeruutahenkilö" class="btn btn-default" data-dismiss="modal">Peruuta</button>
-													    </div>
-												      	</form>
-											    </div>
-
+													</form>
+												</div>
 											</div>
 										</div>
-									</div>
 
-									<button type="button" class="btn btn-warning" id="muokkaaHenkilo">Muokkaa henkilöä</button>
-									<button type="button" class="btn btn-danger" id="poistaHenkilo">Poista henkilö</button>
+										<button type="button" class="btn btn-warning" id="muokkaaHenkilo">Muokkaa henkilöä</button>
+										<button type="button" class="btn btn-danger" id="poistaHenkilo">Poista henkilö</button>
+									</div>
 								</div>
 							</div>
 						</div>
