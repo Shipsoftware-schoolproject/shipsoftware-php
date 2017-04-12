@@ -222,8 +222,129 @@ function valitseHenkilo(elementti)
 }
 
 function lisaaHenkilo() {
-            
+
+}
+
+function asetaVirheHenk(elementti, viesti) {
+    $('#div' + elementti).addClass('has-error');
+    $('#help' + elementti).removeClass('hidden');
+    $('#help' + elementti).html(viesti);
+}
+
+function poistaHenkVirhe(elementti) {
+    $('#help' + elementti).addClass('hidden');
+    $('#div' + elementti).removeClass('has-error');
+}
+
+function validoiFormi() {
+    ret = true;
+
+    var sotu = $('#txtSotu').val();
+    var etunimi = $('#txtEtunimi').val();
+    var sukunimi = $('#txtSukunimi').val();
+    var postiosoite = $('#txtPostiosoite').val();
+    var postinumero = $('#txtPostinumero').val();
+    var paikkakunta = $('#txtPaikkakunta').val();
+    var puhelin = $('#txtPuhelin').val();
+    var titteli = $('#txtTitteli').val();
+    var regex = /\d/;
+    var regexChars = /[a-z]/i;
+
+    // FIXME: Sotun tarkistus
+    if (sotu.length < 11) {
+        asetaVirheHenk('Sotu', 'Sotu virhe.');
+        ret = false;
+    } else {
+        poistaHenkVirhe('Sotu');
     }
+
+    if (etunimi.length > 30) {
+        asetaVirheHenk('Etunimi', 'Etunimi liian pitkä! Maksimi 30 merkkiä.');
+        ret = false;
+    } else if (etunimi.length < 2) {
+        asetaVirheHenk('Etunimi', 'Etunimi on liian lyhyt! Minimi 2 merkkiä.');
+        ret = false;
+    } else if (regex.test(etunimi)) {
+        asetaVirheHenk('Etunimi', 'Etunimessä ei saa olla numeroita!');
+        ret = false;
+    } else {
+        poistaHenkVirhe('Etunimi');
+    }
+
+    if (sukunimi.length > 30) {
+        asetaVirheHenk('Sukunimi', 'Sukunimi liian pitkä! Maksimi 30 merkkiä.');
+        ret = false
+    } else if (sukunimi.length < 2) {
+        asetaVirheHenk('Sukunimi', 'Sukunimi liian lyhyt! Minimi 2 merkkiä.');
+        ret = false;
+    } else if (regex.test(sukunimi)) {
+        asetaVirheHenk('Sukunimi', 'Sukunimessä ei saa olla numeroita!');
+        ret = false;
+    } else {
+        poistaHenkVirhe('Sukunimi');
+    }
+
+    if (postiosoite.length > 85) {
+        asetaVirheHenk('Postiosoite', 'Postiosoite liian pitkä! Maksimi 85 merkkiä.');
+        ret = false;
+    } else if (postiosoite.length < 3) {
+        asetaVirheHenk('Postiosoite', 'Postiosoite liian lyhyt! Minimi 3 merkkiä');
+        ret = false;
+    } else {
+        poistaHenkVirhe('Postiosoite');
+    }
+
+    if (postinumero.length > 5) {
+        asetaVirheHenk('Postinumero', 'Postinumero on liian pitkä! Maksimi 5 numeroa.');
+        ret = false;
+    } else if (postinumero.length < 5) {
+        asetaVirheHenk('Postinumero', 'Postinumero liian lyhyt! Minimi 5 numeroa.');
+        ret = false;
+    } else if (postinumero.match(regexChars)) {
+        asetaVirheHenk('Postinumero', 'Postinumeron tulee olla numeerinen!');
+        ret = false;
+    } else {
+        poistaHenkVirhe('Postinumero');
+    }
+
+    if (paikkakunta.length > 85) {
+        asetaVirheHenk('Paikkakunta', 'Paikkakunta on liian pitkä! Maksimi 85 merkkiä.');
+        ret = false;
+    } else if (paikkakunta.length < 2) {
+        asetaVirheHenk('Paikkakunta', 'Paikkakunta on liian lyhyt! Minimi 2 merkkiä');
+        ret = false;
+    } else if (regex.test(paikkakunta)) {
+        asetaVirheHenk('Paikkakunta', 'Paikkakunnassa ei saa olla numeroita!');
+        ret = false;
+    } else {
+        poistaHenkVirhe('Paikkakunta');
+    }
+
+    if (puhelin.length > 20) {
+        asetaVirheHenk('Puhelin', 'Puhelinnumero liian pitkä! Maksimi 20 numeroa.');
+        ret = false;
+    } else if (puhelin == '112' || puhelin == '911') {
+        asetaVirheHenk('Puhelin', 'Puhelinnumero ei voi olla hätänumero.');
+        ret = false;
+    } else if (puhelin.length < 3) {
+        asetaVirheHenk('Puhelin', 'Puhelinnumero liian lyhyt! Minimi 3 numeroa.');
+        ret = false;
+    } else if (puhelin.match(regexChars)) {
+        asetaVirheHenk('Puhelin', 'Puhelinnumero ei voi sisältää muita kuin numeroita!');
+        ret = false;
+    } else {
+        poistaHenkVirhe('Puhelin');
+    }
+
+    if (titteli.length > 60) {
+        asetaVirheHenk('Titteli', 'Titteli liian pitkä! Maksimi 60 merkkiä.');
+        ret = false;
+    } else {
+        poistaHenkVirhe('Titteli');
+    }
+
+    return ret;
+}
 
 function paivitaHenkilo(data)
 {

@@ -109,7 +109,6 @@
 											<table id="Henkilotiedot" border="5" style="width: 100%">
 											</table>
 									</div>
-									
 								</div>
 								<div>
 									<!-- lisää henkilö modal -->
@@ -286,6 +285,20 @@
             })
 
             haeLaivat();
+
+            var henkiloFormi = $('#henkiloFormi');
+            henkiloFormi.submit(function(ev) {
+            	$.ajax({
+            		type: henkiloFormi.attr('method'),
+            		url: henkiloFormi.attr('action'),
+            		data: henkiloFormi.serialize(),
+            		success: function(data) {
+            			alert('ok');
+            		}
+            	});
+
+            	ev.preventDefault();
+            });
         </script>
     </body>
 </html>
