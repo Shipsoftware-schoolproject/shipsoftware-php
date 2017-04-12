@@ -163,6 +163,28 @@ function haeLaivanTiedot(data = null)
         
         draw(tiedot['Course']);
 
+        // FIXME: olisiko joku parempikin tapa kuin joka kerralla aina luoda uusi google Map objekti?
+        var sijainti = new google.maps.LatLng(tiedot['North'], tiedot['East']);
+        var miniMapOptions = {
+            center: sijainti,
+            zoom: 8,
+            streetViewControl: false
+        };
+        miniMap = new google.maps.Map(document.getElementById('minimap'), miniMapOptions);
+
+        var miniMapInfoWindow = new google.maps.InfoWindow({
+            content: tiedot['ShipName'] + '<br>N: ' + tiedot['North'] + '<br>E: ' + tiedot['East']
+        });
+
+        var miniMapMarker = new google.maps.Marker({
+            position: sijainti,
+            map: miniMap,
+            title: tiedot['ShipName']
+        });
+        miniMapMarker.addListener('click', function() {
+            miniMapInfoWindow.open(miniMap, miniMapMarker);
+        });
+        miniMapInfoWindow.open(miniMap, miniMapMarker);
     }
 }
 

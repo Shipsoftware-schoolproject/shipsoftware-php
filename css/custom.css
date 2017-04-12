@@ -17,11 +17,11 @@ body {
 }
 
 #map {
-    /*
-    dynaaminen korkeus
-    height: 65vh;
-    */
     min-height: 454px;
+}
+
+#minimap {
+    min-height: 355px;
 }
 
 .miehistoTable {

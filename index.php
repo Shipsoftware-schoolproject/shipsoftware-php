@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8">
@@ -116,9 +116,8 @@
 									<button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal" id="lisaaHenkilo">Lisää henkilö</button>
 									<!-- Modal -->
 									<div id="myModal" class="modal fade" role="dialog">
-									  <div class="modal-dialog">
-
-											    <!-- Modal content-->
+										<div class="modal-dialog">
+											<!-- Modal content-->
 											<div class="modal-dialog modal-lg">
 											    <div class="modal-content">
 											    	<div class="modal-header bg-success text-white">
@@ -258,17 +257,14 @@
 									</div>
 								</div>
 							</div>
+							<!-- Kartta -laatikko -->
 							<div class="col-lg-6">
 								<!-- Minimap -laatikko -->
-								<div id="minimap" class="panel panel-default">
+								<div class="panel panel-default">
 									<div class="panel-heading">
 										<h3 class="panel-title">Kartta</h3>
 									</div>
-									<div class="panel-body">
-										<div class="row text-center">
-											<img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiORqRxh4O8f_EdLxSbqGVqElPh6I4qIP86sRBiinS5-hp4pBCCw" width="355" height="355"></img>
-										</div>
-									</div>
+									<div class="panel-body" id="minimap"></div>
 								</div>
 							</div>
 						</div>
@@ -276,7 +272,7 @@
 						<div class="tab-pane" id="rahti">
 							<div class="col-lg-12">
 								<!-- Minimap -laatikko -->
-								<div id="minimap" class="panel panel-default">
+								<div class="panel panel-default">
 									<div class="panel-heading">
 										<h3 class="panel-title">Rahti</h3>
 									</div>
@@ -316,15 +312,17 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
         <script src="./js/custom.js"></script>
 		<script>
-			var map;
+			var map, miniMap;
 			var markers = new Array();
 
 			function initMap() {
-				map = new google.maps.Map(document.getElementById('map'), {
+				var mapOptions = {
 					center: { lat: 63.1022601, lng: 21.5809185 },
 					zoom: 8,
-					streetViewControl: false,
-				});
+					streetViewControl: false
+				};
+
+				map = new google.maps.Map(document.getElementById('map'), mapOptions);
 			}
 
 			function addMarker(ShipID, sijainti, otsikko, infoIkkuna) {
@@ -340,7 +338,7 @@
 				});
 			}
 		</script>
-		<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAK8bzrVV9-fH72e3jyXSSjsWkW5bpduok&callback=initMap"></script>
+		<script async defer src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyAK8bzrVV9-fH72e3jyXSSjsWkW5bpduok&callback=initMap"></script>
 		<script type="text/javascript">
             // Init kompassi
             $(document).ready(function() {
