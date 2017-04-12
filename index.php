@@ -153,7 +153,7 @@
 																	<div class="col-sm-4">
 																		<div class="form-group" id="divPostiosoite">
 																			<label for="lblPostiosoite">Postiosoite:</label>
-																			<input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="txtPostiosoite" placeholder="Esimerkkikatu 25-27 A13">
+																			<input type="text" class="form-control" id="txtPostiosoite" placeholder="Esimerkkikatu 25-27 A13">
 																		</div>
 																	</div>
 																	<div class="col-sm-4">
@@ -169,12 +169,18 @@
 																		</div>
 																	</div>
 																</div>
-																<legend>Muut Tiedot.</legend>
+																<legend>Muut tiedot</legend>
 																<div class="row">
 																	<div class="col-sm-4">
 																		<div class="form-group" id="divPuhelin">
-																			<label for="lblPuheilin">Puhelin:</label>
-																			<input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="txtPuhelin" placeholder="0401234567">
+																			<label for="lblPuhelin">Puhelin:</label>
+																			<input type="text" class="form-control" id="txtPuhelin" placeholder="0401234567">
+																		</div>
+																	</div>
+																	<div class="col-sm-4">
+																		<div class="form-group" id="divTitteli">
+																			<label for="txtTitteli">Titteli</label>
+																			<input type="text" class="form-control" id="txtPuhelin" placeholder="Titteli">
 																		</div>
 																	</div>
 																	<div class="col-sm-4">
@@ -194,10 +200,9 @@
 												</div>
 											</div>
 										</div>
-
-										<button type="button" class="btn btn-warning" id="muokkaaHenkilo">Muokkaa henkilöä</button>
-										<button type="button" class="btn btn-danger" id="poistaHenkilo">Poista henkilö</button>
 									</div>
+									<button type="button" class="btn btn-warning" id="muokkaaHenkilo">Muokkaa henkilöä</button>
+									<button type="button" class="btn btn-danger" id="poistaHenkilo">Poista henkilö</button>
 								</div>
 							</div>
 						</div>
