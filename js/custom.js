@@ -251,12 +251,13 @@ function validoiFormi() {
     var regexChars = /[a-z]/i;
 
     // FIXME: Sotun tarkistus
-    if (sotu.length < 11) {
-        asetaVirheHenk('Sotu', 'Sotu virhe.');
+    // HOX HOX!: voidaan lisätä ikä ja syntymäpäivä miehistö välilehteen jos tarve tulee tämän avulla
+      if (!sotutarkistus(sotu)){
         ret = false;
-    } else {
+      }
+      else {
         poistaHenkVirhe('Sotu');
-    }
+      }
 
     if (etunimi.length > 30) {
         asetaVirheHenk('Etunimi', 'Etunimi liian pitkä! Maksimi 30 merkkiä.');
@@ -342,8 +343,45 @@ function validoiFormi() {
     } else {
         poistaHenkVirhe('Titteli');
     }
-
     return ret;
+}
+
+function sotutarkistus(sotu){
+
+        if (sotu.length != 11) {
+        asetaVirheHenk('Sotu', 'Sotu on oltava 11 merkkiä.');
+        return false;
+        }
+        var sotuSyntyma = sotu.substring(0,6);
+        var sotuPaiva= sotu.substring(0,2);
+        var sotuKuukausi= sotu.substring(2,4);
+        var sotuVuosi= sotu.substring(4,6);
+        var sotuVuosisata= sotu.substring(6,7);
+        var sotuYksiloNum = sotu.substring(7,10);
+        var sotuTarkistusmerkki= sotu.substring(10,11);
+        var tarkistusmerkki = "0123456789ABCDEFHJKLMNPRSTUVWXY";
+        var tarkistusmerkkiLuku = sotuPaiva+sotuKuukausi+sotuVuosi+sotuYksiloNum;
+        var tarkistusmerkkiTulos = tarkistusmerkkiLuku % 31;
+        var tuloksenTarkistusmerkki = tarkistusmerkki.substring(tarkistusmerkkiTulos, tarkistusmerkkiTulos + 1);
+
+            if(sotuPaiva <1 || sotuPaiva > 31){
+             asetaVirheHenk('Sotu', 'Sotu päivä 1-31!');
+             return false;
+            }
+            if(sotuKuukausi < 1 || sotuKuukausi >12){
+             asetaVirheHenk('Sotu', 'Sotu Kuukausi 1-12!');
+             return false;
+            }
+            if(sotuVuosisata != "-" && sotuVuosisata != "+" && sotuVuosisata != "A"){
+                asetaVirheHenk('Sotu', 'Vuosisata tunnus ei täsmää!'); 
+                return false;
+            }
+            if(sotuTarkistusmerkki != tuloksenTarkistusmerkki){
+                asetaVirheHenk('Sotu', 'Tarkistusmerkki ei täsmää sotun kanssa!'); 
+                return false;
+            }
+            
+    return true;
 }
 
 function paivitaHenkilo(data)
