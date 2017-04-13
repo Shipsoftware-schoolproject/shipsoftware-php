@@ -112,10 +112,10 @@
 								</div>
 								<div>
 									<!-- lisää henkilö modal -->
-									<button type="button" class="btn btn-success" data-toggle="modal" data-target="#henkiloModal" id="btnlisaaHenkilo">Lisää henkilö</button>
+									<button type="button" class="btn btn-success" id="btnlisaaHenkilo" onclick="lisaaHenkilo()">Lisää henkilö</button>
 									<?php include 'modal.php'; ?>
-									<button type="button" class="btn btn-warning" id="muokkaaHenkilo">Muokkaa henkilöä</button>
-									<button type="button" class="btn btn-danger" id="poistaHenkilo">Poista henkilö</button>
+									<button type="button" class="btn btn-warning" id="muokkaaHenkilo" onclick="muokkaaHenkilo()">Muokkaa henkilöä</button>
+									<button type="button" class="btn btn-danger" id="poistaHenkilo" onclick="poistaHenk()">Poista henkilö</button>
 								</div>
 							</div>
 						</div>

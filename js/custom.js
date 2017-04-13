@@ -160,7 +160,7 @@ function haeLaivanTiedot(data = null)
         $('#laivaNorth').text(tiedot['North']);
         $('#laivaEast').text(tiedot['East']);
         $('#laivanTarkkaSuunta').text(tiedot['Course']);
-        
+
         draw(tiedot['Course']);
 
         // FIXME: olisiko joku parempikin tapa kuin joka kerralla aina luoda uusi google Map objekti?
@@ -221,8 +221,105 @@ function valitseHenkilo(elementti)
     phpKutsu('haeHenkilo=' + $(elementti).find('th:first').html(), paivitaHenkilo);
 }
 
-function lisaaHenkilo() {
+function tyhjennaHenkForm() {
+    $('#txtSotu').val('');
+    $('#txtEtunimi').val('');
+    $('#txtSukunimi').val('');
+    $('#txtPostiosoite').val('');
+    $('#txtPostinumero').val('');
+    $('#txtPaikkakunta').val('');
+    $('#txtPuhelin').val('');
+    $('#txtTitteli').val('');
+    $('#imgKuva').val('');
+}
 
+function lisaaHenkilo() {
+    var title = 'Lisää henkilö';
+
+    tyhjennaHenkForm();
+
+    // modalin otsikko rivin väri ja otsikko
+    $('#henkModalColor').removeClass('bg-warning');
+    $('#henkModalColor').addClass('bg-success');
+    $('#henkModalTitle').html(title);
+
+    // modalin ns "ok" napin väri ja teksti
+    $('#btnSubmithenkilö').removeClass('btn-warning');
+    $('#btnSubmithenkilö').addClass('btn-success');
+    $('#btnSubmithenkilö').html(title)
+
+    // näytä modali
+    $('#henkiloModal').modal('show');
+}
+
+function muokkaaHenkilo(data = null) {
+    var sotu = $('#miehistoTaulu .bg-primary th').html();
+    if (typeof sotu === 'undefined') {
+        alert('Valitse ensin muokattava henkilö!');
+        return false;
+    }
+
+    if (data === null) {
+        phpKutsu('haeHenkilo=' + sotu, muokkaaHenkilo);
+        return true;
+    }
+
+    if (data['status'] != 200) {
+        alert('Henkilön tietojen hakeminen epäonnistui.');
+    } else {
+        var henkTiedot = JSON.parse(data.data);
+        var title = 'Muokkaa henkilöä';
+
+        // aseta tiedot tekstilaatikoihin
+        $('#txtSotu').val(henkTiedot[0]['SocialID']);
+        $('#txtEtunimi').val(henkTiedot[0]['FirstName']);
+        $('#txtSukunimi').val(henkTiedot[0]['LastName']);
+        $('#txtPostiosoite').val(henkTiedot[0]['MailingAddress']);
+        $('#txtPostinumero').val(henkTiedot[0]['ZipCode']);
+        $('#txtPaikkakunta').val(henkTiedot[0]['City']);
+        $('#txtPuhelin').val(henkTiedot[0]['Phone']);
+        $('#txtTitteli').val(henkTiedot[0]['Title']);
+        $('#imgKuva').val(henkTiedot[0]['Picture']);
+
+        // modalin otsikko rivin väri ja otsikko
+        $('#henkModalColor').removeClass('bg-success');
+        $('#henkModalColor').addClass('bg-warning');
+        $('#henkModalTitle').html(title);
+
+        // modalin ns "ok" napin väri ja teksti
+        $('#btnSubmithenkilö').removeClass('btn-success');
+        $('#btnSubmithenkilö').addClass('btn-warning');
+        $('#btnSubmithenkilö').html(title)
+
+        // näytä modali
+        $('#henkiloModal').modal('show');
+    }
+}
+
+function poistaHenk(data = null) {
+    var valitutCheckboxit = $('#miehistoTaulu input:checkbox:checked');
+
+    if (data === null) {
+        if (valitutCheckboxit.length < 1) {
+            alert('Valitse ensin poistettava(t) henkilö(t)!');
+            return false;
+        }
+
+        if (confirm('Haluatko varmasti poistaa valitut henkilöt?')) {
+            var sotut = 'poistaHenkilot[]=' + valitutCheckboxit[0].name;
+            for (var i = 1; i < valitutCheckboxit.length; i++) {
+                sotut += '&poistaHenkilot[]=' + valitutCheckboxit[i].name;
+            }
+            phpKutsu(sotut, poistaHenk);
+        }
+    } else {
+        if (data['status'] != 200) {
+            alert(data.data);
+        } else {
+            alert('Valitut henkilöt poistettu!');
+            haeMiehisto();
+        }
+    }
 }
 
 function asetaVirheHenk(elementti, viesti) {
