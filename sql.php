@@ -200,5 +200,31 @@ if (isset($_GET['haeRahti'])) {
 	}
 }
 
+// Poista valitut henkilöt
+if (isset($_GET['poistaHenkilot'])) {
+	$henkilot = $_GET['poistaHenkilot'];
+	if (count($henkilot) < 1) {
+		return_error('Liian vähän henkilöitä.', 206);
+	}
+
+	$delete_clause = '?';
+	for ($i = 1; $i < count($henkilot); $i++) {
+		$delete_clause .= ',?';
+	}
+
+	$query = $conn->prepare('DELETE FROM Persons WHERE SocialID IN (' . $delete_clause . ')');
+	for ($i = 0; $i < count($henkilot); $i++) {
+		$query->bindParam(($i + 1), $henkilot[$i], PDO::PARAM_STR);
+	}
+
+	try {
+		$query->execute();
+	} catch (PDOException $e) {
+		return_error('Virhe SQL-kyselyssä');
+	}
+
+	return_success('');
+}
+
 return_error('Tuntematon pyyntö', 400);
 ?>
