@@ -225,6 +225,36 @@ if (isset($_GET['poistaHenkilot'])) {
 
 	return_success('');
 }
+if(isset($_POST['lisaaHenkilo'])){
+	$ShipID = $_POST['henkLaiva'];
+	$Sotu = $_POST['txtSotu'];
+	$Etunimi = $_POST['txtEtunimi'];
+	$Sukunimi = $_POST['txtSukunimi'];
+	$Postiosoite = $_POST['txtPostiosoite'];
+	$Postinumero = $_POST['txtPostinumero'];
+	$Paikkakunta = $_POST['txtPaikkakunta'];
+	$Puhelin = $_POST['txtPuhelin'];
+	$Titteli = $_POST['txtTitteli'];
+	$Kuva = $_POST['imgKuva'];
+
+	$query = $conn->prepare('INSERT INTO `Persons`(`ShipID`, `Title`, `SocialID`, `FirstName`, `LastName`, `Phone`, `ZipCode`, `City`, `MailingAddress`, `Picture`) 
+	 VALUES (:ShipID,:Title,:SocialID,:FirstName,:LastName,:Phone,:ZipCode,:City,:MailingAddress,:Picture)');
+	$query->bindParam(':ShipID', $ShipID, PDO::PARAM_INT);
+	$query->bindParam(':Title', $Titteli, PDO::PARAM_INT);
+	$query->bindParam(':SocialID', $Sotu, PDO::PARAM_INT);
+	$query->bindParam(':FirstName', $Etunimi, PDO::PARAM_INT);
+	$query->bindParam(':LastName', $Sukunimi, PDO::PARAM_INT);
+	$query->bindParam(':Phone', $Puhelin, PDO::PARAM_INT);
+	$query->bindParam(':ZipCode', $Postinumero, PDO::PARAM_INT);
+	$query->bindParam(':City', $Paikkakunta, PDO::PARAM_INT);
+	$query->bindParam(':MailingAddress', $Postiosoite, PDO::PARAM_INT);
+	$query->bindParam(':Picture', $Kuva, PDO::PARAM_INT);
+	try {
+			$query->execute();
+		} catch (PDOException $e) {
+			return_error('Virhe SQL -kyselyssä');
+		}
+}
 
 return_error('Tuntematon pyyntö', 400);
 ?>
