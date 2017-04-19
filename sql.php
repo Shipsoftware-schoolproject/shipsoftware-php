@@ -69,7 +69,7 @@ if (isset($_GET['haeMiehisto'])) {
 	if (!is_numeric($_GET['haeMiehisto']) || $_GET['haeMiehisto'] < 0) {
 		return_error('Pätemätön parametri!', 400);
 	}else {
-		$query = $conn->prepare('SELECT FirstName, LastName, SocialID, Title 
+		$query = $conn->prepare('SELECT FirstName, LastName, SocialID, Title
 								FROM Persons Where ShipID = :ShipID');
 			$query->bindParam(':ShipID', $_GET['haeMiehisto'], PDO::PARAM_INT);
 		try {
@@ -225,7 +225,8 @@ if (isset($_GET['poistaHenkilot'])) {
 
 	return_success('');
 }
-if(isset($_POST['lisaaHenkilo'])){
+
+if (isset($_POST['henkFormTyyppi']) && $_POST['henkFormTyyppi'] == 'lisaa') {
 	$ShipID = $_POST['henkLaiva'];
 	$Sotu = $_POST['txtSotu'];
 	$Etunimi = $_POST['txtEtunimi'];
@@ -235,9 +236,9 @@ if(isset($_POST['lisaaHenkilo'])){
 	$Paikkakunta = $_POST['txtPaikkakunta'];
 	$Puhelin = $_POST['txtPuhelin'];
 	$Titteli = $_POST['txtTitteli'];
-	$Kuva = $_POST['imgKuva'];
+	$Kuva = null;//$_POST['imgKuva'];
 
-	$query = $conn->prepare('INSERT INTO `Persons`(`ShipID`, `Title`, `SocialID`, `FirstName`, `LastName`, `Phone`, `ZipCode`, `City`, `MailingAddress`, `Picture`) 
+	$query = $conn->prepare('INSERT INTO `Persons`(`ShipID`, `Title`, `SocialID`, `FirstName`, `LastName`, `Phone`, `ZipCode`, `City`, `MailingAddress`, `Picture`)
 	 VALUES (:ShipID,:Title,:SocialID,:FirstName,:LastName,:Phone,:ZipCode,:City,:MailingAddress,:Picture)');
 	$query->bindParam(':ShipID', $ShipID, PDO::PARAM_INT);
 	$query->bindParam(':Title', $Titteli, PDO::PARAM_INT);
@@ -254,6 +255,8 @@ if(isset($_POST['lisaaHenkilo'])){
 		} catch (PDOException $e) {
 			return_error('Virhe SQL -kyselyssä');
 		}
+
+	return_success('');
 }
 
 return_error('Tuntematon pyyntö', 400);

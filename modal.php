@@ -8,8 +8,9 @@
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 					<h4 class="modal-title" id="henkModalTitle"></h4>
 				</div>
-				<form id="henkiloFormi" action="sql.php?lisaaHenkilo" onsubmit="return validoiFormi()" method="POST">
-					<input type="hidden" id="henkLaiva" name="henkLaiva=true" value="">
+				<form id="henkiloFormi" action="sql.php" onsubmit="return validoiFormi()" method="POST">
+					<input type="hidden" id="henkFormTyyppi" name="henkFormTyyppi" value="lisaa">
+					<input type="hidden" id="henkLaiva" name="henkLaiva" value="">
 					<div class="modal-body">
 						<fieldset>
 							<legend>Nimi ja sotu</legend>
