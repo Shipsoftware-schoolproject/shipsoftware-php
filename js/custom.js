@@ -80,7 +80,11 @@ function haeLaivat(data = null)
 
     if (data['status'] != 200) {
         $('#laivatListBox').attr('disabled', true);
-        $('#laivatListBox').append('<option>' + data.data + '</option>');
+        if (data.data == '') {
+            $('#laivatListBox').append('<option>PHP koodit ei toimi</option>');
+        } else {
+            $('#laivatListBox').append('<option>' + data.data + '</option>');
+        }
     } else {
         var laivat = JSON.parse(data.data);
 
