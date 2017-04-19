@@ -9,6 +9,7 @@
 					<h4 class="modal-title" id="henkModalTitle"></h4>
 				</div>
 				<form id="henkiloFormi" action="sql.php?lisaaHenkilo=1" onsubmit="return validoiFormi()" method="POST">
+					<input type="hidden" id="henkLaiva" value="">
 					<div class="modal-body">
 						<fieldset>
 							<legend>Nimi ja sotu</legend>

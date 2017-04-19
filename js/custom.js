@@ -222,6 +222,7 @@ function valitseHenkilo(elementti)
 }
 
 function tyhjennaHenkForm() {
+    $('#henkLaiva').val('');
     $('#txtSotu').val('');
     $('#txtEtunimi').val('');
     $('#txtSukunimi').val('');
@@ -241,6 +242,9 @@ function lisaaHenkilo() {
 
     tyhjennaHenkForm();
 
+    var listBox = document.getElementById('laivatListBox');
+    $('#henkLaiva').val(listBox.options[listBox.selectedIndex].value);
+
     // modalin otsikko rivin väri ja otsikko
     $('#henkModalColor').removeClass('bg-warning');
     $('#henkModalColor').addClass('bg-success');
@@ -257,6 +261,9 @@ function lisaaHenkilo() {
 
 function muokkaaHenkilo(data = null) {
     tyhjennaHenkForm();
+
+    var listBox = document.getElementById('laivatListBox');
+    $('#henkLaiva').val(listBox.options[listBox.selectedIndex].value);
 
     var sotu = $('#miehistoTaulu .bg-primary th').html();
     if (typeof sotu === 'undefined') {
