@@ -1,5 +1,5 @@
 <!-- Modal -->
-<div id="henkiloModal" class="modal fade" role="dialog">
+<div id="henkiloModal" class="modal fade" data-keyboard="false" data-backdrop="static" role="dialog">
 	<div class="modal-dialog">
 		<!-- Modal content-->
 		<div class="modal-dialog modal-lg">
