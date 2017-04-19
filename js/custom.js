@@ -231,6 +231,9 @@ function tyhjennaHenkForm() {
     $('#txtPuhelin').val('');
     $('#txtTitteli').val('');
     $('#imgKuva').val('');
+
+    $('#henkiloFormi>div>fieldset>div>div>div').removeClass('has-error');
+    $('#henkiloFormi>div>fieldset>div>div>div>span').addClass('hidden');
 }
 
 function lisaaHenkilo() {
@@ -253,6 +256,8 @@ function lisaaHenkilo() {
 }
 
 function muokkaaHenkilo(data = null) {
+    tyhjennaHenkForm();
+
     var sotu = $('#miehistoTaulu .bg-primary th').html();
     if (typeof sotu === 'undefined') {
         alert('Valitse ensin muokattava henkilö!');
@@ -460,7 +465,7 @@ function sotutarkistus(sotu){
         var tarkistusmerkkiLuku = sotuPaiva+sotuKuukausi+sotuVuosi+sotuYksiloNum;
         var tarkistusmerkkiTulos = tarkistusmerkkiLuku % 31;
         var tuloksenTarkistusmerkki = tarkistusmerkki.substring(tarkistusmerkkiTulos, tarkistusmerkkiTulos + 1);
-           
+
             if(sotuPaiva <1 || sotuPaiva > 31){
              asetaVirheHenk('Sotu', 'Sotu päivä 1-31!');
              return false;
@@ -470,14 +475,14 @@ function sotutarkistus(sotu){
              return false;
             }
             if(sotuVuosisata != "-" && sotuVuosisata != "+" && sotuVuosisata != "A"){
-                asetaVirheHenk('Sotu', 'Vuosisata tunnus ei täsmää!'); 
+                asetaVirheHenk('Sotu', 'Vuosisata tunnus ei täsmää!');
                 return false;
             }
             if(sotuTarkistusmerkki != tuloksenTarkistusmerkki){
-                asetaVirheHenk('Sotu', 'Tarkistusmerkki ei täsmää sotun kanssa!'); 
+                asetaVirheHenk('Sotu', 'Tarkistusmerkki ei täsmää sotun kanssa!');
                 return false;
             }
-            
+
     return true;
 }
 
