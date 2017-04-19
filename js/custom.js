@@ -455,12 +455,12 @@ function sotutarkistus(sotu){
         var sotuVuosi= sotu.substring(4,6);
         var sotuVuosisata= sotu.substring(6,7);
         var sotuYksiloNum = sotu.substring(7,10);
-        var sotuTarkistusmerkki= sotu.substring(10,11);
+        var sotuTarkistusmerkki= sotu.substring(10,11).toUpperCase();
         var tarkistusmerkki = "0123456789ABCDEFHJKLMNPRSTUVWXY";
         var tarkistusmerkkiLuku = sotuPaiva+sotuKuukausi+sotuVuosi+sotuYksiloNum;
         var tarkistusmerkkiTulos = tarkistusmerkkiLuku % 31;
         var tuloksenTarkistusmerkki = tarkistusmerkki.substring(tarkistusmerkkiTulos, tarkistusmerkkiTulos + 1);
-
+           
             if(sotuPaiva <1 || sotuPaiva > 31){
              asetaVirheHenk('Sotu', 'Sotu päivä 1-31!');
              return false;
