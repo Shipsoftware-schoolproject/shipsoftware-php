@@ -508,10 +508,6 @@ function paivitaHenkilo(data)
         }
         for (var i in henkilo) {
             $('#Henkilotiedot').append('<tr><tr><td rowspan="2"><img id="Kuva" src="'+henkilo[i]['Picture']+ '" width="120"></img></td><td colspan="2"><b>Nimi:</b>'+henkilo[i]['FirstName']+" "+henkilo[i]['LastName']+'</td><th >Kotiosoite</th></tr><tr><td colspan="2"><b>Sotu:</b>'+henkilo[i]['SocialID']+' </td><td><table border="3" style="width: 100%" ><tr><th>Postiosoite:</th><td>'+henkilo[i]['MailingAddress']+'</td></tr><tr><th>Kaupunki:</th><td>'+henkilo[i]['City']+'</td></tr><tr><th>Postinumero:</th><td>'+henkilo[i]['ZipCode']+'</td></tr></table></td></tr><tr><td colspan="2"><b>Titteli:</b>  '+henkilo[i]['Title']+'</td><td colspan="2"><b>Puhelin Numero:</b> '+henkilo[i]['Phone']+'</td></tr>');
-            var image=document.getElementById("Kuva").value;
-            if(image == null || image == ''){
-               document.getElementById('Kuva').src = "img/DefaultPerson.png";
-            }
             }
 }
 

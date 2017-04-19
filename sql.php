@@ -93,9 +93,31 @@ if (isset($_GET['haeMiehisto'])) {
 		return_success($miehisto);
 		}
 }
+
+// Kuvan näyttäminen
+if (isset($_GET['haeKuva'])) {
+	$query = $conn->prepare('SELECT Picture FROM Persons Where SocialID = :SocialID');
+	$query->bindParam(':SocialID', $_GET['haeKuva'], PDO::PARAM_STR);
+
+	try {
+		$query->execute();
+	} catch (PDOException $e) {
+		return_error('Virhe SQL -kyselyssä');
+	}
+
+	$row = $query->fetch();
+
+	if ($row) {
+		header("Content-type: image/jpeg");
+		echo $row['Picture'];
+	}
+
+	die();
+}
+
 //haeHenkilo
  if (isset($_GET['haeHenkilo'])) {
-	if (strlen($_GET['haeHenkilo']) <=9  || strlen($_GET['haeHenkilo']) > 10) {
+	if (strlen($_GET['haeHenkilo']) != 11) {
 		return_error('Pätemätön parametri!', 400);
 	}else {
 		$query = $conn->prepare('SELECT * FROM Persons Where SocialID = :SocialID');
@@ -117,7 +139,12 @@ if (isset($_GET['haeMiehisto'])) {
 			$henkilo[$i]['ZipCode']	= $row['ZipCode'];
 			$henkilo[$i]['City']	= $row['City'];
 			$henkilo[$i]['MailingAddress']	= $row['MailingAddress'];
-			$henkilo[$i]['Picture']	= $row['Picture'];
+			if (!$row['Picture']) {
+				$henkilo[$i]['Picture'] = 'img/DefaultPerson.png';
+			} else {
+				$henkilo[$i]['Picture']	= 'sql.php?haeKuva=' . $row['SocialID'];
+			}
+
 			$i++;
 		}
 		if ($i == 0){
@@ -249,7 +276,7 @@ if (isset($_POST['henkFormTyyppi']) && $_POST['henkFormTyyppi'] == 'lisaa') {
 	$query->bindParam(':ZipCode', $Postinumero, PDO::PARAM_INT);
 	$query->bindParam(':City', $Paikkakunta, PDO::PARAM_INT);
 	$query->bindParam(':MailingAddress', $Postiosoite, PDO::PARAM_INT);
-	$query->bindParam(':Picture', $Kuva, PDO::PARAM_INT);
+	$query->bindParam(':Picture', $Kuva);
 	try {
 			$query->execute();
 		} catch (PDOException $e) {
