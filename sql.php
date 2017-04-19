@@ -236,7 +236,7 @@ if (isset($_POST['henkFormTyyppi']) && $_POST['henkFormTyyppi'] == 'lisaa') {
 	$Paikkakunta = $_POST['txtPaikkakunta'];
 	$Puhelin = $_POST['txtPuhelin'];
 	$Titteli = $_POST['txtTitteli'];
-	$Kuva = null;//$_POST['imgKuva'];
+	$Kuva = $_POST['imgKuva'];
 
 	$query = $conn->prepare('INSERT INTO `Persons`(`ShipID`, `Title`, `SocialID`, `FirstName`, `LastName`, `Phone`, `ZipCode`, `City`, `MailingAddress`, `Picture`)
 	 VALUES (:ShipID,:Title,:SocialID,:FirstName,:LastName,:Phone,:ZipCode,:City,:MailingAddress,:Picture)');
