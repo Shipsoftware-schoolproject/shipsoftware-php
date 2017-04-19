@@ -8,7 +8,7 @@
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 					<h4 class="modal-title" id="henkModalTitle"></h4>
 				</div>
-				<form id="henkiloFormi" action="sql.php" onsubmit="return validoiFormi()" method="POST">
+				<form id="henkiloFormi" action="sql.php" onsubmit="return validoiFormi()" method="POST" enctype="multipart/form-data">
 					<input type="hidden" id="henkFormTyyppi" name="henkFormTyyppi" value="lisaa">
 					<input type="hidden" id="henkLaiva" name="henkLaiva" value="">
 					<div class="modal-body">

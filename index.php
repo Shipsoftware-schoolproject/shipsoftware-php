@@ -286,18 +286,21 @@
 
             haeLaivat();
 
-            var henkiloFormi = $('#henkiloFormi');
-            henkiloFormi.submit(function(ev) {
-            	$.ajax({
-            		type: henkiloFormi.attr('method'),
-            		url: henkiloFormi.attr('action'),
-            		data: henkiloFormi.serialize(),
-            		success: function(data) {
-            			alert('ok');
-            		}
-            	});
+            $('#henkiloFormi').submit(function(ev) {
+                ev.preventDefault();
 
-            	ev.preventDefault();
+                var formData = new FormData($(this)[0]);
+
+                $.ajax({
+                    type: $(this).attr('method'),
+                    url: $(this).attr('action'),
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function(data) {
+                        alert('ok');
+                    }
+                });
             });
         </script>
     </body>

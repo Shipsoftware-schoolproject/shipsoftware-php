@@ -263,7 +263,13 @@ if (isset($_POST['henkFormTyyppi']) && $_POST['henkFormTyyppi'] == 'lisaa') {
 	$Paikkakunta = $_POST['txtPaikkakunta'];
 	$Puhelin = $_POST['txtPuhelin'];
 	$Titteli = $_POST['txtTitteli'];
-	$Kuva = $_POST['imgKuva'];
+	$Kuva = null;
+
+	if (isset($_FILES['imgKuva'])) {
+		if (($Kuva = file_get_contents($_FILES['imgKuva']['tmp_name'])) === false) {
+			return_error('Virhe kuvan latauksessa.');
+		}
+	}
 
 	$query = $conn->prepare('INSERT INTO `Persons`(`ShipID`, `Title`, `SocialID`, `FirstName`, `LastName`, `Phone`, `ZipCode`, `City`, `MailingAddress`, `Picture`)
 	 VALUES (:ShipID,:Title,:SocialID,:FirstName,:LastName,:Phone,:ZipCode,:City,:MailingAddress,:Picture)');
@@ -276,12 +282,13 @@ if (isset($_POST['henkFormTyyppi']) && $_POST['henkFormTyyppi'] == 'lisaa') {
 	$query->bindParam(':ZipCode', $Postinumero, PDO::PARAM_INT);
 	$query->bindParam(':City', $Paikkakunta, PDO::PARAM_INT);
 	$query->bindParam(':MailingAddress', $Postiosoite, PDO::PARAM_INT);
-	$query->bindParam(':Picture', $Kuva);
+	$query->bindParam(':Picture', $Kuva, PDO::PARAM_LOB);
+
 	try {
-			$query->execute();
-		} catch (PDOException $e) {
-			return_error('Virhe SQL -kyselyssä');
-		}
+		$query->execute();
+	} catch (PDOException $e) {
+		return_error('Virhe SQL -kyselyssä.');
+	}
 
 	return_success('');
 }
