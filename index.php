@@ -298,7 +298,17 @@
                     contentType: false,
                     processData: false,
                     success: function(data) {
-                        alert('ok');
+                        alert('Henkilö lisätty!');
+                        $('#henkiloModal').modal('hide');
+                        haeMiehisto();
+                    },
+                    error: function(data) {
+                        if (data.responseText == '') {
+                            alert('PHP koodissa jokin iso vika.');
+                        } else {
+                            alert(data.responseText);
+                        }
+                        return false;
                     }
                 });
             });

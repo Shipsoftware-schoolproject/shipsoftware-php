@@ -253,6 +253,7 @@ if (isset($_GET['poistaHenkilot'])) {
 	return_success('');
 }
 
+// Lisää henkilö
 if (isset($_POST['henkFormTyyppi']) && $_POST['henkFormTyyppi'] == 'lisaa') {
 	$ShipID = $_POST['henkLaiva'];
 	$Sotu = $_POST['txtSotu'];
@@ -265,9 +266,18 @@ if (isset($_POST['henkFormTyyppi']) && $_POST['henkFormTyyppi'] == 'lisaa') {
 	$Titteli = $_POST['txtTitteli'];
 	$Kuva = null;
 
-	if (isset($_FILES['imgKuva'])) {
+	if ($_FILES['imgKuva']['error'] != 4) {
+		if ($_FILES['imgKuva']['error'] != 0) {
+			return_error('Virhe kuvan latauksessa (PHP): ' . $_FILES['imgKuva']['error'] . 'nimi:' . isset($_FILES['imgKuva']['name']));
+		}
+
+		// Tietokannassa kuva on vielä LONGBLOB (4GB), mutta tässä tarkistus MEDIUMBLOB:lle (16MB)
+		if ($_FILES['imgKuva']['size'] > 16777215) {
+			return_error('Kuva on liian suuri (maksimi koko 16MB).');
+		}
+
 		if (($Kuva = file_get_contents($_FILES['imgKuva']['tmp_name'])) === false) {
-			return_error('Virhe kuvan latauksessa.');
+			return_error('Virhe ladatessa kuvaa väliaikaistiedostosta.');
 		}
 	}
 
@@ -282,7 +292,7 @@ if (isset($_POST['henkFormTyyppi']) && $_POST['henkFormTyyppi'] == 'lisaa') {
 	$query->bindParam(':ZipCode', $Postinumero, PDO::PARAM_INT);
 	$query->bindParam(':City', $Paikkakunta, PDO::PARAM_INT);
 	$query->bindParam(':MailingAddress', $Postiosoite, PDO::PARAM_INT);
-	$query->bindParam(':Picture', $Kuva, PDO::PARAM_LOB);
+	$query->bindParam(':Picture', $Kuva);
 
 	try {
 		$query->execute();
