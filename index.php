@@ -39,7 +39,7 @@
 								</div>
 								<div class="panel-body">
 								<!-- TODO: Search button -->
-								<input id="laivatSearchBox" type="textbox" placeholder="Hae laiva"></input>
+								<input id="laivatSearchBox" type="search" placeholder="Hae laiva"></input>
 									<select id="laivatListBox" size="8" name="laivat">
 									</select>
 								</div>
