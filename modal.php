@@ -88,7 +88,7 @@
 						</fieldset>
 					</div>
 					<div class="modal-footer">
-						<button type="submit" id="btnSubmithenkilö" class="btn btn-success" id="henkNappi">Lisää henkilö</button>
+						<button type="submit" id="btnSubmithenkilö" class="btn btn-success">Lisää henkilö</button>
 						<button type="button" id="btnPeruutahenkilö" class="btn btn-default" data-dismiss="modal">Peruuta</button>
 					</div>
 				</form>

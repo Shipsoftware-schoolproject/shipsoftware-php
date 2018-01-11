@@ -112,10 +112,10 @@
 								</div>
 								<div>
 									<!-- lisää henkilö modal -->
-									<button type="button" class="btn btn-success" id="btnlisaaHenkilo" onclick="lisaaHenkilo()">Lisää henkilö</button>
 									<?php include 'modal.php'; ?>
-									<button type="button" class="btn btn-warning" id="muokkaaHenkilo" onclick="muokkaaHenkilo()">Muokkaa henkilöä</button>
-									<button type="button" class="btn btn-danger" id="poistaHenkilo" onclick="poistaHenk()">Poista henkilö</button>
+									<button type="button" class="btn btn-success" onclick="lisaaHenkilo()">Lisää henkilö</button>
+									<button type="button" class="btn btn-warning" onclick="muokkaaHenkilo()">Muokkaa henkilöä</button>
+									<button type="button" class="btn btn-danger" onclick="poistaHenk()">Poista henkilö</button>
 								</div>
 							</div>
 						</div>
@@ -288,7 +288,7 @@
 
             $('#henkiloFormi').submit(function(ev) {
                 ev.preventDefault();
-
+                $('#txtSotu').removeAttr("disabled");
                 var formData = new FormData($(this)[0]);
 
                 $.ajax({
@@ -298,9 +298,10 @@
                     contentType: false,
                     processData: false,
                     success: function(data) {
-                        alert('Henkilö lisätty!');
+                        alert(data);
                         $('#henkiloModal').modal('hide');
                         haeMiehisto();
+                        return true;
                     },
                     error: function(data) {
                         if (data.responseText == '') {

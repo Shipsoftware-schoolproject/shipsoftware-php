@@ -243,6 +243,8 @@ function tyhjennaHenkForm() {
 
 function lisaaHenkilo() {
     var title = 'Lisää henkilö';
+    $('#henkFormTyyppi').val('lisaa');
+    $('#txtSotu').removeAttr("disabled");
 
     tyhjennaHenkForm();
 
@@ -264,6 +266,9 @@ function lisaaHenkilo() {
 }
 
 function muokkaaHenkilo(data = null) {
+    $('#henkFormTyyppi').val('muokkaa');
+    $('#txtSotu').attr("disabled", "disabled");
+
     tyhjennaHenkForm();
 
     var listBox = document.getElementById('laivatListBox');
@@ -287,6 +292,7 @@ function muokkaaHenkilo(data = null) {
         var title = 'Muokkaa henkilöä';
 
         // aseta tiedot tekstilaatikoihin
+        $('#henkVanhaSotu').val(sotu);
         $('#txtSotu').val(henkTiedot[0]['SocialID']);
         $('#txtEtunimi').val(henkTiedot[0]['FirstName']);
         $('#txtSukunimi').val(henkTiedot[0]['LastName']);
@@ -295,7 +301,7 @@ function muokkaaHenkilo(data = null) {
         $('#txtPaikkakunta').val(henkTiedot[0]['City']);
         $('#txtPuhelin').val(henkTiedot[0]['Phone']);
         $('#txtTitteli').val(henkTiedot[0]['Title']);
-        $('#imgKuva').val(henkTiedot[0]['Picture']);
+        //$('#imgKuva').val(henkTiedot[0]['Picture']);
 
         // modalin otsikko rivin väri ja otsikko
         $('#henkModalColor').removeClass('bg-success');

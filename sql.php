@@ -236,10 +236,10 @@ if (isset($_GET['poistaHenkilot'])) {
 
 	$delete_clause = '?';
 	for ($i = 1; $i < count($henkilot); $i++) {
-		$delete_clause .= ',?';
+		$delete_clause .= ' AND SocialID = ?';
 	}
 
-	$query = $conn->prepare('DELETE FROM Persons WHERE SocialID IN (' . $delete_clause . ')');
+	$query = $conn->prepare('DELETE FROM Persons WHERE SocialID = ' . $delete_clause . ';');
 	for ($i = 0; $i < count($henkilot); $i++) {
 		$query->bindParam(($i + 1), $henkilot[$i], PDO::PARAM_STR);
 	}
@@ -253,8 +253,8 @@ if (isset($_GET['poistaHenkilot'])) {
 	return_success('');
 }
 
-// Lisää henkilö
-if (isset($_POST['henkFormTyyppi']) && $_POST['henkFormTyyppi'] == 'lisaa') {
+// Lisää/muokkaa henkilö
+if (isset($_POST['henkFormTyyppi'])) {
 	$ShipID = $_POST['henkLaiva'];
 	$Sotu = $_POST['txtSotu'];
 	$Etunimi = $_POST['txtEtunimi'];
@@ -281,18 +281,41 @@ if (isset($_POST['henkFormTyyppi']) && $_POST['henkFormTyyppi'] == 'lisaa') {
 		}
 	}
 
-	$query = $conn->prepare('INSERT INTO `Persons`(`ShipID`, `Title`, `SocialID`, `FirstName`, `LastName`, `Phone`, `ZipCode`, `City`, `MailingAddress`, `Picture`)
-	 VALUES (:ShipID,:Title,:SocialID,:FirstName,:LastName,:Phone,:ZipCode,:City,:MailingAddress,:Picture)');
-	$query->bindParam(':ShipID', $ShipID, PDO::PARAM_INT);
-	$query->bindParam(':Title', $Titteli, PDO::PARAM_INT);
-	$query->bindParam(':SocialID', $Sotu, PDO::PARAM_INT);
-	$query->bindParam(':FirstName', $Etunimi, PDO::PARAM_INT);
-	$query->bindParam(':LastName', $Sukunimi, PDO::PARAM_INT);
-	$query->bindParam(':Phone', $Puhelin, PDO::PARAM_INT);
-	$query->bindParam(':ZipCode', $Postinumero, PDO::PARAM_INT);
-	$query->bindParam(':City', $Paikkakunta, PDO::PARAM_INT);
-	$query->bindParam(':MailingAddress', $Postiosoite, PDO::PARAM_INT);
-	$query->bindParam(':Picture', $Kuva);
+	// Lisääminen
+	if ($_POST['henkFormTyyppi'] == 'lisaa') {
+		$query = $conn->prepare('INSERT INTO `Persons`(`ShipID`, `Title`, `SocialID`, `FirstName`, `LastName`, `Phone`, `ZipCode`, `City`, `MailingAddress`, `Picture`)
+		 VALUES (:ShipID,:Title,:SocialID,:FirstName,:LastName,:Phone,:ZipCode,:City,:MailingAddress,:Picture)');
+		$query->bindParam(':ShipID', $ShipID, PDO::PARAM_INT);
+		$query->bindParam(':Title', $Titteli, PDO::PARAM_INT);
+		$query->bindParam(':SocialID', $Sotu, PDO::PARAM_INT);
+		$query->bindParam(':FirstName', $Etunimi, PDO::PARAM_INT);
+		$query->bindParam(':LastName', $Sukunimi, PDO::PARAM_INT);
+		$query->bindParam(':Phone', $Puhelin, PDO::PARAM_INT);
+		$query->bindParam(':ZipCode', $Postinumero, PDO::PARAM_INT);
+		$query->bindParam(':City', $Paikkakunta, PDO::PARAM_INT);
+		$query->bindParam(':MailingAddress', $Postiosoite, PDO::PARAM_INT);
+		$query->bindParam(':Picture', $Kuva);
+	// Muokkaaminen
+	} else if ($_POST['henkFormTyyppi'] == 'muokkaa') {
+		if ($Kuva == null) {
+			$sql = 'UPDATE `Persons` SET `ShipID`=:ShipID,`Title`=:Title,`FirstName`=:FirstName,`LastName`=:LastName,`Phone`=:Phone,`ZipCode`=:ZipCode,`City`=:City,`MailingAddress`=:MailingAddress WHERE SocialID = :SocialID';
+		} else {
+			$sql = 'UPDATE `Persons` SET `ShipID`=:ShipID,`Title`=:Title,`FirstName`=:FirstName,`LastName`=:LastName,`Phone`=:Phone,`ZipCode`=:ZipCode,`City`=:City,`MailingAddress`=:MailingAddress `Picture`=:Picture WHERE SocialID = :SocialID';
+			$query->bindParam(':Picture', $Kuva);
+		}
+		$query = $conn->prepare($sql);
+		$query->bindParam(':ShipID', $ShipID, PDO::PARAM_INT);
+		$query->bindParam(':Title', $Titteli, PDO::PARAM_INT);
+		$query->bindParam(':SocialID', $Sotu, PDO::PARAM_INT);
+		$query->bindParam(':FirstName', $Etunimi, PDO::PARAM_INT);
+		$query->bindParam(':LastName', $Sukunimi, PDO::PARAM_INT);
+		$query->bindParam(':Phone', $Puhelin, PDO::PARAM_INT);
+		$query->bindParam(':ZipCode', $Postinumero, PDO::PARAM_INT);
+		$query->bindParam(':City', $Paikkakunta, PDO::PARAM_INT);
+		$query->bindParam(':MailingAddress', $Postiosoite, PDO::PARAM_INT);
+	} else {
+		return_error('Tuntematon pyyntö', 400);
+	}
 
 	try {
 		$query->execute();
@@ -300,7 +323,13 @@ if (isset($_POST['henkFormTyyppi']) && $_POST['henkFormTyyppi'] == 'lisaa') {
 		return_error('Virhe SQL -kyselyssä.');
 	}
 
-	return_success('');
+	if ($_POST['henkFormTyyppi'] == 'lisaa') {
+		return_success('Henkilö lisätty!');
+	} else if ($_POST['henkFormTyyppi'] == 'muokkaa') {
+		return_success('Tiedot muokattu onnistuneesti!');
+	} else {
+		return_error('Tuntematon pyyntö', 400);
+	}
 }
 
 return_error('Tuntematon pyyntö', 400);
