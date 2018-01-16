@@ -1,9 +1,10 @@
 <?php
 
 # mysql_tunnarit.txt:
-# 1. rivi: tietokannan nimi
-# 2. rivi: käyttäjänimi
-# 3. rivi: salasana
+# 1. rivi: hostname
+# 2. rivi: tietokannan nimi
+# 3. rivi: käyttäjänimi
+# 4. rivi: salasana
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -21,7 +22,7 @@ if ($tunnarit === false) {
 	return_error('MySQL tunnuksien lataaminen ei onnistunut.');
 }
 
-if (count($tunnarit) != 3) {
+if (count($tunnarit) != 4) {
 	return_error('MySQL tiedoston sisältö ei ole validi');
 }
 
@@ -41,7 +42,7 @@ function return_success($message)
 }
 
 try {
-	$conn = new PDO('mysql:host=mysql.cc.puv.fi;dbname=' . $tunnarit[0], $tunnarit[1], $tunnarit[2]);
+	$conn = new PDO('mysql:host=' . $tunnarit[0] . ';dbname=' . $tunnarit[1], $tunnarit[2], $tunnarit[3]);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $conn->exec('SET NAMES utf8');
 } catch (PDOException $e) {
