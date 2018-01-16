@@ -1,16 +1,27 @@
 <?php
 
+# mysql_tunnarit.txt:
+# 1. rivi: tietokannan nimi
+# 2. rivi: käyttäjänimi
+# 3. rivi: salasana
+
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-# Tiedostoon ekalle riville SQL käyttäjänimi ja toiselle riville salasana
-$tunnarit = file('../../mysql_tunnarit.txt', FILE_IGNORE_NEW_LINES);
+$tunnarit_file = '';
+if (gethostname() == 'shell.vamk.fi') {
+	$tunnarit_file = '../../mysql_tunnarit.txt';
+} else {
+	$tunnarit_file = '../mysql_tunnarit.txt';
+}
+
+$tunnarit = file($tunnarit_file, FILE_IGNORE_NEW_LINES);
 if ($tunnarit === false) {
 	return_error('MySQL tunnuksien lataaminen ei onnistunut.');
 }
 
-if (count($tunnarit) != 2) {
+if (count($tunnarit) != 3) {
 	return_error('MySQL tiedoston sisältö ei ole validi');
 }
 
@@ -30,7 +41,7 @@ function return_success($message)
 }
 
 try {
-	$conn = new PDO('mysql:host=mysql.cc.puv.fi;dbname=' . $tunnarit[0] . '_Shipsoftware', $tunnarit[0], $tunnarit[1]);
+	$conn = new PDO('mysql:host=mysql.cc.puv.fi;dbname=' . $tunnarit[0], $tunnarit[1], $tunnarit[2]);
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $conn->exec('SET NAMES utf8');
 } catch (PDOException $e) {
