@@ -96,16 +96,16 @@
 			map = new google.maps.Map(document.getElementById('map'), mapOptions);
 		}
 
-		function addMarker(ShipID, sijainti, otsikko, infoIkkuna) {
+		function addMarker(IMO, position, title, markerInfoWindow) {
 			var marker = new google.maps.Marker({
-				position: sijainti,
+				position: this.position,
 				map: map,
-				title: otsikko
+				title: this.title
 			});
-			markers.push({ ShipID: ShipID, Marker: marker, InfoIkkuna: infoIkkuna });
+			markers.push({ IMO: IMO, Marker: marker, markerInfoWindow: markerInfoWindow });
 
 			google.maps.event.addListener(marker, 'click', function() {
-				infoIkkuna.open(map, marker);
+				markerInfoWindow.open(map, marker);
 			});
 		}
 	</script>
@@ -115,7 +115,8 @@
             draw(0);
         })
 
-        haeLaivat();
+        // Get ships into listbox
+        get_ships();
 
         $('#henkiloFormi').submit(function(ev) {
             ev.preventDefault();

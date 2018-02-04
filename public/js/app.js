@@ -16,7 +16,13 @@ $(window).resize(function() {
     });
 }).resize(); // Trigger resize handler
 
-function phpKutsu(kutsu, callback)
+/**
+ * Get data from API via GET
+ *
+ * @param string call - URL to call
+ * @param function callback - Function to call when request has completed
+ */
+function api_get(call, callback)
 {
     //if (window.XMLHttpRequest) {
         var request = new XMLHttpRequest();
@@ -28,33 +34,41 @@ function phpKutsu(kutsu, callback)
             callback({ status: request.status, data: request.responseText });
         }
     };
-    request.open('GET', 'sql.php?' + kutsu);
+    request.open('GET', 'api/' + call);
+    request.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    request.setRequestHeader('Accept', 'application/json');
     request.send();
 }
 
-// Keskitä kartta laivan Markkeriin kun laiva valitaan listalaatikosta
-function keskitaKartta(ShipID)
+/**
+ * Focus to the ship
+ *
+ * @param integer IMO - Ship IMO
+ */
+function focus_ship(IMO)
 {
-    var sijainti = null;
+    var position = null;
 
     for (i in markers) {
-        if (markers[i]['ShipID'] == ShipID) {
-            sijainti = markers[i]['Marker'].getPosition();
+        if (markers[i]['IMO'] == IMO) {
+            position = markers[i]['Marker'].getPosition();
             google.maps.event.trigger(markers[i]['Marker'], 'click');
             break;
         }
     }
 
-    if (sijainti !== null) {
-        map.setCenter(sijainti);
+    if (position !== null) {
+        map.setCenter(position);
     }
 }
 
-// Päivitä tab:n sisältö kun listalaatikon valinta muuttuu
+/**
+ * Update tab content when the listbox item selection changes
+ */
 $('#laivatListBox').change(function() {
     var currentTab = $('.nav-pills li.active').find('a').attr('href');
 
-    // TODO: lisää puuttuvat funktiot
+    // TODO: Add missing functions
     if (currentTab == '#rahti') {
         haeRahti();
     } else if (currentTab == '#kartta') {
@@ -62,7 +76,7 @@ $('#laivatListBox').change(function() {
         if (!listBox.options[listBox.selectedIndex]) {
             return false;
         } else {
-            keskitaKartta(listBox.options[listBox.selectedIndex].value);
+            focus_ship(listBox.options[listBox.selectedIndex].value);
         }
     } else if (currentTab == '#miehistö') {
         haeMiehisto();
@@ -71,33 +85,51 @@ $('#laivatListBox').change(function() {
     }
 });
 
-function haeLaivat(data = null)
+/**
+ * Get ships into listbox and add them into map
+ *
+ * @param mixed data - Use null when calling this function
+ */
+function get_ships(data = null)
 {
     if (data === null) {
-        phpKutsu('haeLaivat=true', haeLaivat);
+        api_get('ship/name/all', get_ships);
         return;
     }
 
     if (data['status'] != 200) {
         $('#laivatListBox').attr('disabled', true);
         if (data.data == '') {
-            $('#laivatListBox').append('<option>PHP koodit ei toimi</option>');
+            $('#laivatListBox').append('<option>Server error</option>');
         } else {
             $('#laivatListBox').append('<option>' + data.data + '</option>');
         }
     } else {
-        var laivat = JSON.parse(data.data);
+        var response = JSON.parse(data.data);
+        var ships = response['ships'];
 
-        for (var i in laivat) {
-            $("#laivatListBox").append('<option value="' + laivat[i]['ShipID'] + '">' + laivat[i]['ShipName'] + '</option>');
-            if (laivat[i]['North'] != null) {
-                sijainti = new google.maps.LatLng(laivat[i]['North'], laivat[i]['East']);
-                infoIkkuna = new google.maps.InfoWindow({ content: laivat[i]['ShipName'] + '<br>N: ' + laivat[i]['North'] + '<br>E: ' + laivat[i]['East'] });
-                addMarker(laivat[i]['ShipID'], sijainti, laivat[i]['ShipName'], infoIkkuna);
+        for (var i in ships) {
+            $("#laivatListBox").append('<option value="'
+                                       + ships[i]['IMO'] + '">'
+                                       + ships[i]['ShipName']
+                                       + '</option>');
+
+            if (ships[i]['Lat'] !== null) {
+                position = new google.maps.LatLng(ships[i]['Lat'],
+                                                  ships[i]['Lng']);
+                markerInfoWindow = new google.maps.InfoWindow({ content:
+                                                        ships[i]['ShipName']
+                                                        + '<br>N: '
+                                                        + ships[i]['Lat']
+                                                        + '<br>E: '
+                                                        + ships[i]['Lng'] });
+
+                addMarker(ships[i]['IMO'], position, ships[i]['ShipName'],
+                          markerInfoWindow);
             }
         }
 
-        // Valitse listalaatikon eka itemi
+        // Select first item in listbox
         $('#laivatListBox').val($('#laivatListBox option:first').val());
     }
 }
@@ -529,7 +561,7 @@ $('[data-toggle="tab"]').click(function(event) {
     if (targetTab == '#kartta') {
         var listBox = document.getElementById('laivatListBox');
         if (listBox.options[listBox.selectedIndex]) {
-            keskitaKartta(listBox.options[listBox.selectedIndex].value);
+            focus_ship(listBox.options[listBox.selectedIndex].value);
         }
     } else if (targetTab == '#rahti') {
         if (!haeRahti()) {
