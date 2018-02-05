@@ -13,8 +13,8 @@ return [
     |
     */
 
-    'failed' => 'These credentials do not match our records.',
-    'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
-    'logout' => 'Logout',
+    'failed' => 'Virheellinen sähköpostiosoite tai salasana.',
+    'throttle' => 'Liian monta kirjautumisyritystä. Yritä uudelleen :seconds sekunnin kuluttua.',
+    'logout' => 'Kirjaudu ulos',
 
 ];
