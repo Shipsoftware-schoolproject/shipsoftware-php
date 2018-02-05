@@ -17,52 +17,6 @@ $(window).resize(function() {
 }).resize(); // Trigger resize handler
 
 /**
- * Get data from API via GET
- *
- * @param string call - URL to call
- * @param function callback - Function to call when request has completed
- */
-function api_get(call, callback)
-{
-    //if (window.XMLHttpRequest) {
-        var request = new XMLHttpRequest();
-    //} else {
-        //var request = new ActiveXObject("Microsoft.XMLHTTP");
-    //}
-    request.onreadystatechange = function() {
-        if (request.readyState == 4) {
-            callback({ status: request.status, data: request.responseText });
-        }
-    };
-    request.open('GET', 'api/' + call);
-    request.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-    request.setRequestHeader('Accept', 'application/json');
-    request.send();
-}
-
-/**
- * Focus to the ship
- *
- * @param integer IMO - Ship IMO
- */
-function focus_ship(IMO)
-{
-    var position = null;
-
-    for (i in markers) {
-        if (markers[i]['IMO'] == IMO) {
-            position = markers[i]['Marker'].getPosition();
-            google.maps.event.trigger(markers[i]['Marker'], 'click');
-            break;
-        }
-    }
-
-    if (position !== null) {
-        map.setCenter(position);
-    }
-}
-
-/**
  * Update tab content when the listbox item selection changes
  */
 $('#laivatListBox').change(function() {
@@ -84,55 +38,6 @@ $('#laivatListBox').change(function() {
         haeLaivanTiedot();
     }
 });
-
-/**
- * Get ships into listbox and add them into map
- *
- * @param mixed data - Use null when calling this function
- */
-function get_ships(data = null)
-{
-    if (data === null) {
-        api_get('ship/name/all', get_ships);
-        return;
-    }
-
-    if (data['status'] != 200) {
-        $('#laivatListBox').attr('disabled', true);
-        if (data.data == '') {
-            $('#laivatListBox').append('<option>Server error</option>');
-        } else {
-            $('#laivatListBox').append('<option>' + data.data + '</option>');
-        }
-    } else {
-        var response = JSON.parse(data.data);
-        var ships = response['ships'];
-
-        for (var i in ships) {
-            $("#laivatListBox").append('<option value="'
-                                       + ships[i]['IMO'] + '">'
-                                       + ships[i]['ShipName']
-                                       + '</option>');
-
-            if (ships[i]['Lat'] !== null) {
-                position = new google.maps.LatLng(ships[i]['Lat'],
-                                                  ships[i]['Lng']);
-                markerInfoWindow = new google.maps.InfoWindow({ content:
-                                                        ships[i]['ShipName']
-                                                        + '<br>N: '
-                                                        + ships[i]['Lat']
-                                                        + '<br>E: '
-                                                        + ships[i]['Lng'] });
-
-                addMarker(ships[i]['IMO'], position, ships[i]['ShipName'],
-                          markerInfoWindow);
-            }
-        }
-
-        // Select first item in listbox
-        $('#laivatListBox').val($('#laivatListBox option:first').val());
-    }
-}
 
 function haeRahti(data = null)
 {
@@ -548,40 +453,3 @@ function paivitaHenkilo(data)
             $('#Henkilotiedot').append('<tr><tr><td rowspan="2"><img id="Kuva" src="'+henkilo[i]['Picture']+ '" width="120"></img></td><td colspan="2"><b>Nimi:</b>'+henkilo[i]['FirstName']+" "+henkilo[i]['LastName']+'</td><th >Kotiosoite</th></tr><tr><td colspan="2"><b>Sotu:</b>'+henkilo[i]['SocialID']+' </td><td><table border="3" style="width: 100%" ><tr><th>Postiosoite:</th><td>'+henkilo[i]['MailingAddress']+'</td></tr><tr><th>Kaupunki:</th><td>'+henkilo[i]['City']+'</td></tr><tr><th>Postinumero:</th><td>'+henkilo[i]['ZipCode']+'</td></tr></table></td></tr><tr><td colspan="2"><b>Titteli:</b>  '+henkilo[i]['Title']+'</td><td colspan="2"><b>Puhelin Numero:</b> '+henkilo[i]['Phone']+'</td></tr>');
             }
 }
-
-$('[data-toggle="tab"]').click(function(event) {
-    var currentTab = $('.nav-pills li.active').find('a').attr('href');
-    var targetTab = $(event.target).attr('href')
-
-    if (currentTab == targetTab) {
-        event.preventDefault();
-        return false;
-    }
-
-    if (targetTab == '#kartta') {
-        var listBox = document.getElementById('laivatListBox');
-        if (listBox.options[listBox.selectedIndex]) {
-            focus_ship(listBox.options[listBox.selectedIndex].value);
-        }
-    } else if (targetTab == '#rahti') {
-        if (!haeRahti()) {
-            alert('Valitse ensin laiva.');
-            event.preventDefault();
-            return false;
-        }
-    } else if (targetTab == '#miehistö'){
-        if (!haeMiehisto()){
-            alert('Valitse ensin laiva.')
-            event.preventDefault();
-            return false;
-        }
-    } else if (targetTab == '#laivantiedot') {
-        if (!haeLaivanTiedot()) {
-            alert('Valitse ensin laiva.');
-            event.preventDefault();
-            return false;
-        }
-    } else {
-        alert('Tabiä "' + $(event.target).attr('href') + '" ei ole implementoitu');
-    }
-});

@@ -27,7 +27,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="{{ url('/') }}">Shipsoftware</a><br>
+                    <a class="navbar-brand" href="{{ url('/') }}">{{ config('app.name') }}</a><br>
                 </div>
                 <div id="app-navbar-collapse" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
@@ -35,9 +35,9 @@
                             <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
                         </li> --}}
                     </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        <!-- Authentication Links -->
-                        @auth
+                    @auth
+                        <!-- User links -->
+                        <ul class="nav navbar-nav navbar-right">
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
                                     {{ Auth::user()->FirstName }} {{ Auth::user()->LastName }} <span class="caret"></span>
@@ -48,7 +48,7 @@
                                         <a href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                            Logout
+                                            {{ trans('auth.logout') }}
                                         </a>
 
                                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -57,8 +57,8 @@
                                     </li>
                                 </ul>
                             </li>
-                        @endauth
-                    </ul>
+                        </ul>
+                    @endauth
                 </div>
             </div>
         </nav>
@@ -71,7 +71,7 @@
         <!-- Footer -->
         <footer class="footer">
             <div class="container">
-                <p>&#169; Shipsoftware</p>
+                <p>&#169; {{ config('app.name') }}</p>
             </div>
         </footer>
     </div>
@@ -80,71 +80,50 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyAK8bzrVV9-fH72e3jyXSSjsWkW5bpduok&callback=initMap"></script>
-    <script src="{{ asset('js/app.js') }}"></script>
-    <script src="{{ url('js/compass.js') }}"></script>
-	<script>
-		var map, miniMap;
-		var markers = new Array();
+    @auth
+        <script src="{{ asset('js/api.js') }}"></script>
+        <script src="{{ asset('js/map.js') }}"></script>
+        <script src="{{ asset('js/ship.js') }}"></script>
+        @hasSection('scripts')
+            @yield('scripts')
+        @endif
+        {{--<script type="text/javascript">--}}
+            {{--// Init kompassi--}}
+            {{--$(document).ready(function() {--}}
+                {{--//draw(0);--}}
+            {{--});--}}
 
-		function initMap() {
-			var mapOptions = {
-				center: { lat: 63.1022601, lng: 21.5809185 },
-				zoom: 8,
-				streetViewControl: false
-			};
+            {{--// Get ships into listbox--}}
+            {{--get_ships();--}}
 
-			map = new google.maps.Map(document.getElementById('map'), mapOptions);
-		}
+            {{--$('#henkiloFormi').submit(function(ev) {--}}
+                {{--ev.preventDefault();--}}
+                {{--$('#txtSotu').removeAttr("disabled");--}}
+                {{--var formData = new FormData($(this)[0]);--}}
 
-		function addMarker(IMO, position, title, markerInfoWindow) {
-			var marker = new google.maps.Marker({
-				position: this.position,
-				map: map,
-				title: this.title
-			});
-			markers.push({ IMO: IMO, Marker: marker, markerInfoWindow: markerInfoWindow });
-
-			google.maps.event.addListener(marker, 'click', function() {
-				markerInfoWindow.open(map, marker);
-			});
-		}
-	</script>
-	<script type="text/javascript">
-        // Init kompassi
-        $(document).ready(function() {
-            draw(0);
-        })
-
-        // Get ships into listbox
-        get_ships();
-
-        $('#henkiloFormi').submit(function(ev) {
-            ev.preventDefault();
-            $('#txtSotu').removeAttr("disabled");
-            var formData = new FormData($(this)[0]);
-
-            $.ajax({
-                type: $(this).attr('method'),
-                url: $(this).attr('action'),
-                data: formData,
-                contentType: false,
-                processData: false,
-                success: function(data) {
-                    alert(data);
-                    $('#henkiloModal').modal('hide');
-                    haeMiehisto();
-                    return true;
-                },
-                error: function(data) {
-                    if (data.responseText == '') {
-                        alert('PHP koodissa jokin iso vika.');
-                    } else {
-                        alert(data.responseText);
-                    }
-                    return false;
-                }
-            });
-        });
-    </script>
+                {{--$.ajax({--}}
+                    {{--type: $(this).attr('method'),--}}
+                    {{--url: $(this).attr('action'),--}}
+                    {{--data: formData,--}}
+                    {{--contentType: false,--}}
+                    {{--processData: false,--}}
+                    {{--success: function(data) {--}}
+                        {{--alert(data);--}}
+                        {{--$('#henkiloModal').modal('hide');--}}
+                        {{--haeMiehisto();--}}
+                        {{--return true;--}}
+                    {{--},--}}
+                    {{--error: function(data) {--}}
+                        {{--if (data.responseText == '') {--}}
+                            {{--alert('PHP koodissa jokin iso vika.');--}}
+                        {{--} else {--}}
+                            {{--alert(data.responseText);--}}
+                        {{--}--}}
+                        {{--return false;--}}
+                    {{--}--}}
+                {{--});--}}
+            {{--});--}}
+        {{--</script>--}}
+    @endauth
 </body>
 </html>
