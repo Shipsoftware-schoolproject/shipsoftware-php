@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <div class="content" style="min-height: 100%; height: 100%;">
+    <div class="content">
         <div class="col-lg-3">
             <!-- Ships box -->
             <div class="col-lg-12">
