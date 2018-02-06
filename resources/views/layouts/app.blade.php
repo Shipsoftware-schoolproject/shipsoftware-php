@@ -65,7 +65,10 @@
 
         <!-- Main content -->
         <div class="container">
-            @yield('content')
+            <div class="content">
+                @yield('content')
+                <div id="push"></div>
+            </div>
         </div>
 
         <!-- Footer -->

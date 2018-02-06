@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="content">
     <div class="col-lg-3">
         <div class="valikot">
             <!-- Laivat laatikko -->
@@ -308,6 +307,4 @@
             </div>
         </div>
     </div>
-    <div id="push"></div>
-</div>
 @endsection
