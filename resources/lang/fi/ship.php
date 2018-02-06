@@ -16,5 +16,7 @@ return [
 
     'ship' => '{0} Laiva|[1,*]Laivat',
     'find' => 'Hae laiva',
+    'show_info' => 'Näytä laivan tiedot',
+    'select_first' => 'Valitse ensin laiva!',
 
 ];

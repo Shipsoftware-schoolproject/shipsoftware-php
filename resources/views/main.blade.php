@@ -17,6 +17,8 @@
                         <!-- TODO: Search button -->
                         <input id="shipSearch" class="search" type="search" placeholder="{{ trans('ship.find') }}" />
                         <select id="lstShips" class="listbox" size="8" name="laivat"></select>
+                        <input id="lstShip_errormsg" type="hidden" value="{{ trans('ship.select_first') }}" />
+                        <input class="btn btn-primary" type="button" onclick="shipDetails();" value="{{ trans('ship.show_info') }}" />
                     </div>
                 </div>
             </div>

@@ -12,6 +12,20 @@ $('#lstCompanies').change(function () {
     // TODO: Implementation..
 });
 
+/**
+ * Redirect to ship information page
+ */
+function shipDetails() {
+    var lstShips = document.getElementById('lstShips');
+
+    if (lstShips.options[lstShips.selectedIndex]) {
+        window.location.href = 'ship/'
+            + lstShips.options[lstShips.selectedIndex].value;
+    } else {
+        alert($('#lstShip_errormsg').val());
+    }
+}
+
 $(document).ready(function() {
     get_ships();
 });

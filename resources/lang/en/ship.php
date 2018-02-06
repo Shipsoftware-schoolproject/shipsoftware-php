@@ -16,5 +16,7 @@ return [
 
     'ship' => '{0} Ship|[1,*]Ships',
     'find' => 'Search ship',
+    'show_info' => 'Show ship information',
+    'select_first' => 'Select ship first!',
 
 ];
