@@ -1,4 +1,4 @@
-var map, miniMap;
+var map;
 var markers = new Array();
 
 /**

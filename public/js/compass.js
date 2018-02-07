@@ -1,6 +1,14 @@
+/**
+ * Set compass needle to point into degress
+ *
+ * @param degrees
+ */
 function draw(degrees) {
     //alert(degrees);
     var canvas = document.getElementById('compass');
+    var ctx;
+    var needle;
+    var img;
 
 	// Canvas supported?
 	if (canvas.getContext('2d')) {

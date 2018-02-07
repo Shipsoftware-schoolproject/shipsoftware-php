@@ -15,5 +15,7 @@ return [
     */
 
     'map' => 'Map',
+    'back_to_map' => 'Back to map view',
+    'unknown' => 'Unknown',
 
 ];

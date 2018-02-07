@@ -1,55 +1,174 @@
 @extends('layouts.app')
 
+@section('scripts')
+    <script src="{{ asset('js/map.js') }}"></script>
+    <script src="{{ asset('js/compass.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            @if(isset($ship->Course))
+                draw({{ $ship->Course }});
+            @else
+                draw(0);
+            @endif
+        });
+    </script>
+@endsection
+
 @section('content')
     <div class="col-lg-3">
-        <div class="valikot">
-            <!-- Laivat laatikko -->
-            <div>
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Laivat</h3>
-                    </div>
-                    <div class="panel-body">
-                        <!-- TODO: Search button -->
-                        <input id="laivatSearchBox" type="search" placeholder="Hae laiva"></input>
-                        <select id="laivatListBox" size="8" name="laivat">
-                        </select>
-                    </div>
-                </div>
+        <!-- Tabs box -->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">{{ trans('ship.tabs') }}</h3>
             </div>
-            <!-- Välilehdet laatikko -->
-            <div>
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Välilehdet</h3>
-                    </div>
-                    <div class="panel-body">
-                        <!-- Nav tabs -->
-                        <ul class="nav nav-pills nav-stacked" role="tablist">
-                            <li class="active"><a href="#kartta" role="tab" data-toggle="tab">Kartta</a></li>
-                            <li><a href="#miehistö" role="tab" data-toggle="tab">Miehistö</a></li>
-                            <li><a href="#laivantiedot" role="tab" data-toggle="tab">Laivan tiedot</a></li>
-                            <li><a href="#rahti" role="tab" data-toggle="tab">Rahti</a></li>
-                        </ul>
-                    </div>
-                </div>
+            <div class="panel-body">
+                <!-- Nav tabs -->
+                <ul class="nav nav-pills nav-stacked" role="tablist">
+                    <li class="active"><a href="#shipinfo" role="tab" data-toggle="tab">{{ trans('ship.info') }}</a></li>
+                    <li><a href="#miehistö" role="tab" data-toggle="tab">Miehistö</a></li>
+                    <li><a href="#rahti" role="tab" data-toggle="tab">Rahti</a></li>
+                </ul>
             </div>
         </div>
+        <a href="{{ url('/') }}"><input class="btn btn-primary" type="button" value="{{ trans('misc.back_to_map') }}" /></a>
     </div>
     <div class="col-lg-9">
-        <!-- Tab panes -->
+        <!-- Tabs content -->
         <div class="tab-content">
-            <!-- Kartta -välilehti -->
-            <div class="tab-pane active" id="kartta">
-                <div class="col-lg-9">
+            <!-- Ship info tab -->
+            <div class="tab-pane active" id="shipinfo">
+                <!-- General info, location, course, etc. -->
+                <div class="col-lg-5">
+                    <!-- General info box -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Kartta</h3>
+                            <h3 class="panel-title">{{ trans('ship.general_info') }}</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-6">{{ trans('ship.name') }}:</div>
+                                <div id="name" class="col-md-6 text-right">
+                                    @if(isset($ship->ShipName))
+                                        {{ $ship->ShipName }}
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">{{ trans('ship.type') }}:</div>
+                                <div id="type" class="col-md-6 text-right">
+                                    @if(isset($ship->Type))
+                                        {{ $ship->Type }}
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">MMSI:</div>
+                                <div id="mmsi" class="col-md-6 text-right">
+                                    @if(isset($ship->MMSI))
+                                        {{ $ship->MMSI }}
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">{{ trans_choice('companies.company', 0) }}:</div>
+                                <div id="type" class="col-md-6 text-right">
+                                    @if(isset($ship->Company))
+                                        {{ $ship->Company }}
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">{{ trans('ship.length') }}:</div>
+                                <div id="length" class="col-md-6 text-right">
+                                    @if(isset($ship->ShipLength))
+                                        {{ $ship->ShipLength }}
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-8">{{ trans('ship.width') }}:</div>
+                                <div id="width" class="col-md-4 text-right">
+                                    @if(isset($ship->Width))
+                                        {{ $ship->Width }}
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-8">{{ trans('ship.draught') }}:</div>
+                                <div id="width" class="col-md-4 text-right">
+                                    @if(isset($ship->Draught))
+                                        {{ $ship->Draught }}
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Location box -->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">{{ trans('ship.location') }}</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-2">{{ trans('ship.comment') }}:</div>
+                                <div id="comment" class="col-md-10 text-right">
+                                    @if(isset($ship->CommentText))
+                                        {{ $ship->CommentText }}
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">{{ trans('ship.lat') }}:</div>
+                                <div id="lat" class="col-md-6 text-right">
+                                    @if(isset($gps->Lat))
+                                        {{ $gps->Lat }}
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">{{ trans('ship.lng') }}:</div>
+                                <div id="lng" class="col-md-6 text-right">
+                                    @if(isset($gps->Lng))
+                                        {{ $gps->Lng }}
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Course -->
+                    <div id="course" class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">{{ trans('ship.course') }}</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row text-center">
+                                <!-- Compass -->
+                                <canvas id="compass" width="200" height="200"></canvas>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-8">{{ trans('ship.precise_course') }}:</div>
+                                <div id="precise_course" class="col-md-4 text-right">
+                                    @if(isset($ship->Course))
+                                        {{ $ship->Course }}
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Map box -->
+                <div class="col-lg-7">
+                    <!-- Minimap box -->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">{{ trans('misc.map') }}</h3>
                         </div>
                         <div class="panel-body" id="map"></div>
                     </div>
                 </div>
             </div>
+
+            <!-- FIXME: Implementations etc. -->
             <!-- Miehistö -välilehti -->
             <div class="tab-pane" id="miehistö">
                 <div class="col-lg-12">
@@ -185,94 +304,6 @@
                         <button type="button" class="btn btn-success" onclick="lisaaHenkilo()">Lisää henkilö</button>
                         <button type="button" class="btn btn-warning" onclick="muokkaaHenkilo()">Muokkaa henkilöä</button>
                         <button type="button" class="btn btn-danger" onclick="poistaHenk()">Poista henkilö</button>
-                    </div>
-                </div>
-            </div>
-            <!-- Laivan tiedot -välilehti -->
-            <div class="tab-pane" id="laivantiedot">
-                <!-- Yleistiedot,Sijainti,Suunta -->
-                <div class="col-lg-5">
-                    <!-- Yleistiedot -laatikko -->
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Yleistiedot</h3>
-                        </div>
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="col-md-6">Laivan nimi:</div>
-                                <div id="laivaNimi" class="col-md-6 text-right"></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">Laivan Tyyppi:</div>
-                                <div id="laivaTyyppi" class="col-md-6 text-right"></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">MMSI:</div>
-                                <div id="laivaMMSI" class="col-md-6 text-right"></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">Pituus:</div>
-                                <div id="laivaPituus" class="col-md-6 text-right"></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-8">Leveys:</div>
-                                <div id="laivaLeveys" class="col-md-4 text-right"></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-8">Paino:</div>
-                                <div id="laivaPaino" class="col-md-4 text-right"></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-8">Kuollut Paino:</div>
-                                <div id="laivaKuollutPaino" class="col-md-4 text-right"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Sijainti -laatikko -->
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Sijainti</h3>
-                        </div>
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="col-md-2">Reitti:</div>
-                                <div id="laivaReitti" class="col-md-10 text-right"></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">Nort:</div>
-                                <div id="laivaNorth" class="col-md-6 text-right"></div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">East:</div>
-                                <div id="laivaEast" class="col-md-6 text-right"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Suunta -laatikko -->
-                    <div id="suunta" class="panel panel-default">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Suunta</h3>
-                        </div>
-                        <div class="panel-body">
-                            <div class="row text-center">
-                                <!-- Kompassi -->
-                                <canvas id="compass" width="200" height="200"></canvas>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-8">Tarkka suunta:</div>
-                                <div id="laivanTarkkaSuunta" class="col-md-4 text-right"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Kartta -laatikko -->
-                <div class="col-lg-6">
-                    <!-- Minimap -laatikko -->
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Kartta</h3>
-                        </div>
-                        <div class="panel-body" id="minimap"></div>
                     </div>
                 </div>
             </div>

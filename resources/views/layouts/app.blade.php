@@ -84,9 +84,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyAK8bzrVV9-fH72e3jyXSSjsWkW5bpduok&callback=initMap"></script>
     @auth
-        <script src="{{ asset('js/api.js') }}"></script>
-        <script src="{{ asset('js/map.js') }}"></script>
-        <script src="{{ asset('js/ship.js') }}"></script>
         @hasSection('scripts')
             @yield('scripts')
         @endif

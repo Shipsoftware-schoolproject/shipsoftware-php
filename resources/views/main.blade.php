@@ -1,7 +1,10 @@
 @extends('layouts.app')
 
 @section('scripts')
-    <script src="/js/mainpage.js"></script>
+    <script src="{{ asset('js/api.js') }}"></script>
+    <script src="{{ asset('js/ship.js') }}"></script>
+    <script src="{{ asset('js/map.js') }}"></script>
+    <script src="{{ asset('js/mainpage.js') }}"></script>
 @endsection
 
 @section('content')

@@ -15,5 +15,7 @@ return [
     */
 
     'map' => 'Kartta',
+    'back_to_map' => 'Takaisin kartta näkymään',
+    'unknown' => 'Tuntematon',
 
 ];
