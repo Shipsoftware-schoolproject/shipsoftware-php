@@ -6,9 +6,9 @@
     <script type="text/javascript">
         $(document).ready(function() {
             @if(isset($ship->Course))
-                draw({{ $ship->Course }});
+                compass_init({{ $ship->Course }});
             @else
-                draw(0);
+                compass_init();
             @endif
         });
     </script>
