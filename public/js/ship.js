@@ -28,17 +28,8 @@ function get_ships(data = null)
                 + '</option>');
 
             if (ships[i]['Lat'] !== null) {
-                position = new google.maps.LatLng(ships[i]['Lat'],
-                    ships[i]['Lng']);
-                markerInfoWindow = new google.maps.InfoWindow({ content:
-                    ships[i]['ShipName']
-                    + '<br>N: '
-                    + ships[i]['Lat']
-                    + '<br>E: '
-                    + ships[i]['Lng'] });
-
-                addMarker(ships[i]['IMO'], position, ships[i]['ShipName'],
-                    markerInfoWindow);
+                addMarker(ships[i]['IMO'], ships[i]['Lat'], ships[i]['Lng'],
+                    ships[i]['ShipName']);
             }
         }
 

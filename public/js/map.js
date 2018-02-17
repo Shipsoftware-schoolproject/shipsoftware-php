@@ -18,21 +18,28 @@ function initMap() {
  * Add marker into the map
  *
  * @param IMO - Ship IMO number
- * @param position - GPS coordinates
+ * @param lat - Latitude
+ * @param lng Longitude
  * @param title - Info window title
- * @param markerInfoWindow - Marker's info window
  */
-function addMarker(IMO, position, title, markerInfoWindow) {
-    var marker = new google.maps.Marker({
-        position: this.position,
+function addMarker(IMO, lat, lng, title) {
+    let deferred = new $.Deferred();
+    let marker = new google.maps.Marker({
+        position: new google.maps.LatLng(lat, lng),
         map: map,
         title: this.title
     });
-    markers.push({ IMO: IMO, Marker: marker, markerInfoWindow: markerInfoWindow });
+    let infoWin = new google.maps.InfoWindow({
+        content: title + '<br>N: ' + lat + '<br>E: ' + lng
+    });
+    markers.push({ IMO: IMO, Marker: marker, markerInfoWindow: infoWin });
 
     google.maps.event.addListener(marker, 'click', function() {
-        markerInfoWindow.open(map, marker);
+        infoWin.open(map, marker);
     });
+
+    deferred.resolve();
+    return deferred.promise();
 }
 
 /**

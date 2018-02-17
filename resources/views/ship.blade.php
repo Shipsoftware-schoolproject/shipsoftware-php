@@ -5,11 +5,19 @@
     <script src="{{ asset('js/compass.js') }}"></script>
     <script type="text/javascript">
         $(document).ready(function() {
+            // Initialize compass
             @if(isset($ship->Course))
                 compass_init({{ $ship->Course }});
             @else
                 compass_init();
             @endif
+        });
+
+        $(window).load(function() {
+            // Add pin into map
+            addMarker({{ $ship->IMO }}, {{ $gps->Lat }}, {{ $gps->Lng }}, '{{ $ship->ShipName }}').done(function() {
+                focus_ship({{ $ship->IMO }});
+            });
         });
     </script>
 @endsection
