@@ -29,7 +29,7 @@ function get_ships(data = null)
 
             if (ships[i]['Lat'] !== null) {
                 addMarker(ships[i]['IMO'], ships[i]['Lat'], ships[i]['Lng'],
-                    ships[i]['ShipName']);
+                    ships[i]['ShipName'],ships[i]['UpdatedTime']);
             }
         }
 
