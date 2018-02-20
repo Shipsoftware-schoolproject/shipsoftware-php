@@ -15,7 +15,7 @@
 
         $(window).load(function() {
             // Add pin into map
-            addMarker({{ $ship->IMO }}, {{ $gps->Lat }}, {{ $gps->Lng }}, '{{ $ship->ShipName }}').done(function() {
+            addMarker({{ $ship->IMO }}, {{ $gps->Lat }}, {{ $gps->Lng }}, '{{ $ship->ShipName }}',{{$gps->UpdatedTime}}).done(function() {
                 focus_ship({{ $ship->IMO }});
             });
         });

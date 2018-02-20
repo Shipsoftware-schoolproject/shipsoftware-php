@@ -22,7 +22,7 @@ function initMap() {
  * @param lng Longitude
  * @param title - Info window title
  */
-function addMarker(IMO, lat, lng, title) {
+function addMarker(IMO, lat, lng, title,UpdatedTime) {
     let deferred = new $.Deferred();
     let marker = new google.maps.Marker({
         position: new google.maps.LatLng(lat, lng),
@@ -30,7 +30,7 @@ function addMarker(IMO, lat, lng, title) {
         title: this.title
     });
     let infoWin = new google.maps.InfoWindow({
-        content: title + '<br>N: ' + lat + '<br>E: ' + lng
+        content: title + '<br>N: ' + lat + '<br>E: ' + lng + '<br>Update Time: ' + UpdatedTime
     });
     markers.push({ IMO: IMO, Marker: marker, markerInfoWindow: infoWin });
 
