@@ -352,7 +352,7 @@
 			            <!-- Company info tab -->
             <div class="tab-pane active" id="company">
                 <!-- General info company -->
-                <div class="col-lg-5">
+                <div class="col-lg-10">
                     <!-- General info box -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -396,6 +396,9 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+					<div>
+                        <button type="button" class="btn btn-warning" id="editCompany">Muokkaa Yhtiötä</button>
                     </div>
 				</div>
             </div>
