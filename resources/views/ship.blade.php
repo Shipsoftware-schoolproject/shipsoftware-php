@@ -350,7 +350,7 @@
                 </div>
             </div>
 			            <!-- Company info tab -->
-            <div class="tab-pane active" id="company">
+            <div class="tab-pane" id="company">
                 <!-- General info company -->
                 <div class="col-lg-10">
                     <!-- General info box -->
