@@ -349,6 +349,56 @@
                     </div>
                 </div>
             </div>
+			            <!-- Company info tab -->
+            <div class="tab-pane active" id="company">
+                <!-- General info company -->
+                <div class="col-lg-5">
+                    <!-- General info box -->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Yhteystiedot</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-6">Nimi:</div>
+                                <div id="name" class="col-md-6 text-right">
+                                    Kingkat Oy.
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">Mailing Address:</div>
+                                <div id="type" class="col-md-6 text-right">
+                                Kingkat katu 25-27 A13
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">ZipCode:</div>
+                                <div id="mmsi" class="col-md-6 text-right">
+                                    65200
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">City:</div>
+                                <div id="type" class="col-md-6 text-right">
+                                    Vaasa
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">IS Port:</div>
+                                <div id="length" class="col-md-6 text-right">
+                                    Yes/no
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-8">country:</div>
+                                <div id="width" class="col-md-4 text-right">
+                                    KingKatistan
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+				</div>
+            </div>
         </div>
     </div>
 @endsection
