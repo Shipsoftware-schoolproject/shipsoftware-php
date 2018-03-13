@@ -65,6 +65,22 @@ class User extends Authenticatable
      */
     public function getAuthPassword()
     {
-        return $this->Password;;
+        return $this->Password;
+    }
+
+    /**
+     * Check is the current user Admin
+     *
+     * @return bool
+     */
+    public function isAdmin()
+    {
+        $role = new Role;
+
+        if ($role->getName($this->RoleID)) {
+            return true;
+        }
+
+        return false;
     }
 }
