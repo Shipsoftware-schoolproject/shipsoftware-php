@@ -33,8 +33,9 @@
                 <!-- Nav tabs -->
                 <ul class="nav nav-pills nav-stacked" role="tablist">
                     <li class="active"><a href="#shipinfo" role="tab" data-toggle="tab">{{ trans('ship.info') }}</a></li>
-                    <li><a href="#miehistö" role="tab" data-toggle="tab">Miehistö</a></li>
-                    <li><a href="#rahti" role="tab" data-toggle="tab">Rahti</a></li>
+                    <li><a href="#crew" role="tab" data-toggle="tab">Miehistö</a></li>
+                    <li><a href="#cargo" role="tab" data-toggle="tab">Rahti</a></li>
+					<li><a href="#company" role="tab" data-toggle="tab">Yhtiö</a></li>
                 </ul>
             </div>
         </div>
@@ -174,11 +175,14 @@
                         <div class="panel-body" id="map"></div>
                     </div>
                 </div>
+				<div>
+                    <button type="button" class="btn btn-warning" id="editShip">Muokkaa Laivaa</button>
+				</div>
             </div>
 
             <!-- FIXME: Implementations etc. -->
             <!-- Miehistö -välilehti -->
-            <div class="tab-pane" id="miehistö">
+            <div class="tab-pane" id="crew">
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -316,8 +320,9 @@
                 </div>
             </div>
             <!-- Rahti -välilehti -->
-            <div class="tab-pane" id="rahti">
+            <div class="tab-pane" id="cargo">
                 <div class="col-lg-12">
+					<!-- Mikä ihmeen minimap? -->
                     <!-- Minimap -laatikko -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
