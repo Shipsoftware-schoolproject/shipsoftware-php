@@ -16,3 +16,5 @@ Auth::routes();
 Route::get('/', 'ViewsController@index');
 
 Route::get('/ship/{id}', 'ViewsController@ship');
+
+Route::get('/admin', 'AdminController@index');
