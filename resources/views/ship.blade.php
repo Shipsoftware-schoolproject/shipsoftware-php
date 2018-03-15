@@ -2,6 +2,7 @@
 
 @section('scripts')
     <script src="{{ asset('js/map.js') }}"></script>
+	<script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/compass.js') }}"></script>
     <script type="text/javascript">
         $(document).ready(function() {
