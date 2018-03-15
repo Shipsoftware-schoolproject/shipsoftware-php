@@ -314,9 +314,9 @@
                                 </div>
                             </div>
                         </div>
-                        <button type="button" class="btn btn-success" onclick="lisaaHenkilo()">Lisää henkilö</button>
-                        <button type="button" class="btn btn-warning" onclick="muokkaaHenkilo()">Muokkaa henkilöä</button>
-                        <button type="button" class="btn btn-danger" onclick="poistaHenk()">Poista henkilö</button>
+                        <button type="button" class="btn btn-success" onclick="lisaaHenkilo({{ $ship->IMO }})">Lisää henkilö</button>
+                        <button type="button" class="btn btn-warning" onclick="muokkaaHenkilo({{ $ship->IMO }})">Muokkaa henkilöä</button>
+                        <button type="button" class="btn btn-danger" onclick="poistaHenk({{ $ship->IMO }})">Poista henkilö</button>
                     </div>
                 </div>
             </div>

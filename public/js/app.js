@@ -178,15 +178,14 @@ function tyhjennaHenkForm() {
     $('#henkiloFormi>div>fieldset>div>div>div>span').addClass('hidden');
 }
 
-function lisaaHenkilo() {
+function lisaaHenkilo(IMO) {
     var title = 'Lisää henkilö';
     $('#henkFormTyyppi').val('lisaa');
     $('#txtSotu').removeAttr("disabled");
 
     tyhjennaHenkForm();
 
-    var listBox = document.getElementById('laivatListBox');
-    $('#henkLaiva').val(listBox.options[listBox.selectedIndex].value);
+    $('#henkLaiva').val(IMO);
 
     // modalin otsikko rivin väri ja otsikko
     $('#henkModalColor').removeClass('bg-warning');
