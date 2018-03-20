@@ -14,7 +14,7 @@ class User extends Authenticatable
      *
      * @var string
      */
-    protected $table = 'Persons';
+    protected $table = 'Users';
 
     /**
      * Users table primary key
