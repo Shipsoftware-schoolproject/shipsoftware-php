@@ -363,37 +363,49 @@
                             <div class="row">
                                 <div class="col-md-6">Nimi:</div>
                                 <div id="name" class="col-md-6 text-right">
-                                    Kingkat Oy.
+                                    @if(isset($company->Name))
+                                        {{ $company->Name }}
+                                    @endif
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">Mailing Address:</div>
                                 <div id="type" class="col-md-6 text-right">
-                                Kingkat katu 25-27 A13
+                                @if(isset($company->MailingAddress))
+                                        {{ $company->MailingAddress }}
+                                    @endif
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">ZipCode:</div>
                                 <div id="mmsi" class="col-md-6 text-right">
-                                    65200
+                                     @if(isset($company->ZipCode))
+                                        {{ $company->ZipCode }}
+                                    @endif
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">City:</div>
                                 <div id="type" class="col-md-6 text-right">
-                                    Vaasa
+                                     @if(isset($company->City))
+                                        {{ $company->City }}
+                                    @endif
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">IS Port:</div>
                                 <div id="length" class="col-md-6 text-right">
-                                    Yes/no
+                                    @if(isset($company->IsPort))
+                                        {{ $company->IsPort }}
+                                    @endif
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-8">country:</div>
                                 <div id="width" class="col-md-4 text-right">
-                                    KingKatistan
+                                    @if(isset($company->CountryID))
+                                        {{ $company->CountryID }}
+                                    @endif
                                 </div>
                             </div>
                         </div>
