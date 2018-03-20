@@ -41,6 +41,8 @@ class ViewsController extends Controller
             return 'Ship not found';
         }
 
+		$company = DB::table('Companies')->where('ID', $ship->CompanyID)->first();
+		
         $type = DB::table('ShipTypes')->where('ID', $ship->TypeID)->first();
         if ($type) {
             $ship->Type = $type->Name;
@@ -48,6 +50,6 @@ class ViewsController extends Controller
 
         $gps = DB::table('GPS')->where('IMO', $id)->latest('UpdatedTime')->first();
 
-        return view('ship')->with(['ship' => $ship, 'gps' => $gps]);
+        return view('ship')->with(['ship' => $ship, 'gps' => $gps,'company' => $company]);
     }
 }
