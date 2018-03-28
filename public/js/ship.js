@@ -1,7 +1,7 @@
 /**
  * Get ships into listbox and add them into map
  *
- * @param mixed data - Use null when calling this function
+ * @param data - Use null when calling this function
  */
 function get_ships(data = null)
 {
@@ -29,7 +29,7 @@ function get_ships(data = null)
 
             if (ships[i]['Lat'] !== null) {
                 addMarker(ships[i]['IMO'], ships[i]['Lat'], ships[i]['Lng'],
-                    ships[i]['ShipName'],ships[i]['UpdatedTime']);
+                    ships[i]['ShipName'], ships[i]['UpdatedTime']);
             }
         }
 

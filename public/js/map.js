@@ -21,8 +21,9 @@ function initMap() {
  * @param lat - Latitude
  * @param lng Longitude
  * @param title - Info window title
+ * @param UpdatedTime - Time when the GPS location was updated
  */
-function addMarker(IMO, lat, lng, title,UpdatedTime) {
+function addMarker(IMO, lat, lng, title, UpdatedTime) {
     let deferred = new $.Deferred();
     let marker = new google.maps.Marker({
         position: new google.maps.LatLng(lat, lng),

@@ -16,7 +16,7 @@ class APIController extends Controller
     public function get_all_ship_names(Request $request)
     {
         $ships = DB::table('Ships')
-                    ->select('Ships.IMO', 'ShipName', 'GPS.Lat', 'GPS.Lng')
+                    ->select('Ships.IMO', 'ShipName', 'GPS.Lat', 'GPS.Lng', 'GPS.UpdatedTime')
                     ->leftJoin('GPS', function($join) {
                         $join->on('Ships.IMO', '=', 'GPS.IMO')
                             ->whereIn('ID', [DB::raw('SELECT MAX(ID) FROM GPS GROUP BY IMO')]);
