@@ -10,12 +10,7 @@
             <div class="panel-body">
                 <!-- Nav tabs -->
                 <ul class="nav nav-pills nav-stacked" role="tablist">
-<<<<<<< HEAD
-                    <li class="active"><a href="#shipinfo" role="tab" data-toggle="tab">{{ trans('ship.info') }}</a></li>
-					<li><a href="#editship" role="tab" data-toggle="tab">Laivat</a></li>
-=======
 					<li class="active"><a href="#editship" role="tab" data-toggle="tab">Laivat</a></li>
->>>>>>> utf8 part2
                     <li><a href="#editcrew" role="tab" data-toggle="tab">Miehistö</a></li>
                     <li><a href="#editcargo" role="tab" data-toggle="tab">Rahti</a></li>
 					<li><a href="#editcompany" role="tab" data-toggle="tab">Yhtiö</a></li>
