@@ -28,6 +28,11 @@ class Ship extends Model
         return $this->hasMany('App\GPS', 'IMO');
     }
 
+    public function latestGps()
+    {
+        return $this->hasOne('App\GPS', 'IMO')->latest('UpdatedTime');
+    }
+
     /**
      * Get the type of this ship.
      */

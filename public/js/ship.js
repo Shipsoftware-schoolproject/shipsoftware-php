@@ -6,7 +6,7 @@
 function get_ships(data = null)
 {
     if (data === null) {
-        api_get('ship/name/all', get_ships);
+        api_get('ship/name', get_ships);
         return;
     }
 
@@ -27,9 +27,12 @@ function get_ships(data = null)
                 + ships[i]['ShipName']
                 + '</option>');
 
-            if (ships[i]['Lat'] !== null) {
-                addMarker(ships[i]['IMO'], ships[i]['Lat'], ships[i]['Lng'],
-                    ships[i]['ShipName'], ships[i]['UpdatedTime']);
+            if (ships[i]['latest_gps'] !== null) {
+                addMarker(ships[i]['IMO'],
+                    ships[i]['latest_gps']['Lat'],
+                    ships[i]['latest_gps']['Lng'],
+                    ships[i]['ShipName'],
+                    ships[i]['latest_gps']['UpdatedTime']);
             }
         }
 

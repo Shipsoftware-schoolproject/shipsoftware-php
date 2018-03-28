@@ -25,7 +25,7 @@ Route::middleware('auth:web')->group(function() {
      * Routes for ships
      */
     Route::group(['prefix' => '/ship'], function() {
-        Route::get('/name/all', 'APIController@get_all_ship_names');
+        Route::get('/name/{name?}', 'APIController@get_ship_names');
         Route::get('/info/{id}', 'APIController@get_ship_info');
         Route::get('/loc/current/{id}', 'APIController@get_ship_cur_location');
         Route::get('/loc/history/{id}', 'APIController@get_ship_loc_history');
