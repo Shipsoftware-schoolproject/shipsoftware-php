@@ -24,7 +24,7 @@ function search_ships(data, name)
     let lstShips = $('#lstShips');
     lstShips.find('option').remove();
 
-    if (data['status'] !== '200') {
+    if (data['status'] !== 200) {
         if (data.data === '') {
             lstShips.append('<option>Server error</option>');
         } else {
