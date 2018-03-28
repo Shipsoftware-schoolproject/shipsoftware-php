@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
+<head>
+  <meta charset="UTF-8">
+</head> 
     <div class="col-lg-3">
         <!-- Tabs box -->
         <div class="panel panel-default">
