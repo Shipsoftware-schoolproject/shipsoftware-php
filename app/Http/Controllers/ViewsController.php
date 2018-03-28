@@ -41,7 +41,7 @@ class ViewsController extends Controller
         $ship = Ship::find($id);
         if (!$ship) {
             // FIXME: Return a nice view
-            return 'Ship not found';
+            return view('errors.custom', ['title' => 'Error', 'message' => 'Ship was not found.']);
         }
 
         $company = DB::table('Companies')->where('ID', $ship->CompanyID)->first();
