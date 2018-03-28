@@ -19,4 +19,20 @@ class Ship extends Model
      * @var string
      */
     protected $primaryKey = 'IMO';
+
+    /**
+     * Get the GPS location for ship.
+     */
+    public function gps()
+    {
+        return $this->hasMany('App\GPS', 'IMO');
+    }
+
+    /**
+     * Get the type of this ship.
+     */
+    public function type()
+    {
+        return $this->hasOne('App\ShipTypes');
+    }
 }

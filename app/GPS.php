@@ -19,4 +19,12 @@ class GPS extends Model
      * @var string
      */
     protected $primaryKey = 'IMO';
+
+    /**
+     * Get the ship that owns the GPS location.
+     */
+    public function ship()
+    {
+        return $this->belongsTo('App\Ship', 'IMO');
+    }
 }

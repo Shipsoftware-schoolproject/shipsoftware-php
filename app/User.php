@@ -69,6 +69,22 @@ class User extends Authenticatable
     }
 
     /**
+     * Get the role associated to the user
+     */
+    public function role()
+    {
+        return $this->hasOne('App\Role', 'ID', 'RoleID');
+    }
+
+    /**
+     * Get the company associated to the user
+     */
+    public function company()
+    {
+        return $this->hasOne('App\Company', 'ID', 'CompanyID');
+    }
+
+    /**
      * Check is the current user Admin
      *
      * @return bool

@@ -12,4 +12,9 @@ class ShipTypes extends Model
      * @var string
      */
     protected $table = 'ShipTypes';
+
+    public function ship()
+    {
+        return $this->hasMany('App\Ship', 'TypeID');
+    }
 }

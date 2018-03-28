@@ -8,6 +8,13 @@ use DB;
 class Role extends Model
 {
     /**
+     * The table associated with this model
+     *
+     * @var string
+     */
+    protected $table = 'Roles';
+
+    /**
      * Get role name by it's ID
      *
      * @param $id
