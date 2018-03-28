@@ -25,7 +25,6 @@
     <div class="col-lg-9">
         <!-- Tabs content -->
         <div class="tab-content">
-            <!-- Ship info tab -->
             @include('admin.users')
         </div>
     </div>
