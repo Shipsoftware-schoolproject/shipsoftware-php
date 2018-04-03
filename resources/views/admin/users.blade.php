@@ -17,19 +17,21 @@
                 </thead>
                 <tbody>
                     @foreach($users as $user)
-                        <td>{{ $user->FirstName }}</td>
-                        <td>{{ $user->LastName }}</td>
-                        <td>{{ $user->Email }}</td>
-                        <td>{{ $user->role ? $user->role->Name : '-' }}</td>
-                        <td>{{ $user->company ? $user->company->Name : '-' }}</td>
-                        <td>
-                            <button type="button" class="btn btn-sm btn-warning" onclick="editUser({{ $user->ID }});">
-                                <span class="glyphicon glyphicon-pencil"></span>
-                            </button>
-                            <button type="button" class="btn btn-sm btn-danger" onclick="deleteUser({{ $user->ID }});">
-                                <span class="glyphicon glyphicon-trash"></span>
-                            </button>
-                        </td>
+                        <tr>
+                            <td>{{ $user->FirstName }}</td>
+                            <td>{{ $user->LastName }}</td>
+                            <td>{{ $user->Email }}</td>
+                            <td>{{ $user->role ? $user->role->Name : '-' }}</td>
+                            <td>{{ $user->company ? $user->company->Name : '-' }}</td>
+                            <td>
+                                <button type="button" class="btn btn-sm btn-warning" onclick="editUser({{ $user->ID }});">
+                                    <span class="glyphicon glyphicon-pencil"></span>
+                                </button>
+                                <button type="button" class="btn btn-sm btn-danger" onclick="deleteUser({{ $user->ID }});">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                </button>
+                            </td>
+                        </tr>
                     @endforeach
                 </tbody>
             </table>
