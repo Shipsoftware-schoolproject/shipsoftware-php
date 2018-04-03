@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\User;
 use App\Role;
 use App\Company;
+use App\Ship;
 
 class AdminController extends Controller
 {
@@ -19,7 +20,8 @@ class AdminController extends Controller
         }
 
         $users = User::with(['role', 'company'])->get();
+		$ships = Ship::with(['type', 'company'])->get();
 
-        return view('admin')->with(['users' => $users, 'roles' => Role::all(), 'companies' => Company::all()]);
+        return view('admin')->with(['ships' => $ships,'users' => $users, 'roles' => Role::all(), 'companies' => Company::all()]);
     }
 }

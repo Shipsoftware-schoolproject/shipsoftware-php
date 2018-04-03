@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-<div class="tab-pane active" id="users">
-=======
 @section('scripts')
     <script>
         function setModalTitle(title) {
@@ -37,41 +34,40 @@
     </script>
 @endsection
 
-<div class="tab-pane" id="users">
->>>>>>> joridev
+<div class="tab-pane active" id="ships">
     <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title">Käyttäjät</h3>
+                <h3 class="panel-title">Laivat</h3>
             </div>
             <table class="table">
                 <thead>
                 <tr>
-                    <th>Etunimi</th>
-                    <th>Sukunimi</th>
-                    <th>Email</th>
-                    <th>Rooli</th>
+                    <th>IMO</th>
+                    <th>MMSI</th>
+                    <th>Name</th>
+                    <th>Tyyppi</th>
                     <th>Yhtiö</th>
                     <th></th>
                 </tr>
                 </thead>
                 <tbody>
-                    @foreach($users as $user)
-                        <tr>
-                            <td>{{ $user->FirstName }}</td>
-                            <td>{{ $user->LastName }}</td>
-                            <td>{{ $user->Email }}</td>
-                            <td>{{ $user->role ? $user->role->Name : '-' }}</td>
-                            <td>{{ $user->company ? $user->company->Name : '-' }}</td>
-                            <td>
-                                <button type="button" class="btn btn-sm btn-warning" onclick="editUser({{ $user->ID }});">
-                                    <span class="glyphicon glyphicon-pencil"></span>
-                                </button>
-                                <button type="button" class="btn btn-sm btn-danger" onclick="deleteUser({{ $user->ID }});">
-                                    <span class="glyphicon glyphicon-trash"></span>
-                                </button>
-                            </td>
-                        </tr>
+                    @foreach($ships as $ship)
+						<tr>
+                        <td>{{ $ship->IMO }}</td>
+                        <td>{{ $ship->MMSI }}</td>
+                        <td>{{ $ship->ShipName }}</td>
+                        <td>{{ $ship->type ? $ship->type->Name : '-' }}</td>
+                        <td>{{ $ship->company ? $ship->company->Name : '-' }}</td>
+                        <td>
+                            <button type="button" class="btn btn-sm btn-warning" onclick="editUser({{ $ship->ID }});">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                            </button>
+                            <button type="button" class="btn btn-sm btn-danger" onclick="deleteUser({{ $ship->ID }});">
+                                <span class="glyphicon glyphicon-trash"></span>
+                            </button>
+                        </td>
+						</tr>
                     @endforeach
                 </tbody>
             </table>
@@ -89,8 +85,8 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="userModalTitle"></h4>
             </div>
-            <form id="userForm" action="{{ url('api/user') }}" enctype="multipart/form-data">
-                <div class="modal-body">
+            <div class="modal-body">
+                <form id="userForm">
                     <div class="row">
                         <div class="col-sm-4">
                             <div class="form-group">
@@ -183,12 +179,12 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Sulje</button>
-                    <button id="userSubmit" type="submit" class="btn btn-primary">Tallenna</button>
-                </div>
-            </form>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Sulje</button>
+                <button type="button" class="btn btn-primary">Tallenna</button>
+            </div>
         </div>
     </div>
 </div>
