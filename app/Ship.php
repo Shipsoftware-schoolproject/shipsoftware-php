@@ -38,6 +38,10 @@ class Ship extends Model
      */
     public function type()
     {
-        return $this->hasOne('App\ShipTypes');
+        return $this->hasOne('App\ShipTypes', "ID");
+    }
+	    public function company()
+    {
+        return $this->hasOne('App\Company', "ID", 'TypeID');
     }
 }

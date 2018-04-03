@@ -12,4 +12,8 @@ class Company extends Model
      * @var string
      */
     protected $table = 'Companies';
+	public function ship()
+	{
+		return $this->hasMany('App\Ship', 'CompanyID');
+	}
 }
