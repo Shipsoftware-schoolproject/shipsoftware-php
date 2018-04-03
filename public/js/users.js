@@ -1,11 +1,21 @@
+/**
+ * Set modal title
+ * @param title
+ */
 function setModalTitle(title) {
     $('#userModalTitle').text(title);
 }
 
+/**
+ * Show modal
+ */
 function showModal() {
     $('#userModal').modal('show');
 }
 
+/**
+ * Clear form fields in modal
+ */
 function clearModal()
 {
     $('#firstName').val('');
@@ -16,6 +26,9 @@ function clearModal()
     $('#password').val('');
 }
 
+/**
+ * Open modal for adding new user
+ */
 function addUser() {
     setModalTitle('Lisää käyttäjä');
     clearModal();
@@ -25,6 +38,11 @@ function addUser() {
     showModal();
 }
 
+/**
+ * Open modal for editing user
+ *
+ * @param id - User ID
+ */
 function editUser(id) {
     setModalTitle('Muokkaa käyttäjää');
     clearModal();
@@ -34,6 +52,11 @@ function editUser(id) {
     showModal();
 }
 
+/**
+ * Create new user
+ *
+ * @param data
+ */
 function insertUser(data = null) {
     if (data === null) {
         api_post('user', insertUser);
@@ -47,6 +70,9 @@ function insertUser(data = null) {
     }
 }
 
+/**
+ * Send form via AJAX
+ */
 $('#userForm').submit(function(e) {
     e.preventDefault();
 
