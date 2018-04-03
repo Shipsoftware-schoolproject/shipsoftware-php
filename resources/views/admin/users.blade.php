@@ -1,44 +1,4 @@
-<<<<<<< HEAD
-<div class="tab-pane active" id="users">
-=======
-@section('scripts')
-    <script>
-        function setModalTitle(title) {
-            $('#userModalTitle').text(title);
-        }
-
-        function showModal() {
-            $('#userModal').modal('show');
-        }
-
-        function clearModal()
-        {
-            $('#firstName').val('');
-            $('#lastName').val('');
-            $('#phoneNumber').val('');
-            $('#email').val('');
-            $('#username').val('');
-            $('#password').val('');
-        }
-
-        function addUser() {
-            setModalTitle('Lisää käyttäjä');
-            clearModal();
-
-            showModal();
-        }
-
-        function editUser(id) {
-            setModalTitle('Muokkaa käyttäjää');
-            clearModal();
-
-            showModal();
-        }
-    </script>
-@endsection
-
 <div class="tab-pane" id="users">
->>>>>>> joridev
     <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading">
