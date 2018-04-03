@@ -26,40 +26,4 @@ class APIController extends Controller
 
         return response()->json(['found' => count($ships), 'ships' => $ships]);
     }
-
-    /**
-     * Get all information about the ship
-     *
-     * @param Request $request
-     * @param integer $id
-     * @return Response
-     */
-    public function get_ship_info(Request $request, $id)
-    {
-
-    }
-
-    /**
-     * Get ship current location
-     *
-     * @param Request $request
-     * @param integer $id
-     * @return Response
-     */
-    public function get_ship_cur_location(Request $request, $id)
-    {
-
-    }
-
-    /**
-     * Get ship location history
-     *
-     * @param Request $request
-     * @param integer $id
-     * @return Response
-     */
-    public function get_ship_loc_history(Request $request, $id)
-    {
-
-    }
 }
