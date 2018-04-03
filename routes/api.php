@@ -30,4 +30,9 @@ Route::middleware('auth:web')->group(function() {
         Route::get('/loc/current/{id}', 'APIController@get_ship_cur_location');
         Route::get('/loc/history/{id}', 'APIController@get_ship_loc_history');
     });
+
+    /**
+     * Routes for users
+     */
+    Route::post('user', 'APIController@add_user');
 });

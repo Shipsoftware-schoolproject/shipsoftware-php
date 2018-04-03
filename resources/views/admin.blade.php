@@ -1,5 +1,10 @@
 ﻿@extends('layouts.app')
 
+@section('scripts')
+    <script src="{{ asset('js/api.js') }}"></script>
+    <script src="{{ asset('js/users.js') }}"></script>
+@endsection
+
 @section('content')
     <div class="col-lg-3">
         <!-- Tabs box -->

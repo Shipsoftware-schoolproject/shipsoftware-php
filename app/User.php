@@ -30,6 +30,9 @@ class User extends Authenticatable
      */
     protected $username = 'Email';
 
+    const CREATED_AT = 'Created';
+    const UPDATED_AT = 'Updated';
+
     /**
      * The attributes that are mass assignable.
      *

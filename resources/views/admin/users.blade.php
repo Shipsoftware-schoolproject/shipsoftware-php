@@ -1,39 +1,3 @@
-@section('scripts')
-    <script>
-        function setModalTitle(title) {
-            $('#userModalTitle').text(title);
-        }
-
-        function showModal() {
-            $('#userModal').modal('show');
-        }
-
-        function clearModal()
-        {
-            $('#firstName').val('');
-            $('#lastName').val('');
-            $('#phoneNumber').val('');
-            $('#email').val('');
-            $('#username').val('');
-            $('#password').val('');
-        }
-
-        function addUser() {
-            setModalTitle('Lisää käyttäjä');
-            clearModal();
-
-            showModal();
-        }
-
-        function editUser(id) {
-            setModalTitle('Muokkaa käyttäjää');
-            clearModal();
-
-            showModal();
-        }
-    </script>
-@endsection
-
 <div class="tab-pane active" id="users">
     <div class="col-lg-12">
         <div class="panel panel-default">
@@ -83,8 +47,8 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="userModalTitle"></h4>
             </div>
-            <div class="modal-body">
-                <form id="userForm">
+            <form id="userForm" action="{{ url('api/user') }}" enctype="multipart/form-data">
+                <div class="modal-body">
                     <div class="row">
                         <div class="col-sm-4">
                             <div class="form-group">
@@ -177,12 +141,12 @@
                             </div>
                         </div>
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Sulje</button>
-                <button type="button" class="btn btn-primary">Tallenna</button>
-            </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Sulje</button>
+                    <button id="userSubmit" type="submit" class="btn btn-primary">Tallenna</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
