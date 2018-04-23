@@ -30,9 +30,11 @@
                                 <td>{{ $user->company ? $user->company->Name : '-' }}</td>
                                 <td>
                                     <!-- FIXME: Inline the buttons on small screens? -->
-                                    <button type="button" class="btn btn-sm btn-warning">
-                                        <span class="glyphicon glyphicon-pencil"></span>
-                                    </button>
+                                    <a href="{{ url('/admin/users/edit/' . $user->UserID) }}">
+                                        <button type="button" class="btn btn-sm btn-warning">
+                                            <span class="glyphicon glyphicon-pencil"></span>
+                                        </button>
+                                    </a>
                                     <button type="button" class="btn btn-sm btn-danger">
                                         <span class="glyphicon glyphicon-trash"></span>
                                     </button>

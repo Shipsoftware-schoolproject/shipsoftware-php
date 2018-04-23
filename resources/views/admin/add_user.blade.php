@@ -20,7 +20,7 @@
                     <div class="col-sm-5">
                         <div class="form-group @if ($errors->has('FirstName')) has-error @endif">
                             <label class="control-label" for="FirstName">Etunimi:</label>
-                            <input type="text" class="form-control" name="FirstName" id="FirstName" placeholder="Erkki" @if (Request::old('FirstName')) value="{{ Request::old('FirstName') }}" @endif>
+                            <input type="text" class="form-control" name="FirstName" id="FirstName" placeholder="Erkki" @if (Request::old('FirstName')) value="{{ Request::old('FirstName') }}" @elseif ($user->FirstName) value="{{ $user->FirstName }}" @endif>
                             @if ($errors->has('FirstName'))
                                 <span id="helpFirstName" class="help-block">
                                     {{ $errors->first('FirstName') }}
@@ -31,7 +31,7 @@
                     <div class="col-sm-6">
                         <div class="form-group @if ($errors->has('LastName')) has-error @endif">
                             <label class="control-label" for="LastName">Sukunimi:</label>
-                            <input type="text" class="form-control" name="LastName" id="LastName" placeholder="Esimerkki" @if (Request::old('LastName')) value="{{ Request::old('LastName') }}" @endif>
+                            <input type="text" class="form-control" name="LastName" id="LastName" placeholder="Esimerkki" @if (Request::old('LastName')) value="{{ Request::old('LastName') }}" @elseif ($user->LastName) value="{{ $user->LastName }}" @endif>
                             @if ($errors->has('LastName'))
                                 <span id="helpLastName" class="help-block">
                                     {{ $errors->first('LastName') }}
@@ -44,7 +44,7 @@
                     <div class="col-sm-5">
                         <div class="form-group @if ($errors->has('PhoneNumber')) has-error @endif">
                             <label class="control-label" for="PhoneNumber">Puhelinnumero:</label>
-                            <input type="text" class="form-control" name="PhoneNumber" id="PhoneNumber" placeholder="0401234567" @if (Request::old('PhoneNumber')) value="{{ Request::old('PhoneNumber') }}" @endif>
+                            <input type="text" class="form-control" name="PhoneNumber" id="PhoneNumber" placeholder="0401234567" @if (Request::old('PhoneNumber')) value="{{ Request::old('PhoneNumber') }}" @elseif ($user->PhoneNumber) value="{{ $user->PhoneNumber }}" @endif>
                             @if ($errors->has('PhoneNumber'))
                                 <span id="helpPhoneNumber" class="help-block">
                                     {{ $errors->first('PhoneNumber') }}
@@ -55,7 +55,7 @@
                     <div class="col-sm-6">
                         <div class="form-group @if ($errors->has('Email')) has-error @endif">
                             <label class="control-label" for="Email">Email:</label>
-                            <input type="text" class="form-control" name="Email" id="Email" placeholder="erkki.esimerkki@example.com" @if (Request::old('Email')) value="{{ Request::old('Email') }}" @endif>
+                            <input type="text" class="form-control" name="Email" id="Email" placeholder="erkki.esimerkki@example.com" @if (Request::old('Email')) value="{{ Request::old('Email') }}" @elseif ($user->Email) value="{{ $user->Email }}" @endif>
                             @if ($errors->has('Email'))
                                 <span id="helpEmail" class="help-block">
                                     {{ $errors->first('Email') }}
@@ -68,7 +68,7 @@
                     <div class="col-sm-4">
                         <div class="form-group @if ($errors->has('Username')) has-error @endif">
                             <label class="control-label" for="Username">Käyttäjänimi:</label>
-                            <input type="text" class="form-control" name="Username" id="Username" placeholder="eres" @if (Request::old('Username')) value="{{ Request::old('Username') }}" @endif>
+                            <input type="text" class="form-control" name="Username" id="Username" placeholder="eres" @if (Request::old('Username')) value="{{ Request::old('Username') }}" @elseif ($user->Username) value="{{ $user->Username }}" @endif>
                             @if ($errors->has('Username'))
                                 <span id="helpUsername" class="help-block">
                                     {{ $errors->first('Username') }}
@@ -81,7 +81,7 @@
                         <div @if($errors->has('Password')) class="has-error" @endif>
                             <label class="control-label" for="Password">Salasana:</label>
                             <div class="input-group @if ($errors->has('Password')) has-error @endif">
-                                <input type="password" class="form-control" name="Password" id="Password" @if (Request::old('Password')) value="{{ Request::old('Password') }}" @endif>
+                                <input type="password" class="form-control" name="Password" id="Password">
                                 <span class="input-group-btn">
                                     <button type="button" class="btn @if ($errors->has('Password')) btn-danger @else btn-default @endif">Generoi</button>
                                 </span>
@@ -119,7 +119,7 @@
                             <select id="RoleID" name="RoleID" class="form-control">
                                 <option value=""></option>
                                 @foreach($roles as $role)
-                                    @if (Request::old('RoleID') == $role->ID)
+                                    @if (Request::old('RoleID') == $role->ID || $user->RoleID == $role->ID)
                                         <option value="{{ $role->ID }}" selected="selected">{{ $role->Name }}</option>
                                     @else
                                         <option value="{{ $role->ID }}">{{ $role->Name }}</option>
@@ -141,7 +141,7 @@
                             <select id="CompanyID" name="CompanyID" class="form-control">
                                 <option value=""></option>
                                 @foreach($companies as $company)
-                                    @if (Request::old('CompanyID') == $company->ID)
+                                    @if (Request::old('CompanyID') == $company->ID || $user->Company == $company->ID)
                                         <option value="{{ $company->ID }}" selected="selected">{{ $company->Name }}</option>
                                     @else
                                         <option value="{{ $company->ID }}">{{ $company->Name }}</option>

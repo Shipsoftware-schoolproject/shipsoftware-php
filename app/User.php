@@ -65,7 +65,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'Password', 'RememberME',
+        'Password', 'RememberME'
     ];
 
     public static function rules()

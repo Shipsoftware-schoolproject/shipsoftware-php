@@ -21,6 +21,17 @@
     <div class="col-lg-9">
         <!-- Tabs content -->
         <div class="tab-content">
+            <div class="col-lg-10">
+                @foreach(array('success', 'danger') as $flash)
+                    @if (session()->has($flash))
+                        @foreach(session()->get($flash) as $msg)
+                            <div class="alert alert-{{ $flash }}" role="alert">
+                                {{ $msg }}
+                            </div>
+                        @endforeach
+                    @endif
+                @endforeach
+            </div>
             @yield('admin-content')
         </div>
     </div>

@@ -24,7 +24,11 @@ Route::group(['middleware' => 'role:admin', 'prefix' => 'admin'], function() {
     Route::get('/ships', 'AdminController@ships')->name('ships');
 
     // List all users, add / edit user
-    Route::get('/users', 'AdminController@users')->name('users');
-    Route::get('/users/add', 'AdminController@addUserView')->name('users');
-    Route::post('/users/add', 'AdminController@addUser');
+    Route::group(['prefix' => 'users', 'as' => 'users'], function() {
+        Route::get('/', 'AdminController@users');
+        Route::get('/add', 'AdminController@addUserView');
+        Route::post('/add', 'AdminController@addUser');
+        Route::get('/edit/{UserID}', 'AdminController@editUserView');
+        Route::post('/edit/{UserID}', 'AdminController@editUser');
+    });
 });
