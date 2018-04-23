@@ -28,17 +28,21 @@ class AdminController extends Controller
         return view('admin/users')->with(['users' => $users]);
     }
 
-    public function addUserView()
+    public function addUserView(Request $request)
     {
         $roles = Role::all();
         $companies = Company::all();
+
+        $user = new User;
+        $user->fill($request->old());
 
         return view('admin/add_user',
             [
                 'type' => 'Lisää',
                 'form_action' => url('/admin/users/add'),
                 'roles' => $roles,
-                'companies' => $companies
+                'companies' => $companies,
+                'user' => $user
             ]
         );
     }

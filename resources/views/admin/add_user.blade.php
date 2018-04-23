@@ -20,7 +20,7 @@
                     <div class="col-sm-5">
                         <div class="form-group @if ($errors->has('FirstName')) has-error @endif">
                             <label class="control-label" for="FirstName">Etunimi:</label>
-                            <input type="text" class="form-control" name="FirstName" id="FirstName" placeholder="Erkki" @if (Request::old('FirstName')) value="{{ Request::old('FirstName') }}" @elseif ($user->FirstName) value="{{ $user->FirstName }}" @endif>
+                            <input type="text" class="form-control" name="FirstName" id="FirstName" placeholder="Erkki" value="{{ $user->FirstName }}">
                             @if ($errors->has('FirstName'))
                                 <span id="helpFirstName" class="help-block">
                                     {{ $errors->first('FirstName') }}
@@ -31,7 +31,7 @@
                     <div class="col-sm-6">
                         <div class="form-group @if ($errors->has('LastName')) has-error @endif">
                             <label class="control-label" for="LastName">Sukunimi:</label>
-                            <input type="text" class="form-control" name="LastName" id="LastName" placeholder="Esimerkki" @if (Request::old('LastName')) value="{{ Request::old('LastName') }}" @elseif ($user->LastName) value="{{ $user->LastName }}" @endif>
+                            <input type="text" class="form-control" name="LastName" id="LastName" placeholder="Esimerkki" value="{{ $user->LastName }}">
                             @if ($errors->has('LastName'))
                                 <span id="helpLastName" class="help-block">
                                     {{ $errors->first('LastName') }}
@@ -42,12 +42,12 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-5">
-                        <div class="form-group @if ($errors->has('PhoneNumber')) has-error @endif">
-                            <label class="control-label" for="PhoneNumber">Puhelinnumero:</label>
-                            <input type="text" class="form-control" name="PhoneNumber" id="PhoneNumber" placeholder="0401234567" @if (Request::old('PhoneNumber')) value="{{ Request::old('PhoneNumber') }}" @elseif ($user->PhoneNumber) value="{{ $user->PhoneNumber }}" @endif>
-                            @if ($errors->has('PhoneNumber'))
-                                <span id="helpPhoneNumber" class="help-block">
-                                    {{ $errors->first('PhoneNumber') }}
+                        <div class="form-group @if ($errors->has('Phone')) has-error @endif">
+                            <label class="control-label" for="Phone">Puhelinnumero:</label>
+                            <input type="text" class="form-control" name="Phone" id="Phone" placeholder="0401234567" value="{{ $user->Phone }}">
+                            @if ($errors->has('Phone'))
+                                <span id="helpPhone" class="help-block">
+                                    {{ $errors->first('Phone') }}
                                 </span>
                             @endif
                         </div>
@@ -55,7 +55,7 @@
                     <div class="col-sm-6">
                         <div class="form-group @if ($errors->has('Email')) has-error @endif">
                             <label class="control-label" for="Email">Email:</label>
-                            <input type="text" class="form-control" name="Email" id="Email" placeholder="erkki.esimerkki@example.com" @if (Request::old('Email')) value="{{ Request::old('Email') }}" @elseif ($user->Email) value="{{ $user->Email }}" @endif>
+                            <input type="text" class="form-control" name="Email" id="Email" placeholder="erkki.esimerkki@example.com" value="{{ $user->Email }}">
                             @if ($errors->has('Email'))
                                 <span id="helpEmail" class="help-block">
                                     {{ $errors->first('Email') }}
@@ -68,7 +68,7 @@
                     <div class="col-sm-4">
                         <div class="form-group @if ($errors->has('Username')) has-error @endif">
                             <label class="control-label" for="Username">Käyttäjänimi:</label>
-                            <input type="text" class="form-control" name="Username" id="Username" placeholder="eres" @if (Request::old('Username')) value="{{ Request::old('Username') }}" @elseif ($user->Username) value="{{ $user->Username }}" @endif>
+                            <input type="text" class="form-control" name="Username" id="Username" placeholder="eres" value="{{ $user->Username }}">
                             @if ($errors->has('Username'))
                                 <span id="helpUsername" class="help-block">
                                     {{ $errors->first('Username') }}
@@ -83,6 +83,7 @@
                             <div class="input-group @if ($errors->has('Password')) has-error @endif">
                                 <input type="password" class="form-control" name="Password" id="Password">
                                 <span class="input-group-btn">
+                                    <!-- TODO: Implement password generator -->
                                     <button type="button" class="btn @if ($errors->has('Password')) btn-danger @else btn-default @endif">Generoi</button>
                                 </span>
                             </div>
