@@ -46,6 +46,7 @@ class User extends Authenticatable
      */
     protected $username = 'Email';
 
+    /* Timestamps */
     const CREATED_AT = 'Created';
     const UPDATED_AT = 'Updated';
 
@@ -68,6 +69,11 @@ class User extends Authenticatable
         'Password', 'RememberME'
     ];
 
+    /**
+     * Validation rules
+     *
+     * @return array
+     */
     public static function rules()
     {
         return [

@@ -13,6 +13,11 @@ use Illuminate\Validation\Rule;
 
 class AdminController extends Controller
 {
+    /**
+     * List all ships
+     *
+     * @return \Illuminate\View\View
+     */
     public function ships()
     {
         $ships = Ship::with(['type', 'company'])->get();
@@ -21,6 +26,11 @@ class AdminController extends Controller
         return view('admin/ships')->with(['ships' => $ships, 'companies' => $companies]);
     }
 
+    /**
+     * List all users
+     *
+     * @return \Illuminate\View\View
+     */
     public function users()
     {
         $users = User::with(['role', 'company'])->get();
@@ -28,6 +38,12 @@ class AdminController extends Controller
         return view('admin/users')->with(['users' => $users]);
     }
 
+    /**
+     * Add user view
+     *
+     * @param Request $request
+     * @return \Illuminate\View\View
+     */
     public function addUserView(Request $request)
     {
         $roles = Role::all();
@@ -47,6 +63,12 @@ class AdminController extends Controller
         );
     }
 
+    /**
+     * Edit user view
+     *
+     * @param $UserID
+     * @return \Illuminate\View\View
+     */
     public function editUserView($UserID)
     {
         $roles = Role::all();
@@ -70,6 +92,12 @@ class AdminController extends Controller
         );
     }
 
+    /**
+     * Add new user
+     *
+     * @param Request $request
+     * @return \Illuminate\Routing\Redirector
+     */
     public function addUser(Request $request)
     {
         $rules = User::rules();
@@ -90,6 +118,13 @@ class AdminController extends Controller
         return redirect('/admin/users');
     }
 
+    /**
+     * Edit user
+     *
+     * @param Request $request
+     * @param $userid
+     * @return \Illuminate\Routing\Redirector
+     */
     public function editUser(Request $request, $userid)
     {
         $rules = User::rules();
@@ -133,6 +168,12 @@ class AdminController extends Controller
         return redirect('/admin/users');
     }
 
+    /**
+     * Delete user
+     *
+     * @param $UserID
+     * @return \Illuminate\Routing\Redirector
+     */
     public function deleteUser($UserID)
     {
         $user = User::find($UserID);
