@@ -41,20 +41,18 @@ class APIController extends Controller
             return response()->json(['Error' => 'You\'re not an admin'], 403);
         }
 
-        $validation = Validator::make($request->all(),[
-            'FirstName' => 'required|max:30',
-            'LastName' => 'required|max:30',
-            'Phone' => 'max:20',
-            'Email' => 'required|email',
-            'Username' => 'required|string|unique:users|max:30',
-            'Password' => 'required|string|max:60',
-            'Picture' => 'mimes:jpeg,png',
+        $validator = Validator::make($request->all(), [
+            'firstName' => 'required|max:30',
+            'lastName' => 'required|max:30',
+            'phoneNumber' => 'nullable|max:20',
+            'email' => 'required|email',
+            'username' => 'required|string|unique:users|max:30',
+            'password' => 'required|string|max:60',
+            'picture' => 'nullable|mimes:jpeg,png',
         ]);
 
-        if ($validation->fails()) {
-            $errors = $validation->errors();
-
-            return response()->json($errors, 400);
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
         }
 
         $user = new User;

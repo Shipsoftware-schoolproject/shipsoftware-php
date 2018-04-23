@@ -15,6 +15,20 @@ class Role extends Model
     protected $table = 'Roles';
 
     /**
+     * Table's primary key
+     *
+     * @var string
+     */
+    protected $primaryKey = 'ID';
+
+    /**
+     * Table has timestamps
+     *
+     * @var bool
+     */
+    public $timestamps = false;
+
+    /**
      * Get role name by it's ID
      *
      * @param $id

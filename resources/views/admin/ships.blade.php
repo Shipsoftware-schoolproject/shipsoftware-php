@@ -1,3 +1,7 @@
+@extends('layouts.admin')
+
+@section('title', 'Ships')
+
 @section('scripts')
     <script>
         function setModalTitle(title) {
@@ -34,6 +38,7 @@
     </script>
 @endsection
 
+@section('admin-content')
 <div class="tab-pane active" id="ships">
     <div class="col-lg-12">
         <div class="panel panel-default">
@@ -157,9 +162,6 @@
                                 <label for="role">Rooli:</label>
                                 <select id="role" class="form-control">
                                     <option value=""></option>
-                                    @foreach($roles as $role)
-                                        <option value="{{ $role->ID }}">{{ $role->Name }}</option>
-                                    @endforeach
                                 </select>
                                 <span id="helpRole" class="help-block hidden"></span>
                             </div>
@@ -188,3 +190,4 @@
         </div>
     </div>
 </div>
+@endsection

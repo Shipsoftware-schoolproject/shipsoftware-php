@@ -5,6 +5,22 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+/**
+ * Class User
+ * @package App
+ * @property int $RoleID
+ * @property int $UserID
+ * @property string $Username
+ * @property string $Email
+ * @property string $Password
+ * @property string $FirstName
+ * @property string $LastName
+ * @property string Phone
+ * @property string Picture
+ * @property string RememberME
+ * @property int Created
+ * @property string Updated
+ */
 class User extends Authenticatable
 {
     use Notifiable;
@@ -39,7 +55,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'RoleID', 'CompanyID', 'Username', 'Email', 'Password', 'FirstName',
+        'LastName', 'Phone', 'Picture'
     ];
 
     /**
@@ -48,8 +65,23 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'Password', 'RememberME',
     ];
+
+    public static function rules()
+    {
+        return [
+            'RoleID' => 'exists:Roles,ID',
+            'CompanyID' => 'exists:Companies,ID',
+            'Username' => 'string|min:3|max:30|unique:Users,Username',
+            'Email' => 'email|unique:Users,Email',
+            'Password' => 'min:6',
+            'FirstName' => 'string|min:2|max:30',
+            'LastName' => 'string|min:3|max:30',
+            'Phone' => 'nullable',
+            'Picture' => 'nullable|image'
+        ];
+    }
 
     /**
      * Get the column name for the "remember me" token.
@@ -94,9 +126,9 @@ class User extends Authenticatable
      */
     public function isAdmin()
     {
-        $role = new Role;
+        $role = Role::where('ID', $this->RoleID)->first();
 
-        if ($role->getName($this->RoleID)) {
+        if ($role->Name == 'Admin') {
             return true;
         }
 
