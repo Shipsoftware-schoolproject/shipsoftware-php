@@ -23,12 +23,13 @@ Route::group(['middleware' => 'role:admin', 'prefix' => 'admin'], function() {
     Route::get('/', 'AdminController@ships')->name('ships');
     Route::get('/ships', 'AdminController@ships')->name('ships');
 
-    // List all users, add / edit user
+    // List all users, add / edit user / delete
     Route::group(['prefix' => 'users', 'as' => 'users'], function() {
         Route::get('/', 'AdminController@users');
         Route::get('/add', 'AdminController@addUserView');
         Route::post('/add', 'AdminController@addUser');
         Route::get('/edit/{UserID}', 'AdminController@editUserView');
         Route::post('/edit/{UserID}', 'AdminController@editUser');
+        Route::get('/delete/{UserID}', 'AdminController@deleteUser');
     });
 });

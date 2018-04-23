@@ -128,4 +128,24 @@ class AdminController extends Controller
 
         return redirect('/admin/users');
     }
+
+    public function deleteUser($UserID)
+    {
+        $user = User::find($UserID);
+
+        if (!$user) {
+            FLash::add('danger', 'Käyttäjää ei löytynyt!');
+            return redirect('/admin/users');
+        }
+
+        try {
+            $user->delete();
+        } catch (\Exception $ex) {
+            FLash::add('danger', 'Käyttäjän ' . $user->Username . ' poistaminen epäonnistui.');
+            return redirect('/admin/users');
+        }
+
+        Flash::add('success', 'Käyttäjä ' . $user->Username . ' poistettu onnistuneesti.');
+        return redirect('/admin/users');
+    }
 }

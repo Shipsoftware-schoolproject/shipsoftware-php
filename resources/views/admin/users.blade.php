@@ -35,9 +35,11 @@
                                             <span class="glyphicon glyphicon-pencil"></span>
                                         </button>
                                     </a>
-                                    <button type="button" class="btn btn-sm btn-danger">
-                                        <span class="glyphicon glyphicon-trash"></span>
-                                    </button>
+                                    <a href="{{ url('/admin/users/delete/' . $user->UserID) }}">
+                                        <button type="button" class="btn btn-sm btn-danger">
+                                            <span class="glyphicon glyphicon-trash"></span>
+                                        </button>
+                                    </a>
                                 </td>
                             </tr>
                         @endforeach
