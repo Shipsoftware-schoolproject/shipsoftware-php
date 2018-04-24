@@ -18,6 +18,7 @@ class AdminController extends Controller
      * List all ships
      *
      * @return \Illuminate\View\View
+     * @todo Ships pagination
      */
     public function ships()
     {
@@ -31,6 +32,7 @@ class AdminController extends Controller
      * List all users
      *
      * @return \Illuminate\View\View
+     * @todo Users pagination
      */
     public function users()
     {
@@ -65,35 +67,6 @@ class AdminController extends Controller
     }
 
     /**
-     * Edit user view
-     *
-     * @param $UserID
-     * @return \Illuminate\View\View
-     */
-    public function editUserView($UserID)
-    {
-        $roles = Role::all();
-        $companies = Company::all();
-
-        $user = User::find($UserID);
-        if ($user == null) {
-            return view('errors.custom', [
-                'title' => 'Error',
-                'message' => 'User not found!']);
-        }
-
-        return view('admin/add_user',
-            [
-                'type' => 'Muokkaa',
-                'form_action' => 'edit/' . $user->UserID,
-                'roles' => $roles,
-                'companies' => $companies,
-                'user' => $user
-            ]
-        );
-    }
-
-    /**
      * Add new user
      *
      * @param Request $request
@@ -120,18 +93,47 @@ class AdminController extends Controller
     }
 
     /**
+     * Edit user view
+     *
+     * @param $UserID
+     * @return \Illuminate\View\View
+     */
+    public function editUserView($UserID)
+    {
+        $roles = Role::all();
+        $companies = Company::all();
+
+        $user = User::find($UserID);
+        if ($user == null) {
+            return view('errors.custom', [
+                'title' => 'Virhe',
+                'message' => 'Käyttäjää ei löytynyt!']);
+        }
+
+        return view('admin/add_user',
+            [
+                'type' => 'Muokkaa',
+                'form_action' => 'edit/' . $user->UserID,
+                'roles' => $roles,
+                'companies' => $companies,
+                'user' => $user
+            ]
+        );
+    }
+
+    /**
      * Edit user
      *
      * @param Request $request
-     * @param $userid
+     * @param $id
      * @return \Illuminate\Routing\Redirector
      */
-    public function editUser(Request $request, $userid)
+    public function editUser(Request $request, $id)
     {
         $rules = User::rules();
 
-        $rules['Username'] = Rule::unique('Users')->ignore($userid, 'UserID');
-        $rules['Email'] = Rule::unique('Users')->ignore($userid, 'UserID');
+        $rules['Username'] = Rule::unique('Users')->ignore($id, 'UserID');
+        $rules['Email'] = Rule::unique('Users')->ignore($id, 'UserID');
 
         if ($request->input('RoleID') < 1) {
             $rules['RoleID'] = '';
@@ -147,7 +149,7 @@ class AdminController extends Controller
 
         $this->validate($request, $rules);
 
-        $user = User::find($userid);
+        $user = User::find($id);
         if ($user == null) {
             Flash::add('danger', 'Käyttäjää ei löytynyt!');
             return back()->withInput($request->all());
@@ -160,7 +162,7 @@ class AdminController extends Controller
         }
 
         $user = $user->fill($request->all());
-        $user->UserID = $userid;
+        $user->UserID = $id;
 
         $user->save();
 
@@ -199,6 +201,7 @@ class AdminController extends Controller
      * List all companies
      *
      * @return \Illuminate\View\View
+     * @todo Companies pagination
      */
     public function companies()
     {
@@ -209,6 +212,12 @@ class AdminController extends Controller
         ]);
     }
 
+    /**
+     * Add company view
+     *
+     * @param Request $request
+     * @return \Illuminate\View\View
+     */
     public function addCompanyView(Request $request)
     {
         $countries = Country::all();
@@ -226,6 +235,12 @@ class AdminController extends Controller
         );
     }
 
+    /**
+     * Add new company
+     *
+     * @param Request $request
+     * @return \Illuminate\Routing\Redirector
+     */
     public function addCompany(Request $request)
     {
         $rules = Company::rules();
@@ -250,8 +265,8 @@ class AdminController extends Controller
         $company = Company::find($id);
         if ($company == null) {
             return view('errors.custom', [
-                'title' => 'Error',
-                'message' => 'User not found!']);
+                'title' => 'Virhe',
+                'message' => 'Yhtiötä ei löytynyt!']);
         }
 
         return view('admin/add_company',

@@ -46,7 +46,7 @@ class Company extends Model
         return [
             'Name' => 'required|max:100|unique:Companies,Name',
             'MailingAddress' => 'nullable|max:85',
-            'ZipCode' => 'nullable|numeric',
+            'ZipCode' => 'nullable|digits_between:0,5',
             'City' => 'nullable|string|max:85',
             'CountryID' => 'exists:Country,ID'
         ];
