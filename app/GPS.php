@@ -20,6 +20,10 @@ class GPS extends Model
      */
     protected $primaryKey = 'IMO';
 
+    /* Timestamps */
+    const CREATED_AT = 'UpdatedTime';
+    const UPDATED_AT = 'UpdatedTime';
+
     /**
      * Get the ship that owns the GPS location.
      */

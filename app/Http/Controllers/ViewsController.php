@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use DB;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Company;
 use App\Ship;
 use App\ShipTypes;
 use App\GPS;
@@ -27,7 +28,20 @@ class ViewsController extends Controller
      */
     public function index()
     {
-        return view('main');
+        $ships = null;
+        $companies = null;
+
+        if (Auth::user()->isAdmin()) {
+            $ships = Ship::with('latestGps')->get();
+            $companies = Company::all();
+        } else {
+            // TODO: Implementation
+        }
+
+        return view('main', [
+            'ships' => $ships,
+            'companies' => $companies
+        ]);
     }
 
     /**

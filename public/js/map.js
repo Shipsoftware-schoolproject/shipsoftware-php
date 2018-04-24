@@ -14,6 +14,14 @@ function initMap() {
     map = new google.maps.Map(document.getElementById('map'), mapOptions);
 }
 
+function addToMap(lstBox) {
+    $(lstBox + ' option').each(function() {
+        alert($(this).data('lng'));
+        addMarker(this.value, $(this).data('lat').value, $(this).data('lng'),
+                  this.text, $(this).data('updated'));
+    });
+}
+
 /**
  * Add marker into the map
  *
