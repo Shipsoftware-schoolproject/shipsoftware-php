@@ -137,7 +137,7 @@
                             <select id="CompanyID" name="CompanyID" class="form-control">
                                 <option value=""></option>
                                 @foreach($companies as $company)
-                                    @if (old('CompanyID') == $company->ID || $user->Company == $company->ID)
+                                    @if (old('CompanyID') == $company->ID || $user->CompanyID == $company->ID)
                                         <option value="{{ $company->ID }}" selected="selected">{{ $company->Name }}</option>
                                     @else
                                         <option value="{{ $company->ID }}">{{ $company->Name }}</option>
