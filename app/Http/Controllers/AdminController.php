@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use App\Helpers\Flash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\File;
 use App\Country;
 use App\User;
 use App\Role;
 use App\Company;
 use App\Ship;
-use Illuminate\Validation\Rule;
 
 class AdminController extends Controller
 {
@@ -57,7 +58,7 @@ class AdminController extends Controller
 
         return view('admin/add_user',
             [
-                'type' => 'Lisää',
+                'type' => 'Lisää käyttäjä',
                 'form_action' => 'add',
                 'roles' => $roles,
                 'companies' => $companies,
@@ -112,7 +113,7 @@ class AdminController extends Controller
 
         return view('admin/add_user',
             [
-                'type' => 'Muokkaa',
+                'type' => 'Muokkaa käyttäjää',
                 'form_action' => 'edit/' . $user->UserID,
                 'roles' => $roles,
                 'companies' => $companies,
@@ -131,6 +132,7 @@ class AdminController extends Controller
     public function editUser(Request $request, $id)
     {
         $rules = User::rules();
+        $picture = null;
 
         $rules['Username'] = Rule::unique('Users')->ignore($id, 'UserID');
         $rules['Email'] = Rule::unique('Users')->ignore($id, 'UserID');
@@ -161,8 +163,15 @@ class AdminController extends Controller
             $request->merge(['Password' => $user->Password]);
         }
 
+        if ($request->file('Picture')) {
+            $picture = base64_encode(File::get($request->file('Picture')));
+        } else {
+            $picture = $user->Picture;
+        }
+
         $user = $user->fill($request->all());
         $user->UserID = $id;
+        $user->Picture = $picture;
 
         $user->save();
 

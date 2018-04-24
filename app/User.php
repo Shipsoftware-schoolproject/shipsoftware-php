@@ -85,7 +85,7 @@ class User extends Authenticatable
             'FirstName' => 'string|min:2|max:30',
             'LastName' => 'string|min:3|max:30',
             'Phone' => 'nullable|max:20',
-            'Picture' => 'nullable|image'
+            'Picture' => 'nullable|mimes:jpg,jpeg'
         ];
     }
 

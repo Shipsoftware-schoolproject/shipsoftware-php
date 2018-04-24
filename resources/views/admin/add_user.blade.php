@@ -1,12 +1,12 @@
 @extends('layouts.admin')
 
-@section('title', $type . 'käyttäjä')
+@section('title', $type)
 
 @section('admin-content')
 <div class="col-lg-10">
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h3 class="panel-title">{{ $type }} käyttäjä</h3>
+            <h3 class="panel-title">{{ $type }}</h3>
         </div>
         <form id="userForm" action="{{ url('/admin/users/' . $form_action) }}" enctype="multipart/form-data" method="POST" autocomplete="off">
             {{ csrf_field() }}
@@ -98,7 +98,7 @@
                                         that if user doesn't have a profile
                                         picture
                             -->
-                            <img style="width: 100%;" src="" id="userPicture">
+                            <img style="width: 100%;" src="data:image/jpg;base64,{{ $user->Picture }}" id="userPicture">
                             <input type="file" style="padding-top: 1em;" id="Picture" name="Picture">
                             @if ($errors->has('Picture'))
                                 <span id="helpPicture" class="help-block">
