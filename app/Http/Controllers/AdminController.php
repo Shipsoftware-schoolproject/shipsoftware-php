@@ -268,31 +268,57 @@ class AdminController extends Controller
      * Edit company
      *
      * @param Request $request
-     * @param $companyid
+     * @param $id
      * @return \Illuminate\Routing\Redirector
      */
-    public function editCompany(Request $request, $companyid)
+    public function editCompany(Request $request, $id)
     {
         $rules = Company::rules();
 
-        $rules['ID'] = Rule::unique('Companies')->ignore($companyid, 'ID');
-        $rules['Name'] = Rule::unique('Companies')->ignore($companyid, 'ID');
+        $rules['ID'] = Rule::unique('Companies')->ignore($id, 'ID');
+        $rules['Name'] = Rule::unique('Companies')->ignore($id, 'ID');
 
         $this->validate($request, $rules);
 
-        $company = Company::find($companyid);
+        $company = Company::find($id);
         if ($company == null) {
             Flash::add('danger', 'Yhtiötä ei löytynyt!');
             return back()->withInput($request->all());
         }
 
         $company = $company->fill($request->all());
-        $company->ID = $companyid;
+        $company->ID = $id;
 
         $company->save();
 
         Flash::add('success', 'Yhtiö muokattu onnistuneesti!');
 
+        return redirect('/admin/companies');
+    }
+
+    /**
+     * Delete company
+     *
+     * @param $id
+     * @return \Illuminate\Routing\Redirector
+     */
+    public function deleteCompany($id)
+    {
+        $company = Company::find($id);
+
+        if (!$company) {
+            FLash::add('danger', 'Yhtiötä ei löytynyt!');
+            return redirect('/admin/companies');
+        }
+
+        try {
+            $company->delete();
+        } catch (\Exception $ex) {
+            FLash::add('danger', 'Yhtiön ' . $company->Name . ' poistaminen epäonnistui.');
+            return redirect('/admin/companies');
+        }
+
+        Flash::add('success', 'Yhtiö ' . $company->Name . ' poistettu onnistuneesti.');
         return redirect('/admin/companies');
     }
 }

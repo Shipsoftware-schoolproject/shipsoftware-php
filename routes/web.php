@@ -33,12 +33,13 @@ Route::group(['middleware' => 'role:admin', 'prefix' => 'admin'], function() {
         Route::get('/delete/{UserID}', 'AdminController@deleteUser');
     });
 
-    // List all companies, add / edit company
+    // List all companies, add / edit /delete company
     Route::group(['prefix' => 'companies', 'as' => 'companies'], function() {
         Route::get('/', 'AdminController@companies');
         Route::get('/add', 'AdminController@addCompanyView');
         Route::post('/add', 'AdminController@addCompany');
         Route::get('/edit/{ID}', 'AdminController@editCompanyView');
         Route::post('/edit/{ID}', 'AdminController@editCompany');
+        Route::get('/delete/{ID}', 'AdminController@deleteCompany');
     });
 });
