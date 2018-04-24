@@ -209,13 +209,41 @@ class AdminController extends Controller
         ]);
     }
 
+    public function addCompanyView(Request $request)
+    {
+        $countries = Country::all();
+
+        $company = new User;
+        $company->fill($request->old());
+
+        return view('admin/add_company',
+            [
+                'type' => 'Lisää yhtiö',
+                'form_action' => 'add',
+                'countries' => $countries,
+                'company' => $company
+            ]
+        );
+    }
+
+    public function addCompany(Request $request)
+    {
+        $rules = Company::rules();
+
+        $this->validate($request, $rules);
+
+        Company::create($request->all());
+
+        return redirect('/admin/companies');
+    }
+
     /**
      * Edit company view
      *
      * @param $id
      * @return \Illuminate\View\View
      */
-    public function editCompanyView(Request $request, $id)
+    public function editCompanyView($id)
     {
         $countries = Country::all();
 

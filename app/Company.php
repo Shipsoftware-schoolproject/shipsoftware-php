@@ -44,11 +44,11 @@ class Company extends Model
     public static function rules()
     {
         return [
-            'Name' => 'unique:Companies,Name',
+            'Name' => 'required|max:100|unique:Companies,Name',
             'MailingAddress' => 'nullable|max:85',
             'ZipCode' => 'nullable|numeric',
             'City' => 'nullable|string|max:85',
-            'CountryID' => 'nullable|numeric'
+            'CountryID' => 'exists:Country,ID'
         ];
     }
 

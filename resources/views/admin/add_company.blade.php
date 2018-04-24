@@ -64,7 +64,7 @@
                         <div class="form-group @if ($errors->has('CountryID')) has-error @endif">
                             <label class="control-label" for="Country">Maa:</label>
                             <select id="CountryID" name="CountryID" class="form-control">
-                                <option value="0"></option>
+                                <option></option>
                                 @foreach($countries as $country)
                                     @if (old('CountryID') == $country->ID || $company->CountryID == $country->ID)
                                         <option value="{{ $country->ID }}" selected="selected">{{ $country->Name }}</option>
