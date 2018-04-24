@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\Flash;
+use App\ShipType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
@@ -24,9 +25,133 @@ class AdminController extends Controller
     public function ships()
     {
         $ships = Ship::with(['type', 'company'])->get();
+
+        return view('admin/ships')->with(['ships' => $ships]);
+    }
+
+    /**
+     * Add new ship view
+     *
+     * @param Request $request
+     * @return \Illuminate\View\View
+     */
+    public function addShipView(Request $request)
+    {
+        $companies = Company::all();
+        $types = ShipType::all();
+
+        $ship = new Ship;
+        $ship->fill($request->old());
+
+        return view('admin/add_ship',
+            [
+                'type' => 'Lisää laiva',
+                'form_action' => 'add',
+                'companies' => $companies,
+                'types' => $types,
+                'ship' => $ship
+            ]
+        );
+    }
+
+    /**
+     * Add new ship
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function addShip(Request $request)
+    {
+        $rules = Ship::rules();
+
+        $this->validate($request, $rules);
+
+        Ship::create($request->all());
+
+        return redirect('/admin/ships');
+    }
+
+    /**
+     * Edit ship view
+     *
+     * @param $imo
+     * @return \Illuminate\View\View
+     */
+    public function editShipView($imo)
+    {
+        $types = ShipType::all();
         $companies = Company::all();
 
-        return view('admin/ships')->with(['ships' => $ships, 'companies' => $companies]);
+        $ship = Ship::find($imo);
+        if ($ship == null) {
+            return view('errors.custom', [
+                'title' => 'Virhe',
+                'message' => 'Laivaa ei löytynyt!']);
+        }
+
+        return view('admin/add_ship',
+            [
+                'type' => 'Muokkaa laivaa',
+                'form_action' => 'edit/' . $ship->IMO,
+                'types' => $types,
+                'companies' => $companies,
+                'ship' => $ship
+            ]
+        );
+    }
+
+    /**
+     * Edit the ship
+     *
+     * @param Request $request
+     * @param $imo
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function editShip(Request $request, $imo)
+    {
+        $rules = Ship::rules();
+
+        $this->validate($request, $rules);
+
+        $ship = Ship::find($imo);
+        if ($ship == null) {
+            Flash::add('danger', 'Laivaa ei löytynyt!');
+            return back()->withInput($request->all());
+        }
+
+        $ship = $ship->fill($request->all());
+
+        $ship->save();
+
+        Flash::add('success', 'Laiva muokattu onnistuneesti!');
+
+        return redirect('/admin/ships');
+    }
+
+    /**
+     * Delete the ship
+     *
+     * @param $imo
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function deleteShip($imo)
+    {
+        $ship = User::find($imo);
+
+        if (!$ship) {
+            FLash::add('danger', 'Laivaa ei löytynyt!');
+            return redirect('/admin/ships');
+        }
+
+        try {
+            $ship->delete();
+        } catch (\Exception $ex) {
+            FLash::add('danger', 'Laivan ' . $ship->ShipName . ' poistaminen epäonnistui.');
+            return redirect('/admin/users');
+        }
+
+        Flash::add('success', 'Laiva ' . $ship->ShipName . ' poistettu onnistuneesti.');
+        return redirect('/admin/users');
     }
 
     /**
@@ -71,7 +196,7 @@ class AdminController extends Controller
      * Add new user
      *
      * @param Request $request
-     * @return \Illuminate\Routing\Redirector
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function addUser(Request $request)
     {
@@ -127,7 +252,7 @@ class AdminController extends Controller
      *
      * @param Request $request
      * @param $id
-     * @return \Illuminate\Routing\Redirector
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function editUser(Request $request, $id)
     {
@@ -184,7 +309,7 @@ class AdminController extends Controller
      * Delete user
      *
      * @param $UserID
-     * @return \Illuminate\Routing\Redirector
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function deleteUser($UserID)
     {
@@ -248,7 +373,7 @@ class AdminController extends Controller
      * Add new company
      *
      * @param Request $request
-     * @return \Illuminate\Routing\Redirector
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function addCompany(Request $request)
     {
@@ -293,7 +418,7 @@ class AdminController extends Controller
      *
      * @param Request $request
      * @param $id
-     * @return \Illuminate\Routing\Redirector
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function editCompany(Request $request, $id)
     {
@@ -324,7 +449,7 @@ class AdminController extends Controller
      * Delete company
      *
      * @param $id
-     * @return \Illuminate\Routing\Redirector
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function deleteCompany($id)
     {

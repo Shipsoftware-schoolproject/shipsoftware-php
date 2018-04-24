@@ -19,9 +19,18 @@ Route::get('/ship/{id}', 'ViewsController@ship');
 
 // Admin routes
 Route::group(['middleware' => 'role:admin', 'prefix' => 'admin'], function() {
-    // List all ships, add / edit ship
+    // By default show ships
     Route::get('/', 'AdminController@ships')->name('ships');
-    Route::get('/ships', 'AdminController@ships')->name('ships');
+
+    // List all ships, add / edit / delete ship
+    Route::group(['prefix' => 'ships', 'as' => 'ships'], function() {
+        Route::get('/', 'AdminController@ships');
+        Route::get('/add', 'AdminController@addShipView');
+        Route::get('/edit/{IMO}', 'AdminController@editShipView');
+        Route::post('/edit/{IMO}', 'AdminController@editShip');
+        Route::get('/delete/{IMO}', 'AdminController@deleteShip');
+    });
+
 
     // List all users, add / edit / delete user
     Route::group(['prefix' => 'users', 'as' => 'users'], function() {

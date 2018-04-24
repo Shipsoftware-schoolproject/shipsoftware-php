@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ShipTypes extends Model
+class ShipType extends Model
 {
     /**
      * The table associated with this model

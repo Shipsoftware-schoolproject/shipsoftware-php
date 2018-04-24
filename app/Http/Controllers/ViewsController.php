@@ -6,7 +6,7 @@ use DB;
 use Illuminate\Support\Facades\Auth;
 use App\Company;
 use App\Ship;
-use App\ShipTypes;
+use App\ShipType;
 use App\GPS;
 
 class ViewsController extends Controller
@@ -60,7 +60,7 @@ class ViewsController extends Controller
 
         $company = DB::table('Companies')->where('ID', $ship->CompanyID)->first();
 
-        $type = ShipTypes::find($ship->TypeID);
+        $type = ShipType::find($ship->TypeID);
         if ($type) {
             $ship->Type = $type->Name;
         }
