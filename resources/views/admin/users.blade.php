@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Users')
+@section('title', 'Käyttäjät')
 
 @section('admin-content')
     <div class="col-lg-12">

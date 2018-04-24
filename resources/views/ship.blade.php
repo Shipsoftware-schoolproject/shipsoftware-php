@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('scripts')
+    <script async defer src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyAK8bzrVV9-fH72e3jyXSSjsWkW5bpduok&callback=initMap"></script>
     <script src="{{ asset('js/map.js') }}"></script>
 	<script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/compass.js') }}"></script>

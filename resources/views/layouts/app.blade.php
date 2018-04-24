@@ -30,11 +30,7 @@
                     <a class="navbar-brand" href="{{ url('/') }}">{{ config('app.name') }}</a><br>
                 </div>
                 <div id="app-navbar-collapse" class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        {{-- <li class="nav-item active">
-                            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                        </li> --}}
-                    </ul>
+                    <ul class="nav navbar-nav"></ul>
                     @auth
                         <!-- User links -->
                         <ul class="nav navbar-nav navbar-right">
@@ -46,7 +42,7 @@
                                 <ul class="dropdown-menu">
                                     @if (Auth::user()->isAdmin())
                                         <li>
-                                            <a href="{{ url('/admin') }}">Admin panel</a>
+                                            <a href="{{ url('/admin') }}">Hallintapaneeli</a>
                                         </li>
                                     @endif
                                     <li>
@@ -87,48 +83,10 @@
     <!-- Scripts -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyAK8bzrVV9-fH72e3jyXSSjsWkW5bpduok&callback=initMap"></script>
     @auth
         @hasSection('scripts')
             @yield('scripts')
         @endif
-        {{--<script type="text/javascript">--}}
-            {{--// Init kompassi--}}
-            {{--$(document).ready(function() {--}}
-                {{--//draw(0);--}}
-            {{--});--}}
-
-            {{--// Get ships into listbox--}}
-            {{--get_ships();--}}
-
-            {{--$('#henkiloFormi').submit(function(ev) {--}}
-                {{--ev.preventDefault();--}}
-                {{--$('#txtSotu').removeAttr("disabled");--}}
-                {{--var formData = new FormData($(this)[0]);--}}
-
-                {{--$.ajax({--}}
-                    {{--type: $(this).attr('method'),--}}
-                    {{--url: $(this).attr('action'),--}}
-                    {{--data: formData,--}}
-                    {{--contentType: false,--}}
-                    {{--processData: false,--}}
-                    {{--success: function(data) {--}}
-                        {{--alert(data);--}}
-                        {{--$('#henkiloModal').modal('hide');--}}
-                        {{--haeMiehisto();--}}
-                        {{--return true;--}}
-                    {{--},--}}
-                    {{--error: function(data) {--}}
-                        {{--if (data.responseText == '') {--}}
-                            {{--alert('PHP koodissa jokin iso vika.');--}}
-                        {{--} else {--}}
-                            {{--alert(data.responseText);--}}
-                        {{--}--}}
-                        {{--return false;--}}
-                    {{--}--}}
-                {{--});--}}
-            {{--});--}}
-        {{--</script>--}}
     @endauth
 </body>
 </html>

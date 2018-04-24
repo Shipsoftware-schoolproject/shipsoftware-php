@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Users')
+@section('title', $type . 'käyttäjä')
 
 @section('admin-content')
 <div class="col-lg-10">
@@ -11,11 +11,6 @@
         <form id="userForm" action="{{ $form_action }}" enctype="multipart/form-data" method="POST" autocomplete="off">
             {{ csrf_field() }}
             <div class=panel-body" style="padding-top: 1em; padding-left: 1.5em;">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div id="userHelp" class="alert alert-danger hidden"></div>
-                    </div>
-                </div>
                 <div class="row">
                     <div class="col-sm-5">
                         <div class="form-group @if ($errors->has('FirstName')) has-error @endif">
