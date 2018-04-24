@@ -47,26 +47,19 @@ class ViewsController extends Controller
     /**
      * Show ship information page
      *
-     * @param $id - Ship IMO
+     * @param $imo - Ship IMO
      * @return View
      */
-    public function ship($id)
+    public function ship($imo)
     {
-        $ship = Ship::find($id);
+        $ship = Ship::with(['latestGps', 'gps', 'company', 'type'])->get()->find($imo);
         if (!$ship) {
-            // FIXME: Return a nice view
-            return view('errors.custom', ['title' => 'Error', 'message' => 'Ship was not found.']);
+            return view('errors.custom', [
+                'title' => 'Virhe',
+                'message' => 'Laivaa ei löytynyt.']
+            );
         }
 
-        $company = DB::table('Companies')->where('ID', $ship->CompanyID)->first();
-
-        $type = ShipType::find($ship->TypeID);
-        if ($type) {
-            $ship->Type = $type->Name;
-        }
-
-        $gps = GPS::find($id)->orderBy('UpdatedTime', 'desc')->take(1)->first();
-
-        return view('ship')->with(['ship' => $ship, 'gps' => $gps,'company' => $company]);
+        return view('ship')->with(['ship' => $ship]);
     }
 }

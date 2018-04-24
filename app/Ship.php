@@ -76,7 +76,11 @@ class Ship extends Model
      */
     public function latestGps()
     {
-        return $this->hasOne('App\GPS', 'IMO')->latest('UpdatedTime');
+        return $this->hasOne('App\GPS', 'IMO')->latest('UpdatedTime')->withDefault([
+            'Lat' => 0,
+            'Lng' => 0,
+            'UpdatedTime' => 0
+        ]);
     }
 
     /**
@@ -96,6 +100,6 @@ class Ship extends Model
      */
     public function company()
     {
-        return $this->hasOne('App\Company', 'ID', 'CompanyID');
+        return $this->hasOne('App\Company', 'ID', 'CompanyID')->with('Country');
     }
 }

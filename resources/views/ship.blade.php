@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('scripts')
-    <script async defer src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyAK8bzrVV9-fH72e3jyXSSjsWkW5bpduok&callback=initMap"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyAK8bzrVV9-fH72e3jyXSSjsWkW5bpduok&callback=prettyMap"></script>
     <script src="{{ asset('js/map.js') }}"></script>
 	<script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/compass.js') }}"></script>
@@ -15,12 +15,54 @@
             @endif
         });
 
-        $(window).load(function() {
-            // Add pin into map
-            addMarker({{ $ship->IMO }}, {{ $gps->Lat }}, {{ $gps->Lng }}, '{{ $ship->ShipName }}','{{$gps->UpdatedTime}}').done(function() {
-                focus_ship({{ $ship->IMO }});
+        function prettyMap() {
+            let mapOptions = {
+                center: { lat: {{ $ship->latestGps->Lat }}, lng: {{ $ship->latestGps->Lng }} },
+                zoom: 8,
+                streetViewControl: false
+            };
+
+            map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+            let marker = new google.maps.Marker({
+                position: new google.maps.LatLng({{ $ship->latestGps->Lat }}, {{ $ship->latestGps->Lng }}),
+                map: map,
+                title: '{{ $ship->ShipName }}'
             });
-        });
+
+            let infoWin = new google.maps.InfoWindow({
+                content: '{{ $ship->ShipName }}' + '<br>N: ' +
+                         {{ $ship->latestGps->Lat }} +
+                         '<br>E: ' + {{ $ship->latestGps->Lng }} +
+                         '<br>Update Time: ' + '{{ $ship->latestGps->UpdatedTime }}'
+            });
+
+            google.maps.event.addListener(marker, 'click', function() {
+                infoWin.open(map, marker);
+            });
+
+            let flightPlanCoordinates = [
+                @for ($i = 0; $i < count($ship->gps); ++$i)
+                    @if ($i + 1 < count($ship->gps))
+                        { lat: {{ $ship->gps[$i]->Lat }}, lng: {{ $ship->gps[$i]->Lng }} },
+                    @else
+                        { lat: {{ $ship->gps[$i]->Lat }}, lng: {{ $ship->gps[$i]->Lng }} }
+                    @endif
+                @endfor
+            ];
+
+            let flightPath = new google.maps.Polyline({
+                path: flightPlanCoordinates,
+                geodesic: true,
+                strokeColor: '#FF0000',
+                strokeOpacity: 1.0,
+                strokeWeight: 2
+            });
+
+            flightPath.setMap(map);
+
+            markers.push({ IMO: {{ $ship->IMO }}, Marker: marker, markerInfoWindow: infoWin });
+        }
     </script>
 @endsection
 
@@ -67,8 +109,8 @@
                             <div class="row">
                                 <div class="col-md-6">{{ trans('ship.type') }}:</div>
                                 <div id="type" class="col-md-6 text-right">
-                                    @if(isset($ship->Type))
-                                        {{ $ship->Type }}
+                                    @if(isset($ship->type->Name))
+                                        {{ $ship->type->Name }}
                                     @endif
                                 </div>
                             </div>
@@ -83,8 +125,8 @@
                             <div class="row">
                                 <div class="col-md-6">{{ trans_choice('companies.company', 0) }}:</div>
                                 <div id="type" class="col-md-6 text-right">
-                                    @if(isset($ship->Company))
-                                        {{ $ship->Company }}
+                                    @if(isset($ship->company))
+                                        {{ $ship->company->Name }}
                                     @endif
                                 </div>
                             </div>
@@ -364,48 +406,48 @@
                             <div class="row">
                                 <div class="col-md-6">Nimi:</div>
                                 <div id="name" class="col-md-6 text-right">
-                                    @if(isset($company->Name))
-                                        {{ $company->Name }}
+                                    @if(isset($ship->company))
+                                        {{ $ship->company->Name }}
                                     @endif
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">Mailing Address:</div>
                                 <div id="type" class="col-md-6 text-right">
-                                @if(isset($company->MailingAddress))
-                                        {{ $company->MailingAddress }}
+                                @if(isset($ship->company))
+                                        {{ $ship->company->MailingAddress }}
                                     @endif
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">ZipCode:</div>
                                 <div id="mmsi" class="col-md-6 text-right">
-                                     @if(isset($company->ZipCode))
-                                        {{ $company->ZipCode }}
+                                     @if(isset($ship->company))
+                                        {{ $ship->company->ZipCode }}
                                     @endif
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">City:</div>
                                 <div id="type" class="col-md-6 text-right">
-                                     @if(isset($company->City))
-                                        {{ $company->City }}
+                                     @if(isset($ship->company))
+                                        {{ $ship->company->City }}
                                     @endif
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-6">IS Port:</div>
+                                <div class="col-md-6">On satama:</div>
                                 <div id="length" class="col-md-6 text-right">
-                                    @if(isset($company->IsPort))
-                                        {{ $company->IsPort }}
+                                    @if(isset($ship->company))
+                                        {{ $ship->company->IsPort ? 'Kyllä' : 'Ei' }}
                                     @endif
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-8">country:</div>
+                                <div class="col-md-8">Maa:</div>
                                 <div id="width" class="col-md-4 text-right">
-                                    @if(isset($company->CountryID))
-                                        {{ $company->CountryID }}
+                                    @if(isset($ship->company))
+                                        {{ $ship->company->country->Name }}
                                     @endif
                                 </div>
                             </div>
