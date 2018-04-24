@@ -1,58 +1,41 @@
-var map;
-var markers = new Array();
+let map;
+let markers = Array();
 
 /**
- * Initialize Google Maps
+ * Initialize Google Maps and add markers
  */
 function initMap() {
-    var mapOptions = {
+    let mapOptions = {
         center: { lat: 63.1022601, lng: 21.5809185 },
         zoom: 8,
         streetViewControl: false
     };
 
     map = new google.maps.Map(document.getElementById('map'), mapOptions);
-}
 
-function addToMap(lstBox) {
-    $(lstBox + ' option').each(function() {
-        alert($(this).data('lng'));
-        addMarker(this.value, $(this).data('lat').value, $(this).data('lng'),
-                  this.text, $(this).data('updated'));
-    });
-}
+    $('#lstShips option').each(function() {
+        let marker = new google.maps.Marker({
+            position: new google.maps.LatLng($(this).data('lat'), $(this).data('lng')),
+            map: map,
+            title: this.value
+        });
 
-/**
- * Add marker into the map
- *
- * @param IMO - Ship IMO number
- * @param lat - Latitude
- * @param lng Longitude
- * @param title - Info window title
- * @param UpdatedTime - Time when the GPS location was updated
- */
-function addMarker(IMO, lat, lng, title, UpdatedTime) {
-    let deferred = new $.Deferred();
-    let marker = new google.maps.Marker({
-        position: new google.maps.LatLng(lat, lng),
-        map: map,
-        title: this.title
-    });
-    let infoWin = new google.maps.InfoWindow({
-        content: title + '<br>N: ' + lat + '<br>E: ' + lng + '<br>Update Time: ' + UpdatedTime
-    });
-    markers.push({ IMO: IMO, Marker: marker, markerInfoWindow: infoWin });
+        let infoWin = new google.maps.InfoWindow({
+            content: this.text + '<br>N: ' + $(this).data('lat') +
+                        '<br>E: ' + $(this).data('lng') +
+                        '<br>Update Time: ' + $(this).data('updated')
+        });
 
-    google.maps.event.addListener(marker, 'click', function() {
-        infoWin.open(map, marker);
-    });
+        google.maps.event.addListener(marker, 'click', function() {
+            infoWin.open(map, marker);
+        });
 
-    deferred.resolve();
-    return deferred.promise();
+        markers.push({ IMO: this.value, Marker: marker, markerInfoWindow: infoWin });
+    })
 }
 
 /**
- * Focus to the ship
+ * Focus to ship marker
  *
  * @param integer IMO - Ship IMO
  */

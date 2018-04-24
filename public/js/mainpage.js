@@ -71,6 +71,6 @@ function shipDetails() {
     }
 }
 
-$(window).load(function() {
-    addToMap('#lstShips');
-});
+function shipsList() {
+    return '#lstShips';
+}
