@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\Flash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use App\Country;
 use App\User;
 use App\Role;
 use App\Company;
@@ -55,7 +56,7 @@ class AdminController extends Controller
         return view('admin/add_user',
             [
                 'type' => 'Lisää',
-                'form_action' => url('/admin/users/add'),
+                'form_action' => 'add',
                 'roles' => $roles,
                 'companies' => $companies,
                 'user' => $user
@@ -84,7 +85,7 @@ class AdminController extends Controller
         return view('admin/add_user',
             [
                 'type' => 'Muokkaa',
-                'form_action' => url('/admin/users/edit/' . $user->UserID),
+                'form_action' => 'edit/' . $user->UserID,
                 'roles' => $roles,
                 'companies' => $companies,
                 'user' => $user
@@ -192,5 +193,78 @@ class AdminController extends Controller
 
         Flash::add('success', 'Käyttäjä ' . $user->Username . ' poistettu onnistuneesti.');
         return redirect('/admin/users');
+    }
+
+    /**
+     * List all companies
+     *
+     * @return \Illuminate\View\View
+     */
+    public function companies()
+    {
+        $companies = Company::all();
+
+        return view('admin.companies', [
+            'companies' => $companies
+        ]);
+    }
+
+    /**
+     * Edit company view
+     *
+     * @param $id
+     * @return \Illuminate\View\View
+     */
+    public function editCompanyView(Request $request, $id)
+    {
+        $countries = Country::all();
+
+        $company = Company::find($id);
+        if ($company == null) {
+            return view('errors.custom', [
+                'title' => 'Error',
+                'message' => 'User not found!']);
+        }
+
+        return view('admin/add_company',
+            [
+                'type' => 'Muokkaa yhtiötä',
+                'form_action' => 'edit/' . $company->ID,
+                'countries' => $countries,
+                'company' => $company
+            ]
+        );
+    }
+
+    /**
+     * Edit company
+     *
+     * @param Request $request
+     * @param $companyid
+     * @return \Illuminate\Routing\Redirector
+     */
+    public function editCompany(Request $request, $companyid)
+    {
+        $rules = Company::rules();
+
+        $rules['ID'] = Rule::unique('Companies')->ignore($companyid, 'ID');
+        $rules['Name'] = Rule::unique('Companies')->ignore($companyid, 'ID');
+
+        $this->validate($request, $rules);
+
+        $company = Company::find($companyid);
+        if ($company == null) {
+            Flash::add('danger', 'Yhtiötä ei löytynyt!');
+            return back()->withInput($request->all());
+        }
+
+        $company = $company->fill($request->all());
+        $company->ID = $companyid;
+
+        $company->save();
+
+        Flash::add('success', 'Yhtiö muokattu onnistuneesti!');
+
+        return redirect('/admin/companies');
     }
 }

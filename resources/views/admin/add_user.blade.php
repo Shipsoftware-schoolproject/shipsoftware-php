@@ -8,14 +8,14 @@
         <div class="panel-heading">
             <h3 class="panel-title">{{ $type }} käyttäjä</h3>
         </div>
-        <form id="userForm" action="{{ $form_action }}" enctype="multipart/form-data" method="POST" autocomplete="off">
+        <form id="userForm" action="{{ url('/admin/users/' . $form_action) }}" enctype="multipart/form-data" method="POST" autocomplete="off">
             {{ csrf_field() }}
             <div class=panel-body" style="padding-top: 1em; padding-left: 1.5em;">
                 <div class="row">
                     <div class="col-sm-5">
                         <div class="form-group @if ($errors->has('FirstName')) has-error @endif">
                             <label class="control-label" for="FirstName">Etunimi:</label>
-                            <input type="text" class="form-control" name="FirstName" id="FirstName" placeholder="Erkki" value="{{ $user->FirstName }}">
+                            <input type="text" class="form-control" name="FirstName" id="FirstName" placeholder="Erkki" value="{{ old('FirstName') ? old('FirstName') : $user->FirstName }}">
                             @if ($errors->has('FirstName'))
                                 <span id="helpFirstName" class="help-block">
                                     {{ $errors->first('FirstName') }}
@@ -26,7 +26,7 @@
                     <div class="col-sm-6">
                         <div class="form-group @if ($errors->has('LastName')) has-error @endif">
                             <label class="control-label" for="LastName">Sukunimi:</label>
-                            <input type="text" class="form-control" name="LastName" id="LastName" placeholder="Esimerkki" value="{{ $user->LastName }}">
+                            <input type="text" class="form-control" name="LastName" id="LastName" placeholder="Esimerkki" value="{{ old('LastName') ? old('LastName') : $user->LastName }}">
                             @if ($errors->has('LastName'))
                                 <span id="helpLastName" class="help-block">
                                     {{ $errors->first('LastName') }}
@@ -39,7 +39,7 @@
                     <div class="col-sm-5">
                         <div class="form-group @if ($errors->has('Phone')) has-error @endif">
                             <label class="control-label" for="Phone">Puhelinnumero:</label>
-                            <input type="text" class="form-control" name="Phone" id="Phone" placeholder="0401234567" value="{{ $user->Phone }}">
+                            <input type="text" class="form-control" name="Phone" id="Phone" placeholder="0401234567" value="{{ old('Phone') ? old('Phone') : $user->Phone }}">
                             @if ($errors->has('Phone'))
                                 <span id="helpPhone" class="help-block">
                                     {{ $errors->first('Phone') }}
@@ -50,7 +50,7 @@
                     <div class="col-sm-6">
                         <div class="form-group @if ($errors->has('Email')) has-error @endif">
                             <label class="control-label" for="Email">Email:</label>
-                            <input type="text" class="form-control" name="Email" id="Email" placeholder="erkki.esimerkki@example.com" value="{{ $user->Email }}">
+                            <input type="text" class="form-control" name="Email" id="Email" placeholder="erkki.esimerkki@example.com" value="{{ old('Email') ? old('Email') : $user->Email }}">
                             @if ($errors->has('Email'))
                                 <span id="helpEmail" class="help-block">
                                     {{ $errors->first('Email') }}
@@ -63,7 +63,7 @@
                     <div class="col-sm-4">
                         <div class="form-group @if ($errors->has('Username')) has-error @endif">
                             <label class="control-label" for="Username">Käyttäjänimi:</label>
-                            <input type="text" class="form-control" name="Username" id="Username" placeholder="eres" value="{{ $user->Username }}">
+                            <input type="text" class="form-control" name="Username" id="Username" placeholder="eres" value="{{ old('Username') ? old('Username') : $user->Username }}">
                             @if ($errors->has('Username'))
                                 <span id="helpUsername" class="help-block">
                                     {{ $errors->first('Username') }}
@@ -115,7 +115,7 @@
                             <select id="RoleID" name="RoleID" class="form-control">
                                 <option value=""></option>
                                 @foreach($roles as $role)
-                                    @if (Request::old('RoleID') == $role->ID || $user->RoleID == $role->ID)
+                                    @if (old('RoleID') == $role->ID || $user->RoleID == $role->ID)
                                         <option value="{{ $role->ID }}" selected="selected">{{ $role->Name }}</option>
                                     @else
                                         <option value="{{ $role->ID }}">{{ $role->Name }}</option>
@@ -137,7 +137,7 @@
                             <select id="CompanyID" name="CompanyID" class="form-control">
                                 <option value=""></option>
                                 @foreach($companies as $company)
-                                    @if (Request::old('CompanyID') == $company->ID || $user->Company == $company->ID)
+                                    @if (old('CompanyID') == $company->ID || $user->Company == $company->ID)
                                         <option value="{{ $company->ID }}" selected="selected">{{ $company->Name }}</option>
                                     @else
                                         <option value="{{ $company->ID }}">{{ $company->Name }}</option>

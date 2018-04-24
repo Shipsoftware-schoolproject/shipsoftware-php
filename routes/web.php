@@ -32,4 +32,11 @@ Route::group(['middleware' => 'role:admin', 'prefix' => 'admin'], function() {
         Route::post('/edit/{UserID}', 'AdminController@editUser');
         Route::get('/delete/{UserID}', 'AdminController@deleteUser');
     });
+
+    // Companies
+    Route::group(['prefix' => 'companies', 'as' => 'companies'], function() {
+        Route::get('/', 'AdminController@companies');
+        Route::get('/edit/{ID}', 'AdminController@editCompanyView');
+        Route::post('/edit/{ID}', 'AdminController@editCompany');
+    });
 });

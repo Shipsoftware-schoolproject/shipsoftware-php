@@ -13,7 +13,7 @@
 					<li @if (Request::route()->getName() == 'ships') class="active" @endif><a href="{{ url('/admin/ships') }}" role="tab">Laivat</a></li>
                     <li @if (Request::route()->getName() == 'users') class="active" @endif><a href="{{ url('/admin/users') }}" role="tab">Käyttäjät</a></li>
                     <li @if (Request::route()->getName() == 'cargo') class="active" @endif><a href="{{ url('/admin/cargo') }}" role="tab">Rahti</a></li>
-					<li @if (Request::route()->getName() == 'companies') class="active" @endif><a href="{{ url('/admin/companies') }}" role="tab">Yhtiö</a></li>
+					<li @if (Request::route()->getName() == 'companies') class="active" @endif><a href="{{ url('/admin/companies') }}" role="tab">Yhtiöt</a></li>
                 </ul>
             </div>
         </div>
