@@ -75,7 +75,9 @@
         <!-- Footer -->
         <footer class="footer">
             <div class="container">
-                <p>&#169; {{ config('app.name') }}</p>
+                <p>
+                    &#169; {{ config('app.name') }} - (<a href="{{ url('https://github.com/Shipsoftware-schoolproject/shipsoftware-php/commit/' . shell_exec('git log --pretty="%h" -n1 HEAD')) }}">{{ shell_exec('git log --pretty="%h" -n1 HEAD')}}</a>)
+                </p>
             </div>
         </footer>
     </div>
