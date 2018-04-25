@@ -18,7 +18,7 @@
         function prettyMap() {
             let mapOptions = {
                 center: { lat: {{ $ship->latestGps->Lat }}, lng: {{ $ship->latestGps->Lng }} },
-                zoom: 8,
+                zoom: 12,
                 streetViewControl: false
             };
 
