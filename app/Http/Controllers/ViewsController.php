@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use DB;
 use Illuminate\Support\Facades\Auth;
 use App\Company;
 use App\Ship;
-use App\ShipType;
-use App\GPS;
+use App\User;
 
 class ViewsController extends Controller
 {
@@ -35,7 +33,7 @@ class ViewsController extends Controller
             $ships = Ship::with('latestGps')->get();
             $companies = Company::all();
         } else {
-            // TODO: Implementation
+            $ships = Ship::with('latestGps')->where('CompanyID', User::find(Auth::id())->CompanyID)->get();
         }
 
         return view('main', [
