@@ -219,9 +219,12 @@
                         <div class="panel-body" id="map"></div>
                     </div>
                 </div>
-				<div>
-                    <button type="button" class="btn btn-warning" id="editShip">Muokkaa Laivaa</button>
-				</div>
+                {{-- FIXME: Admin is not the only one who can edit ship? --}}
+                @if(Auth::user()->isAdmin())
+				    <div>
+                        <button type="button" class="btn btn-warning" id="editShip">Muokkaa Laivaa</button>
+				    </div>
+                @endif
             </div>
 
             <!-- FIXME: Implementations etc. -->
@@ -357,9 +360,12 @@
                                 </div>
                             </div>
                         </div>
-                        <button type="button" class="btn btn-success" onclick="lisaaHenkilo({{ $ship->IMO }})">Lisää henkilö</button>
-                        <button type="button" class="btn btn-warning" onclick="muokkaaHenkilo({{ $ship->IMO }})">Muokkaa henkilöä</button>
-                        <button type="button" class="btn btn-danger" onclick="poistaHenk({{ $ship->IMO }})">Poista henkilö</button>
+                        {{-- FIXME: Admin is not only one who can add/edit/delete crew? --}}
+                        @if(Auth::user()->isAdmin())
+                            <button type="button" class="btn btn-success" onclick="lisaaHenkilo({{ $ship->IMO }})">Lisää henkilö</button>
+                            <button type="button" class="btn btn-warning" onclick="muokkaaHenkilo({{ $ship->IMO }})">Muokkaa henkilöä</button>
+                            <button type="button" class="btn btn-danger" onclick="poistaHenk({{ $ship->IMO }})">Poista henkilö</button>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -386,11 +392,14 @@
                             </table>
                         </div>
                     </div>
-                    <div>
-                        <button type="button" class="btn btn-success" id="lisaaRahti">Lisää rahti</button>
-                        <button type="button" class="btn btn-warning" id="muokkaaRahti">Muokkaa rahtia</button>
-                        <button type="button" class="btn btn-danger" id="poistaRahti">Poista rahti</button>
-                    </div>
+                    {{-- FIXME: Admin is not the only one who can edit cargo --}}
+                    @if(Auth::user()->isAdmin())
+                        <div>
+                            <button type="button" class="btn btn-success" id="lisaaRahti">Lisää rahti</button>
+                            <button type="button" class="btn btn-warning" id="muokkaaRahti">Muokkaa rahtia</button>
+                            <button type="button" class="btn btn-danger" id="poistaRahti">Poista rahti</button>
+                        </div>
+                    @endif
                 </div>
             </div>
 			            <!-- Company info tab -->
@@ -453,9 +462,12 @@
                             </div>
                         </div>
                     </div>
-					<div>
-                        <button type="button" class="btn btn-warning" id="editCompany">Muokkaa Yhtiötä</button>
-                    </div>
+                    {{-- FIXME: Admin is not only one who can edit company --}}
+                    @if(Auth::user()->isAdmin())
+                        <div>
+                            <button type="button" class="btn btn-warning" id="editCompany">Muokkaa Yhtiötä</button>
+                        </div>
+                    @endif
 				</div>
             </div>
         </div>
