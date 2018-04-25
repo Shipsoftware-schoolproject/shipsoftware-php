@@ -140,4 +140,19 @@ class User extends Authenticatable
 
         return false;
     }
+
+    /**
+     * Check is the current user secretary
+     * @return bool
+     */
+    public function isSecretary()
+    {
+        $role = Role::where('ID', $this->RoleID)->first();
+
+        if ($role->Name == 'Sihteeri') {
+            return true;
+        }
+
+        return false;
+    }
 }

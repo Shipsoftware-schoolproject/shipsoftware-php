@@ -361,7 +361,7 @@
                             </div>
                         </div>
                         {{-- FIXME: Admin is not only one who can add/edit/delete crew? --}}
-                        @if(Auth::user()->isAdmin())
+                        @if(Auth::user()->isAdmin() || Auth::user()->isSecretary())
                             <button type="button" class="btn btn-success" onclick="lisaaHenkilo({{ $ship->IMO }})">Lisää henkilö</button>
                             <button type="button" class="btn btn-warning" onclick="muokkaaHenkilo({{ $ship->IMO }})">Muokkaa henkilöä</button>
                             <button type="button" class="btn btn-danger" onclick="poistaHenk({{ $ship->IMO }})">Poista henkilö</button>
