@@ -1,7 +1,11 @@
 @extends('layouts.app')
 
+@section('head')
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.3/dist/leaflet.css" integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ==" crossorigin=""/>
+@endsection()
+
 @section('scripts')
-    <script async defer src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyAK8bzrVV9-fH72e3jyXSSjsWkW5bpduok&callback=prettyMap"></script>
+    <script src="https://unpkg.com/leaflet@1.3.3/dist/leaflet.js" integrity="sha512-tAGcCfR4Sc5ZP5ZoVz0quoZDYX5aCtEm/eu1KhSLj2c9eFrylXZknQYmxUssFaVJKvvc0dJQixhGjG2yXWiV9Q==" crossorigin=""></script>
     <script src="{{ asset('js/map.js') }}"></script>
 	<script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/compass.js') }}"></script>
@@ -13,56 +17,21 @@
             @else
                 compass_init();
             @endif
+
+            initMap('{{ $ship->latestGps->Lat}}', '{{ $ship->latestGps->Lng }}', 9);
+            addMarker('{{ $ship->ShipName }}', {{ $ship->IMO }},
+                      {{ $ship->latestGps->Lat }}, {{ $ship->latestGps->Lng }},
+                      '{{ $ship->latestGps->UpdatedTime }}', false, true);
+            addPolyline([
+                    @for ($i = 0; $i < count($ship->gps); ++$i)
+                        @if ($i + 1 < count($ship->gps))
+                            [ {{ $ship->gps[$i]->Lat }}, {{ $ship->gps[$i]->Lng }} ],
+                        @else
+                            [ {{ $ship->gps[$i]->Lat }}, {{ $ship->gps[$i]->Lng }} ]
+                        @endif
+                    @endfor
+            ]);
         });
-
-        function prettyMap() {
-            let mapOptions = {
-                center: { lat: {{ $ship->latestGps->Lat }}, lng: {{ $ship->latestGps->Lng }} },
-                zoom: 12,
-                streetViewControl: false
-            };
-
-            map = new google.maps.Map(document.getElementById('map'), mapOptions);
-
-            let marker = new google.maps.Marker({
-                position: new google.maps.LatLng({{ $ship->latestGps->Lat }}, {{ $ship->latestGps->Lng }}),
-                map: map,
-                title: '{{ $ship->ShipName }}'
-            });
-
-            let infoWin = new google.maps.InfoWindow({
-                content: '{{ $ship->ShipName }}' + '<br>N: ' +
-                         {{ $ship->latestGps->Lat }} +
-                         '<br>E: ' + {{ $ship->latestGps->Lng }} +
-                         '<br>Update Time: ' + '{{ $ship->latestGps->UpdatedTime }}'
-            });
-
-            google.maps.event.addListener(marker, 'click', function() {
-                infoWin.open(map, marker);
-            });
-
-            let flightPlanCoordinates = [
-                @for ($i = 0; $i < count($ship->gps); ++$i)
-                    @if ($i + 1 < count($ship->gps))
-                        { lat: {{ $ship->gps[$i]->Lat }}, lng: {{ $ship->gps[$i]->Lng }} },
-                    @else
-                        { lat: {{ $ship->gps[$i]->Lat }}, lng: {{ $ship->gps[$i]->Lng }} }
-                    @endif
-                @endfor
-            ];
-
-            let flightPath = new google.maps.Polyline({
-                path: flightPlanCoordinates,
-                geodesic: true,
-                strokeColor: '#FF0000',
-                strokeOpacity: 1.0,
-                strokeWeight: 2
-            });
-
-            flightPath.setMap(map);
-
-            markers.push({ IMO: {{ $ship->IMO }}, Marker: marker, markerInfoWindow: infoWin });
-        }
     </script>
 @endsection
 

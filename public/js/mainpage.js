@@ -4,7 +4,7 @@
 $("#lstShips").change(function() {
     var lstShips = document.getElementById('lstShips');
     if (lstShips.options[lstShips.selectedIndex]) {
-        focus_ship(lstShips.options[lstShips.selectedIndex].value);
+        focusShip(lstShips.options[lstShips.selectedIndex].value);
     }
 });
 

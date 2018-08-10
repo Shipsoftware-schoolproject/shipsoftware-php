@@ -11,7 +11,7 @@ $('[data-toggle="tab"]').click(function(event) {
     if (targetTab == '#kartta') {
         var listBox = document.getElementById('laivatListBox');
         if (listBox.options[listBox.selectedIndex]) {
-            focus_ship(listBox.options[listBox.selectedIndex].value);
+            focusShip(listBox.options[listBox.selectedIndex].value);
         }
     } else if (targetTab == '#rahti') {
         if (!haeRahti()) {
@@ -35,3 +35,4 @@ $('[data-toggle="tab"]').click(function(event) {
         alert('Tabiä "' + $(event.target).attr('href') + '" ei ole implementoitu');
     }
 });
+

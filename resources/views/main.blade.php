@@ -1,9 +1,25 @@
 @extends('layouts.app')
 
+@section('head')
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.3/dist/leaflet.css" integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ==" crossorigin=""/>
+@endsection()
+
 @section('scripts')
-    <script async defer src="https://maps.googleapis.com/maps/api/js?v=3&key=AIzaSyAK8bzrVV9-fH72e3jyXSSjsWkW5bpduok&callback=initMap"></script>
+    <script src="https://unpkg.com/leaflet@1.3.3/dist/leaflet.js" integrity="sha512-tAGcCfR4Sc5ZP5ZoVz0quoZDYX5aCtEm/eu1KhSLj2c9eFrylXZknQYmxUssFaVJKvvc0dJQixhGjG2yXWiV9Q==" crossorigin=""></script>
     <script src="{{ asset('js/map.js') }}"></script>
     <script src="{{ asset('js/mainpage.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            initMap();
+            @foreach($ships as $ship)
+                @if($ship->latestGps)
+                    addMarker('{{ $ship->ShipName }}', {{ $ship->IMO }}, {{ $ship->latestGps->Lat }}, {{ $ship->latestGps->Lng }}, '{{ $ship->latestGps->UpdatedTime }}');
+                @else
+                    addMarker('{{ $ship->ShipName }}', {{ $ship->IMO }}, 0, 0, 0);
+                @endif
+            @endforeach
+        });
+    </script>
 @endsection
 
 @section('content')
@@ -20,11 +36,7 @@
                     @if ($ships)
                         <select id="lstShips" class="listbox" size="8" name="laivat">
                             @foreach ($ships as $ship)
-                                @if ($ship->latestGps)
-                                    <option value="{{ $ship->IMO }}" data-lat="{{ $ship->latestGps->Lat }}" data-lng="{{ $ship->latestGps->Lng }}" data-updated="{{ $ship->latestGps->UpdatedTime }}">{{ $ship->ShipName }}</option>
-                                @else
-                                    <option value="{{ $ship->IMO }}" data-lat="0" data-lng="0" data-updated="0">{{ $ship->ShipName }}</option>
-                                @endif
+                                <option value="{{ $ship->IMO }}">{{ $ship->ShipName }}</option>
                             @endforeach
                         </select>
                     @else
