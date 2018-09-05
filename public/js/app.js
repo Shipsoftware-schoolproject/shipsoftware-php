@@ -30,7 +30,7 @@ $('#laivatListBox').change(function() {
         if (!listBox.options[listBox.selectedIndex]) {
             return false;
         } else {
-            focus_ship(listBox.options[listBox.selectedIndex].value);
+            focusShip(listBox.options[listBox.selectedIndex].value);
         }
     } else if (currentTab == '#miehistö') {
         haeMiehisto();

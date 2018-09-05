@@ -2,56 +2,77 @@ let map;
 let markers = Array();
 
 /**
- * Initialize Google Maps and add markers
+ * Initialize map and add markers
+ *
+ * @param lat
+ * @param lng
+ * @param zoom
+ * @return void
  */
-function initMap() {
-    let mapOptions = {
-        center: { lat: 63.1022601, lng: 21.5809185 },
-        zoom: 8,
-        streetViewControl: false
-    };
+function initMap(lat = 63.260144, lng = 21.118005, zoom = 9) {
+    map = L.map('map').setView([lat, lng], zoom);
 
-    map = new google.maps.Map(document.getElementById('map'), mapOptions);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+        maxZoom: 18,
+    }).addTo(map);
+}
 
-    $('#lstShips option').each(function() {
-        let marker = new google.maps.Marker({
-            position: new google.maps.LatLng($(this).data('lat'), $(this).data('lng')),
-            map: map,
-            title: this.value
-        });
+/**
+ * Add marker to the map
+ *
+ * @param shipName
+ * @param imo
+ * @param lat
+ * @param lng
+ * @param updated
+ * @param addTooltip
+ * @param openPopup
+ * @return void
+ */
+function addMarker(shipName, imo, lat, lng, updated, addTooltip = true,
+                   openPopup = false)
+{
+    let marker = L.marker([lat, lng]);
 
-        let infoWin = new google.maps.InfoWindow({
-            content: this.text + '<br>N: ' + $(this).data('lat') +
-                        '<br>E: ' + $(this).data('lng') +
-                        '<br>Update Time: ' + $(this).data('updated')
-        });
+    if (addTooltip === true) {
+        marker.bindTooltip(shipName);
+    }
 
-        google.maps.event.addListener(marker, 'click', function() {
-            infoWin.open(map, marker);
-        });
+    marker.bindPopup('<b>' + shipName + '</b><br>' +
+        'N: ' + lat + '<br>' + ' E: ' + lng + '<br>' +
+        'Updated Time: ' + updated);
 
-        markers.push({ IMO: this.value, Marker: marker, markerInfoWindow: infoWin });
-    })
+    marker.addTo(map);
+    markers[imo] = marker;
+
+    if (open === true) {
+        marker.openPopup(marker.getLatLng());
+    }
+}
+
+/**
+ * Draw polyline to map from LatLng points
+ *
+ * @param latlngs - Array(lat, lng)
+ * @return void
+ */
+function addPolyline(latlngs) {
+    L.polyline(latlngs, {color: 'red'}).addTo(map);
 }
 
 /**
  * Focus to ship marker
  *
- * @param integer IMO - Ship IMO
+ * @param IMO - Ship IMO
+ * @return void
  */
-function focus_ship(IMO)
+function focusShip(IMO)
 {
-    var position = null;
+    if (markers[IMO]) {
+        let pos = markers[IMO].getLatLng();
 
-    for (i in markers) {
-        if (markers[i]['IMO'] == IMO) {
-            position = markers[i]['Marker'].getPosition();
-            google.maps.event.trigger(markers[i]['Marker'], 'click');
-            break;
-        }
-    }
-
-    if (position !== null) {
-        map.setCenter(position);
+        map.flyTo(pos, 9.5, {"animate": true, "pan": { "duration": 5.5 }});
+        markers[IMO].openPopup();
     }
 }

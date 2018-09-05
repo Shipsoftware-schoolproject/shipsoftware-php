@@ -17,7 +17,8 @@ body {
 }
 
 #map {
-    min-height: 454px;
+    min-height: 50em;
+    padding: 0;
 }
 
 #minimap {
