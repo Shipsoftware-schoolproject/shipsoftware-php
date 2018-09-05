@@ -5,6 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    <!-- {{ url('https://github.com/Shipsoftware-schoolproject/shipsoftware-php/commit/' . shell_exec('git log --pretty="%h" -n1 HEAD | tr -d "\n"')) }} -->
+
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -77,7 +79,7 @@
         <footer class="footer">
             <div class="container">
                 <p>
-                    &#169; {{ config('app.name') }} - (<a href="{{ url('https://github.com/Shipsoftware-schoolproject/shipsoftware-php/commit/' . shell_exec('git log --pretty="%h" -n1 HEAD')) }}">{{ shell_exec('git log --pretty="%h" -n1 HEAD')}}</a>)
+                    &#169; {{ config('app.name') }}
                 </p>
             </div>
         </footer>
